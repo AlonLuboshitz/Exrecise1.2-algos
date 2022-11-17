@@ -1,13 +1,8 @@
 #include <vector>
 #include <iostream>
+#include "VectorManipulator.h"
 using namespace std;
-class VectorManipulator {
-    public:
-    const vector<double> deductionF(const vector<double> v1, const vector<double> v2);
-    const vector<double> sumMultipleVectors(vector<double> v1, vector<double> v2);
-    const vector<double> sumIndividualeVector(vector<double> v);
-    void PrintVec(vector<double>);
-};
+
 const vector<double> VectorManipulator::deductionF(const vector<double> v1,const vector<double> v2) {
     if (v1.size() != v2.size()) {
         cout<< "cant deduct diffrenet size vectors";

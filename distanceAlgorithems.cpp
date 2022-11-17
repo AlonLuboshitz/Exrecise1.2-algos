@@ -5,7 +5,7 @@ distanceAlgorithems::distanceAlgorithems(const std::vector<double>& vec1, const 
 	
 	m_vec1 = vec1;
 	m_vec2 = vec2;
-	diffVec = { 0 };
+	//diffVec = { 0 };
 	//m_diffVec = m_vecMan.diff(m_vec1, m_vec2);
 }
 
