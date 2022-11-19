@@ -1,10 +1,14 @@
 #include <iostream>
-#include <vector>
-#include "distanceAlgorithems.h"
+#include "mainHeader.h"
 
 int main() {
-	std::vector<double> v1;
-	std::vector<double> v2;
+	std::vector<double> v1 = {1, 2, 3};
+	std::vector<double> v2 = {3 , 2 ,1};
+
+	distanceAlgorithems dis(v1, v2);
+	std::cout<< dis.euclideanDistance();
+
+	/*
 	double x;
 	while (1) {
 		std::cin >> x;
@@ -48,6 +52,6 @@ int main() {
 			
 		}
 
-	}
+	}*/
 
 }
