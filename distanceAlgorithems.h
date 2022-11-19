@@ -1,22 +1,28 @@
-/*
+
 #ifndef DISTANCEALGORITHEMS_H
 #define DISTANCEALGORITHEMS_H
-#include <iostream>
-class distanceAlgorithems {
-private:
+#include<vector>
 
-	std::vector<double> m_vec1;
-	std::vector<double> m_vec2;
-	std::vector<double> m_diffVec;
-	VectorManipulator m_vecMan;
+
+
+	
 	//add vector manipulator
 	
-public:
+
 	//std::vector<double> diffVec = { 0 };
-	distanceAlgorithems(const std::vector<double>& vec1, const std::vector<double>& vec2);
+	// distanceAlgorithems(std::vector<double> vec1, std::vector<double>& vec2);
+	const double AbsSumIndividualeVector(std::vector<double> v);
 	double euclideanDistance();
-};
+	void initDistanceVec(std::vector<double> vec1, std::vector<double> vec2);
+	const std::vector<double> deductionF(const std::vector<double> v1, const std::vector<double> v2);
+	void PrintVec(std::vector<double>);
+	double manhatanDistance();
+	double cevicheDistance();
+	double canberraDistance();
+		double canberraDistance();
+	double minkovskyDistance(double p);
+
+
 
 #endif
 
-*/
