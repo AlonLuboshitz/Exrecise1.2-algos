@@ -1,6 +1,6 @@
 
 #include <iostream>
-#include "VectorManipulator.h"
+#include "mainHeader.h"
 using namespace std;
 
 const vector<double> VectorManipulator::deductionF(const vector<double> v1,const vector<double> v2) {
@@ -43,11 +43,3 @@ void VectorManipulator::PrintVec(vector<double> v1) {
     cout<<endl;
 }
 
-int main() {
-    VectorManipulator vectormani;
-    vector<double> v1 = {1.3,2.6,3.2,4,5};
-    vector<double> v2 = {2,3,4,5,6};
-    vector<double> v3 = vectormani.deductionF(v1,v2);
-    v3;
-    vectormani.AbsSumIndividualeVector(v3);
-}
