@@ -1,4 +1,4 @@
-
+/*
 #ifndef VECTORMANIPULATOR_H
 #define VECTORMANIPULATOR_H
 #include "mainHeader.h"
@@ -11,3 +11,4 @@ class VectorManipulator {
     void PrintVec(vector<double>);
 };
 #endif
+*/
