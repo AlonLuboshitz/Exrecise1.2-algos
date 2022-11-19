@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include "mainHeader.h"
 using namespace std;
@@ -23,11 +24,16 @@ const vector<double> VectorManipulator::deductionF(const vector<double> v1,const
         ++itdeducV;
         i++;
     }
-        PrintVec(deductV);
-
-    
-    
-    return deductV;
+    PrintVec(deductV);
+    const vector<double> returnedvector = deductV;
+    return returnedvector;
+}
+const double VectorManipulator::AbsSumIndividualeVector(vector<double> v1){
+    double sum = 0;
+    for (vector<double>::const_iterator it = v1.cbegin(); it != v1.cend(); ++it){
+        sum = sum + fabs(*it);
+    }
+    return sum;
 }
 void VectorManipulator::PrintVec(vector<double> v1) {
     for (vector<double>::const_iterator it = v1.cbegin();
@@ -36,10 +42,4 @@ void VectorManipulator::PrintVec(vector<double> v1) {
     }
     cout<<endl;
 }
-/*
-int main() {
-    VectorManipulator vectormani;
-    vector<double> v1 = {1.3,2.6,3.2,4,5};
-    vector<double> v2 = {2,3,4,5,6};
-    vectormani.deductionF(v1,v2);
-}*/
+
