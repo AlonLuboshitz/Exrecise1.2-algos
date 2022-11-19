@@ -1,4 +1,3 @@
-
 #include <cmath>
 #include "distanceAlgorithems.h"
 #include <iostream>
@@ -133,6 +132,7 @@ bool is_number(const std::string& s) {
     double val = strtod(s.c_str(), &end);
     return end != s.c_str() && *end == '\0';
 }
+
 
 //this function gets a refrence to a vector
 // reads input from the user using cin and get line which returns the string input which ends with '\n'
