@@ -21,6 +21,7 @@
 	double canberraDistance();
 		double canberraDistance();
 	double minkovskyDistance(double p);
+void printDecimal(double x);
 
 
 
