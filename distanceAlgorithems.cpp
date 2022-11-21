@@ -1,6 +1,6 @@
-#include <cmath>
+
 #include "distanceAlgorithems.h"
-#include <iostream>
+#include "VectorManipulator.h"
 #include <sstream>
 #include <string>
 #include <cstdlib>
@@ -84,47 +84,7 @@ std::vector<double>::iterator iter = m_diffVec.begin();
 	return sqrt(sum);
 }
 
-// deducts one vector from another.
-const std::vector<double> deductionF(const std::vector<double> v1,const std::vector<double> v2) {
-    if (v1.size() != v2.size()) {
-        std::cout<< "cant deduct diffrenet size vectors";
-   }
-    //init deduction vector with zeros
-    std::vector<double> deductV(v1.size(), 0);
-    //init iterators.
-    std::vector<double>::const_iterator itV1 = v1.cbegin();
-    std::vector<double>::const_iterator itV2 = v2.cbegin();
-    std::vector<double>::iterator itdeducV = deductV.begin();
-    int i = 1;
-    for (itV1; itV1 != v1.cend(); ++itV1) {
-        //std::cout << "deducting v1 - v2 in "<<i<<" place " << *itV1<<" - "<< *itV2<<std::endl;
-        double s = *itV1 - *itV2;
-        *itdeducV = s;
-        ++itV2;
-        ++itdeducV;
-        i++;
-    }
-    const std::vector<double> returnedvector = deductV;
-    return returnedvector;
-}
 
-// sums the absoulute values in a vector.
-const double AbsSumIndividualeVector(std::vector<double> v1){
-    double sum = 0;
-    for (std::vector<double>::const_iterator it = v1.cbegin(); it != v1.cend(); ++it){
-        sum = sum + fabs(*it);
-    }
-    return sum;
-}
-
-//iterated on vector and print it.
-// void PrintVec(std::vector<double> v1) {
-//     for (std::vector<double>::const_iterator it = v1.cbegin();
-//      it != v1.cend(); ++it){
-//        std::cout << *it << " ,";
-//     }
-//     std::cout<<std::endl;
-// }
 
 
 //this function checks if the string from the string stream is a valid double
@@ -183,30 +143,28 @@ void printDecimal(double x) {
 //than it checks if the 2 vectors are the same size
 // if not it displays an error messege, and starts from the begginig.
 // after validation sends vectors to algos distances.
-int main() {
-	std::vector<double> v1;
-	std::vector<double> v2;
+// int main() {
+// 	std::vector<double> v1;
+// 	std::vector<double> v2;
 	
-	while (1) {
-	getVectorFromInput(v1);
-	getVectorFromInput(v2);
-	if (v1.size() == v2.size()) {
-		break;
-	}else {
-		v1.clear();
-		v2.clear();
-		std::cout <<"vectors are not the same size. please insert new 2 same sized vectors.\n";
-	}
-	}
+// 	while (1) {
+// 	getVectorFromInput(v1);
+// 	getVectorFromInput(v2);
+// 	if (v1.size() == v2.size()) {
+// 		break;
+// 	}else {
+// 		v1.clear();
+// 		v2.clear();
+// 		std::cout <<"vectors are not the same size. please insert new 2 same sized vectors.\n";
+// 	}
+// 	}
 
-	initDistanceVec(v1,v2);
-	std::fixed(std::cout);
-	std::cout.precision(16);
-	printDecimal(euclideanDistance());
-	printDecimal(manhatanDistance());
-	printDecimal(cevicheDistance());
-	printDecimal(canberraDistance());
-	printDecimal(minkovskyDistance(2));
-	return 0;
-}
+// 	initDistanceVec(v1,v2);
+// 	printDecimal(euclideanDistance());
+// 	printDecimal(manhatanDistance());
+// 	printDecimal(cevicheDistance());
+// 	printDecimal(canberraDistance());
+// 	printDecimal(minkovskyDistance(2));
+// 	return 0;
+// }
 

@@ -1,17 +1,10 @@
+#ifndef VECTORMANIPULATOR_H
+#define VECTORMANIPULATOR_H
+#include <vector>
+#include <iostream>
+#include <cmath>
+const std::vector<double> deductionF(const std::vector<double> v1,const std::vector<double> v2);
+const double AbsSumIndividualeVector(std::vector<double> v1);
+void PrintVec(std::vector<double> v1);
 
-// #ifndef VECTORMANIPULATOR_H
-// #define VECTORMANIPULATOR_H
-// #include "mainHeader.h"
-
-// #include <cmath>
-// #include <vector>
-// class VectorManipulator {
-//     public:
-
-//     const vector<double> deductionF(const vector<double> v1, const vector<double> v2);
-//     const double sumMultipleVectors(vector<double> v1, vector<double> v2);
-//     const double AbsSumIndividualeVector(vector<double> v);
-
-//     void PrintVec(vector<double>);
-// };
-// #endif
+#endif
