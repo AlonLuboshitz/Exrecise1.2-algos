@@ -3,6 +3,9 @@
 #define DISTANCEALGORITHEMS_H
 #include<vector>
 #include <iostream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
 	double euclideanDistance();
 	void initDistanceVec(std::vector<double> vec1, std::vector<double> vec2);
 	double manhatanDistance();
