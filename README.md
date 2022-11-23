@@ -6,10 +6,11 @@ in order to compile and run the code you need to enter the following:
 2. enter username "your username"
 3. enter password "your password"
 4. after project have been colned enter the following:
-5. g++ -std=c++11 "path/distanceAlgorithems.cpp" ,ENTER
-6. ./a.out , ENTER - command which will run the code.
-7. enter first vector (each number seperated by a space), ENTER
-8. enter second vector (each number seperated by a space), ENTER
+5. cd Exrecise1.2-algos/
+6. g++ -std=c++11 *.cpp ,ENTER
+7. ./a.out , ENTER - command which will run the code.
+8. enter first vector (each number seperated by a space), ENTER
+9. enter second vector (each number seperated by a space), ENTER
 
 
 **Code discription**
