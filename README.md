@@ -14,7 +14,7 @@ after the project has been cloned, enter the following:
 
 
 **Code discription**  
-This code takes two vecotrs from the user input and calculates thier distance from each other using five diffrenet algorithems as desrcibed below.  
+This code takes two vecotrs from the user input and calculates thier distance from each other using five diffrenet algorithems as desrcibed below.
 in order to have independant functionality and generalized implementation, we divided the code into three main sections:  
 1. validation of user input.
 2. function calculating each algo.
@@ -23,8 +23,8 @@ a key concepte to separate the deduction of two vectors from the algorithems.
 
 **validation**  
 1. streaming a string, dividing between spaces.  
-                 2. converting each string seperated by a space into a double variable (if valid).  
-                 3. checking if the vecors are the same size  
+2. converting each string seperated by a space into a double variable (if valid).  
+3. checking if the vecors are the same size  
                 
 **algorithems functionality**  
 key variables: Two const double vectors.   
