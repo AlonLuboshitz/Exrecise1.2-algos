@@ -5,16 +5,16 @@ in order to compile and run the code you need to enter the following:
 1. $ git clone "https://github.com/AlonLuboshitz/Exrecise1.2-algos.git"
 2. enter username "your username"
 3. enter password "your password"
-4. after project have been colned enter the following:
-5. cd Exrecise1.2-algos/
-6. g++ -std=c++11 *.cpp ,ENTER
-7. ./a.out , ENTER - command which will run the code.
-8. enter first vector (each number seperated by a space), ENTER
-9. enter second vector (each number seperated by a space), ENTER
+after the project has been cloned, enter the following:
+4. cd Exrecise1.2-algos/
+5. g++ -std=c++11 *.cpp ,ENTER
+6. ./a.out , ENTER - command which will run the code.
+7. enter first vector (each number seperated by a space), ENTER
+8. enter second vector (each number seperated by a space), ENTER
 
 
 **Code discription**
-This code takes two vecotrs from the user input and calculates thier distance from each other using five diffrenet algorithems as desrcibed below.\n
+This code takes two vecotrs from the user input and calculates thier distance from each other using five diffrenet algorithems as desrcibed below.
 in order to have independant functionality and generalized implementation, we divided the code into three main sections:
 1. validation of user input.
 2. function calculating each algo.
@@ -39,9 +39,9 @@ algorithems: (psodue code)
 5. Cevichev() - max(|v1[i]-v2[i]|)
 
 **Manipulation on vectors**
-dudction- function to calculate m_diff key variable of the algorithems functionality.
-sum- sums up all of the vector's values
-print vec- prints all of the vector's values in their order
+1. dudction- function to calculate m_diff key variable of the algorithems functionality.
+2. sum- sums up all of the vector's values
+3. print vec- prints all of the vector's values in their order
 
 
 
