@@ -1,11 +1,15 @@
 # Exrecise1.2-algos
  
 **Compilation & Running**
-in order to compile the code you need to enter the following:
-1. g++ -std=c++11 "path/distanceAlgorithems.cpp" ,ENTER
-2. ./a.out , ENTER - command which will run the code.
-3. enter first vector (each number seperated by a space), ENTER
-4. enter second vector (each number seperated by a space), ENTER
+in order to compile and run the code you need to enter the following:
+1. $ git clone "https://github.com/AlonLuboshitz/Exrecise1.2-algos.git"
+2. enter username "your username"
+3. enter password "your password"
+4. after project have been colned enter the following:
+5. g++ -std=c++11 "path/distanceAlgorithems.cpp" ,ENTER
+6. ./a.out , ENTER - command which will run the code.
+7. enter first vector (each number seperated by a space), ENTER
+8. enter second vector (each number seperated by a space), ENTER
 
 
 **Code discription**
