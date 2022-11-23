@@ -22,14 +22,14 @@ in order to have independant functionality and generalized implementation, we di
 a key concepte to separate the deduction of two vectors from the algorithems.
 
 **validation**  
-threefunctions - 1. streaming a string, dividing between spaces.
-                 2. converting each string seperated by a space into a double variable (if valid).
-                 3. checking if the vecors are the same size
+1. streaming a string, dividing between spaces.  
+                 2. converting each string seperated by a space into a double variable (if valid).  
+                 3. checking if the vecors are the same size  
                 
 **algorithems functionality**  
-key variables: Two const double vectors.  
+key variables: Two const double vectors.   
                one Vector which stands for the deduction of one from the second, (used in all of the algorithems).   
-               m_diff vector -> each i place holds v1[i]-v2[i] 
+               m_diff vector -> each i place holds v1[i]-v2[i]   
 algorithems: (psodue code)
 1. euclidian() - sqrt(sum((v1[i]-v2[i])^2))
 2. manhatan() - sum(|v1[i]-v2[i]|)
