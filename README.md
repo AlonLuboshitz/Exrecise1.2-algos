@@ -14,7 +14,7 @@ in order to compile and run the code you need to enter the following:
 
 
 **Code discription**
-This code takes two vecotrs from the user input and calculates thier distance from each other using five diffrenet algorithems as desrcibed below.
+This code takes two vecotrs from the user input and calculates thier distance from each other using five diffrenet algorithems as desrcibed below.\n
 in order to have independant functionality and generalized implementation, we divided the code into three main sections:
 1. validation of user input.
 2. function calculating each algo.
