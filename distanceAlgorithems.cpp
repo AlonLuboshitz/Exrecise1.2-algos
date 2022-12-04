@@ -2,23 +2,27 @@
 #include "distanceAlgorithems.h"
 #include "VectorManipulator.h"
 
-
-std::vector<double> m_vec1;
-std::vector<double> m_vec2;
-std::vector<double> m_diffVec;
-
-void initDistanceVec(std::vector<double> vec1, std::vector<double> vec2) {
+distanceAlgorithems::distanceAlgorithems(std::vector<double> vec1, std::vector<double> vec2) {
 	m_vec1 = vec1;
 	m_vec2 = vec2;
-	m_diffVec = deductionF(m_vec1,m_vec2);
+	m_diffVec = deductionF(vec1, vec2);
+}
+//eucalidean distance 
+double distanceAlgorithems::calculatedistance() {
+double sum = 0;
+std::vector<double>::iterator iter = m_diffVec.begin();
+	for (iter; iter != m_diffVec.end(); ++iter) {
+		sum += pow(*iter,2);
+	}
+	return sqrt(sum);
 }
 
-double manhatanDistance() {
+double distanceAlgorithems::manhatanDistance() {
 	double s = AbsSumIndividualeVector(m_diffVec);
 	return s;
 }
 
-double cevicheDistance() {
+double distanceAlgorithems::cevicheDistance() {
 	double max = -1;
     for (std::vector<double>::const_iterator it = m_diffVec.cbegin(); it != m_diffVec.cend(); ++it){
         if (fabs(*it) > max) {
@@ -28,7 +32,7 @@ double cevicheDistance() {
     return max;
 }
 
-double canberraDistance() {
+double distanceAlgorithems::canberraDistance() {
 	double sum = 0;
 	std::vector<double>::const_iterator itdiff = m_diffVec.cbegin();
 	std::vector<double>::const_iterator itv1 = m_vec1.cbegin();
@@ -45,7 +49,7 @@ double canberraDistance() {
 return sum;
 }
 
-double minkovskyDistance(double p) {
+double distanceAlgorithems::minkovskyDistance(double p) {
 double sum = 0;
 	if (p==1) {
 		sum = manhatanDistance();
@@ -73,26 +77,40 @@ double sum = 0;
 	return sum;
 }
 
-double euclideanDistance() {
-double sum = 0;
-std::vector<double>::iterator iter = m_diffVec.begin();
-	for (iter; iter != m_diffVec.end(); ++iter) {
-		sum += pow(*iter,2);
-	}
-	return sqrt(sum);
-}
+// double distanceAlgorithems::euclideanDistance() {
+// double sum = 0;
+// std::vector<double>::iterator iter = m_diffVec.begin();
+// 	for (iter; iter != m_diffVec.end(); ++iter) {
+// 		sum += pow(*iter,2);
+// 	}
+// 	return sqrt(sum);
+// }
 
 
+// deducts one vector from another.
+// const std::vector<double> distanceAlgorithems::deductionF(const std::vector<double> v1,const std::vector<double> v2) {
+//     if (v1.size() != v2.size()) {
+//         std::cout<< "cant deduct diffrenet size vectors";
+//    }
+//     //init deduction vector with zeros
+//     std::vector<double> deductV(v1.size(), 0);
+//     //init iterators.
+//     std::vector<double>::const_iterator itV1 = v1.cbegin();
+//     std::vector<double>::const_iterator itV2 = v2.cbegin();
+//     std::vector<double>::iterator itdeducV = deductV.begin();
+//     int i = 1;
+//     for (itV1; itV1 != v1.cend(); ++itV1) {
+//         //std::cout << "deducting v1 - v2 in "<<i<<" place " << *itV1<<" - "<< *itV2<<std::endl;
+//         double s = *itV1 - *itV2;
+//         *itdeducV = s;
+//         ++itV2;
+//         ++itdeducV;
+//         i++;
+//     }
+//     const std::vector<double> returnedvector = deductV;
+//     return returnedvector;
+// }
 
-
-//this function checks if the string from the string stream is a valid double
-//returns true if the string is a double
-//returns false if not
-bool is_number(const std::string& s) {
-    char* end = nullptr;
-    double val = strtod(s.c_str(), &end);
-    return end != s.c_str() && *end == '\0';
-}
 
 
 //main calls getVectorFromInput twice inorder to get 2 vectors from the users

@@ -41,6 +41,18 @@ void printDecimal(double x) {
 		std::cout<<x<<std::endl;
 	}
 } 
+
+
+//this function checks if the string from the string stream is a valid double
+//returns true if the string is a double
+//returns false if not
+bool is_number(const std::string& s) {
+    char* end = nullptr;
+    double val = strtod(s.c_str(), &end);
+    return end != s.c_str() && *end == '\0';
+}
+
+
 //gets vectors from input using getVectorFromInput function. 
 //if the vectors are not the same size, asks the user to insert 2 vectors again
 // continue until the 2 vectors are the same size.
