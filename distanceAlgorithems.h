@@ -1,13 +1,15 @@
 
 #ifndef DISTANCEALGORITHEMS_H
 #define DISTANCEALGORITHEMS_H
+#include "VectorManipulator.h"
+
 #include<vector>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <cstdlib>
 class distanceAlgorithems {
-	private:
+	protected:
 	std::vector<double> m_vec1;
 	std::vector<double> m_vec2;
 	std::vector<double> m_diffVec;
@@ -19,15 +21,7 @@ class distanceAlgorithems {
 	distanceAlgorithems(std::vector<double> vec1);
 	distanceAlgorithems(std::vector<double> vec1, std::vector<double> vec2);
 	virtual double calculatedistance();
-	double euclideanDistance();
-	double manhatanDistance();
-	double cevicheDistance();
-	double canberraDistance();
-	double minkovskyDistance(double p);
-    void printDecimal(double x);
-
-
-
+	void setVectors(std::vector<double> vec1, std::vector<double> vec2);
 };
 #endif
 
