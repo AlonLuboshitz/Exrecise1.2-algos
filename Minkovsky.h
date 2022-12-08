@@ -1,7 +1,6 @@
-#include "Euclidean.h"
-#include "Manhatan.h"
+#include "distanceAlgorithems.h"
 
-class Minkovsky :  public Euclidean,  public Manhatan {
+class Minkovsky :  public distanceAlgorithems {
     private:
     double m_p;
     public:
