@@ -21,6 +21,9 @@ class distanceAlgorithems {
 	distanceAlgorithems(std::vector<double> vec1);
 	distanceAlgorithems(std::vector<double> vec1, std::vector<double> vec2);
 	virtual double calculatedistance();
+    virtual double calculatedistance(std::vector<double> vec);
+	virtual double calculatedistance(std::vector<double> vec1,std::vector<double> vec2);
+
 	void setVectors(std::vector<double> vec1, std::vector<double> vec2);
 };
 #endif

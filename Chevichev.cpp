@@ -11,3 +11,11 @@ double Chevichev::calculatedistance() {
     }
     return max;
 }
+double Chevichev::calculatedistance(std::vector<double> v1){
+    m_diffVec = deductionF(v1,m_vec2);
+    return calculatedistance();
+}
+    double Chevichev::calculatedistance(std::vector<double> v1, std::vector<double> v2) {
+        m_diffVec = deductionF(v1,v2);
+        return calculatedistance();
+}
