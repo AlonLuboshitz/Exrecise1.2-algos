@@ -21,6 +21,7 @@ void CSVReader::setNewFile(std::string filename) {
     if (validateCSVfile(filename)) {
         m_fileName = filename;
     }
+    readFromFile();
 }
 void CSVReader::setIterator() {
     m_vectorLine_iterator = m_lineVector.begin();
@@ -67,14 +68,3 @@ bool CSVReader::getNewLine(std::vector<std::string>& lineToGet) {
   return true;
   }
 }
-//main example.
-
-// int main() {
-//     std::string filename = "iris_classified.csv";
-//     CSVReader csv(filename);
-//     std::vector<std::string> vec;
-//     while (csv.getNewLine(vec)) {
-//         //
-//     }
-    
-// }
