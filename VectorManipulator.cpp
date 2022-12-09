@@ -1,4 +1,5 @@
 #include "VectorManipulator.h"
+#include "inputValidation.h"
 // deducts one vector from another.
 const std::vector<double> deductionF(const std::vector<double> v1,const std::vector<double> v2) {
     if (v1.size() != v2.size()) {
@@ -39,4 +40,14 @@ void PrintVec(std::vector<double> v1) {
     }
     std::cout<<std::endl;
 }
-
+//converts vector of strings to vector of doubles
+std::vector<double> convertVectorToDoubles(std::vector<std::string>& vec) {
+    std::vector<std::string>::const_iterator vectorIterator = vec.cbegin();
+    std::vector<double> doubleVector;
+   for (vectorIterator; vectorIterator != vec.cend(); ++vectorIterator) {
+        if (is_number(*vectorIterator)){
+            doubleVector.push_back(std::stod(*vectorIterator));
+        }
+}
+return doubleVector;
+}

@@ -5,44 +5,36 @@
 #include "Canberra.h"
 #include "check.h"
 #include "Minkovsky.h"
-#include "Chevichev.h"
+
+#include <map>
+#include <iostream>
+
 
 int main() {
-	std::vector<double> v1 = {1,2,3} ;
-	std::vector<double> v2 = {3,2,1};
-		std::vector<double> v3 = {2,3,4};
-	std::vector<double> v4 = {10,11,12};
+	std::vector<std::string> vec = {"hi", "gili", "hi", "whats", "gili"};
+	std::vector<std::string>::const_iterator indexIterator;
+	indexIterator = vec.begin() + 2;
+    vec.erase(indexIterator);
+	std::map<std::string, int> map;
+	map.insert(std::pair<std::string, int>(vec.at(0), 1));
+    //runs k-1 loops
 
-	distanceAlgorithems dis(v1,v4);
-	Euclidean euc(v1,v4);
-	 Manhatan man(v1,v4);
-	Canberra can(v1,v4);
-	Minkovsky min(v1,v4, 2);
-	Chevichev che(v1,v4);
-	check cc(euc);
-	printDecimal(cc.cal());
-	cc.setdis(man);
-		printDecimal(cc.cal());
-		cc.setdis(che);
-	printDecimal(cc.cal());
-	cc.setdis(can);
-	printDecimal(cc.cal());
-	cc.setdis(min);
-	printDecimal(cc.cal());
-cc.setdis(euc);
-		printDecimal(cc.cal(v2));
-		cc.setdis(man);
-		printDecimal(cc.cal(v2));
-		cc.setdis(che);
-	printDecimal(cc.cal(v2));
-	cc.setdis(can);
-	printDecimal(cc.cal(v2));
-	cc.setdis(min);
-	printDecimal(cc.cal(v2));
-	
-	
-	
-	//printDecimal(distanceAlgorithems.minkovskyDistance(2));
-	
+    for (int i = 1; i < 4; i++){
+        std::string tempLabel = vec.at(i);
+        //if the map finds a key the same as the neighbor's label-
+         //it increases its value by one (there is one more vector with this label)
+       if (map.find(tempLabel) != map.end()){
+            map.at(tempLabel)++;
+       }
+       // else- inserts the new label with the count of 1
+       else {
+        map.insert(std::pair<std::string, int>(tempLabel, 1));
+       }
+    }
+	std::string str = map.begin()->first;
+	map.clear();
+	std::string str2 = str;
+
+
 	return 0;
 }
