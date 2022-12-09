@@ -1,10 +1,12 @@
-#include "Euclidean.h"
-#include "Manhatan.h"
+#include "distanceAlgorithems.h"
 
-class Minkovsky :  public Euclidean,  public Manhatan {
+class Minkovsky :  public distanceAlgorithems {
     private:
     double m_p;
     public:
     Minkovsky(std::vector<double> v1, std::vector<double> v2, double p);
     double calculatedistance();
+    double calculatedistance(std::vector<double> v1);
+    double calculatedistance(std::vector<double> v1, std::vector<double> v2);
+
 }; 

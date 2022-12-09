@@ -18,3 +18,11 @@ double sum = 0;
 	}
 return sum;
 }
+double Canberra::calculatedistance(std::vector<double> v2) {
+distanceAlgorithems::setVectors(m_vec1,v2);
+return calculatedistance();
+	 }
+double Canberra::calculatedistance(std::vector<double> v1, std::vector<double> v2) {
+distanceAlgorithems::setVectors(v1,v2);
+return calculatedistance();
+}
