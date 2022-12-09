@@ -11,12 +11,6 @@ KNN::KNN (const std::vector<double> inputVector, distanceAlgorithems& disAlgo, C
     init = true;
 }
 
-//bool getNextVector();
-struct KNN::neighbor{
-std::string label;
-std::vector<double> data;
-double distance;
-};
 
 /**
 * comperator - compares 2 neighbors according to their distance

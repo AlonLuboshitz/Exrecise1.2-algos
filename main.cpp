@@ -12,6 +12,22 @@
 
 
 int main(int argc,char* argv[]){
+	
+CSVReader csv("datasets/beans/beans_Classified.csv");
+    // std::vector<double> vec1;
+    // std::vector<double> vec2;
+    // getVectorFromInput(vec1);
+    // getVectorFromInput(vec2);
+    
+    // Euclidean euc(vec1,vec2);
+    // KNN knn(vec1,euc,csv,3);
+    // std::string str = knn.runKNN();
+
+
+
+
+
+	
 	int k;
 	std::string filePath;
 	//distanceAlgorithems disAlgo;
@@ -22,6 +38,8 @@ int main(int argc,char* argv[]){
 	if (checkK > 0){
 		k = checkK;
 	} else std::cout << "k is not a positive integer";
+	filePath = argv[2];
+	
 	
 	
 
