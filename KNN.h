@@ -9,11 +9,12 @@
 #include <limits>
 #include<bits/stdc++.h>
 #include "VectorManipulator.h"
+#include "CSVReader.h"
 
 class KNN {
 private:
 std::vector<double> m_inputVector;
-//CSVreader* m_csvReader;
+CSVReader* m_csvReader;
 std::vector<std::string> m_tempVector; 
 unsigned int m_k;
 distanceAlgorithems* m_disAlgo;
@@ -40,7 +41,7 @@ void initiation();
 
 public: 
 KNN() = delete;
-KNN (std::vector<double> inputVector,distanceAlgorithems& disAlgo, const unsigned int k);
+KNN (std::vector<double> inputVector,distanceAlgorithems& disAlgo, CSVReader csvReader, const unsigned int k);
 std::string runKNN();
 void setDistanceAlgorithem(distanceAlgorithems& disAlgo);
 void setNewFile(std::string path);

@@ -1,19 +1,17 @@
 #include "KNN.h"
 
-KNN::KNN (const std::vector<double> inputVector, distanceAlgorithems& disAlgo, unsigned int k) {
-    /*
-    if (allDoubleVector(inputVector)){
+KNN::KNN (const std::vector<double> inputVector, distanceAlgorithems& disAlgo, CSVReader csvReader ,unsigned int k) {
     m_inputVector = inputVector;
-    }*/
     m_disAlgo = &disAlgo;
     if (k>0) {
         m_k = k;
     }
+    m_csvReader = &csvReader;
     m_sizeOfInputVec = m_inputVector.size();
     init = true;
 }
 
-    //bool getNextVector();
+//bool getNextVector();
 struct KNN::neighbor{
 std::string label;
 std::vector<double> data;
@@ -60,8 +58,6 @@ int KNN::tempVectorValidation() {
  * gets label (string) according to an index of the tempVector
 */
 std::string KNN:: getLabel(int index){
-    // check if refrence is OK !!!!!!!!!!!!!!!!!
-    // vector.at returns a refrence
     std::string label = m_tempVector.at(index);
     return label;
 }
@@ -94,7 +90,7 @@ void KNN::calculateNeighborsDistances(){
     std::vector<neighbor>::iterator neighborsIterator = neighbors.begin();
    for (neighborsIterator; neighborsIterator != neighbors.cend(); ++neighborsIterator) {
     if ((*neighborsIterator).data.size() == m_sizeOfInputVec) {
-        //(*neighborsIterator).distance = (*m_disAlgo).calculatedistance(m_inputVector, (*neighborsIterator));
+        (*neighborsIterator).distance = (*m_disAlgo).calculatedistance(m_inputVector, (*neighborsIterator).data);
     }
     else {
         (*neighborsIterator).distance = std::numeric_limits<double>::max();
@@ -106,7 +102,6 @@ void KNN::calculateNeighborsDistances(){
  * sorts all the neighbors according to their distance from the input vector
 */
 void KNN::sortNeighbors(){
-    
     std::sort(KNN::neighbors.begin(), KNN::neighbors.end(), [](const KNN::neighbor& n1, const KNN::neighbor& n2) -> bool 
     {
     return(n1.distance < n2.distance);
@@ -125,9 +120,8 @@ void KNN::sortNeighbors(){
 std::string KNN::findKNearest(){
     labelsMap.insert(std::pair<std::string, int>(neighbors.at(0).label, 1));
     //runs k-1 loops
-
-    for (int i = 1; i < 5; i++){
-        std::string tempLabel =neighbors.at(i).label;
+    for (int i = 1; i < m_k; i++){
+        std::string tempLabel = neighbors.at(i).label;
         //if the map finds a key the same as the neighbor's label-
          //it increases its value by one (there is one more vector with this label)
        if (labelsMap.find(tempLabel) != labelsMap.end()){
@@ -154,7 +148,7 @@ std::string KNN::findKNearest(){
  * 7. change the flag init to false -> there is no need to get the data from the file twice
 */
 void KNN::initiation() {
-    while (true) {//(csvREader get new vector) {
+    while ((*m_csvReader).getNewLine(m_tempVector)) {
     int index = tempVectorValidation();
     if (index < 0) {
         continue;
@@ -198,7 +192,7 @@ void KNN::setDistanceAlgorithem(distanceAlgorithems& disAlgo){
  * init and storage the new file in the neighbors vector
 */
 void KNN::setNewFile(std::string path){
-    //csvReader.setFile(path);
+    (*m_csvReader).setNewFile(path);
     neighbors.clear();
     initiation();
 }
