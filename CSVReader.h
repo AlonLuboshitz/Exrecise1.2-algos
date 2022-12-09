@@ -1,3 +1,6 @@
+#ifndef CSVREADER_H
+#define CSVREADER_H
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -30,3 +33,4 @@ class CSVReader {
     //returns false if there are no more lines to read from.
     bool getNewLine(std::vector<std::string>& lineToGet);
 };
+#endif
