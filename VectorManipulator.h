@@ -6,5 +6,6 @@
  const std::vector<double> deductionF(const std::vector<double> v1,const std::vector<double> v2);
 const double AbsSumIndividualeVector(std::vector<double> v1);
 void PrintVec(std::vector<double> v1);
+std::vector<double> convertVectorToDoubles(std::vector<std::string>& vec);
 
 #endif
