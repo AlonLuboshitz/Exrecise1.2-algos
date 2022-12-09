@@ -70,7 +70,7 @@ void KNN::insertNeighbors(const std::string name, const std::vector<double> vec)
     neighbor n;
     n.label = name;
     n.data = vec;
-    n.distance = std::numeric_limits<double>::max();
+    n.distance = 0;
     neighbors.push_back(n);
 }
 
@@ -88,7 +88,7 @@ void KNN::eraseStringFromTemp(int index){
  * runs on all neighbors- 
  * if the data vector is the same size of the input vector- 
  * calculate the vector's distance from the input vector, according to the current distance algorithem
- * (else - the dostance stays at numeric_limits<double>::max (max value for double))
+ * (else - the distance is set to be numeric_limits<double>::max (max value for double))
 */
 void KNN::calculateNeighborsDistances(){
     std::vector<neighbor>::iterator neighborsIterator = neighbors.begin();
@@ -96,13 +96,14 @@ void KNN::calculateNeighborsDistances(){
     if ((*neighborsIterator).data.size() == m_sizeOfInputVec) {
         //(*neighborsIterator).distance = (*m_disAlgo).calculatedistance(m_inputVector, (*neighborsIterator));
     }
+    else {
+        (*neighborsIterator).distance = std::numeric_limits<double>::max();
+    }
 }
 }
 
 /**
- * runs on all the neighbors
- * 
- * if true - puts its distance inside of the heap
+ * sorts all the neighbors according to their distance from the input vector
 */
 void KNN::sortNeighbors(){
     
@@ -112,6 +113,15 @@ void KNN::sortNeighbors(){
     });
 }
 
+/**
+ * runs on the K neighbors with the smallest distance from the input vector
+ * inserts to map - key: label, value: quantity of vectors with the same label
+ * if there is already the same label in the map - adds plus 1 to the quantity
+ * else- create a new key with the kabel, with the quantity of 1
+ * gets the label with the highest quantity (highest valuse in map will be first as default)
+ * clears map
+ * returns label
+*/
 std::string KNN::findKNearest(){
     labelsMap.insert(std::pair<std::string, int>(neighbors.at(0).label, 1));
     //runs k-1 loops
@@ -128,7 +138,9 @@ std::string KNN::findKNearest(){
         labelsMap.insert(std::pair<std::string, int>(tempLabel, 1));
        }
     }
-    return labelsMap.begin()->first;
+    std::string kLabel =labelsMap.begin()->first;
+    labelsMap.clear();
+    return kLabel;
 }
 
 /**
@@ -170,7 +182,34 @@ sortNeighbors();
 std::string kLabel = findKNearest();
 return kLabel;
 }
-
+/**
+ * setter- gets new distance algorithem
+ * set m_disAlgo to the new distance algorithem
+ * calculets new distances according to the new algorithem
+*/
 void KNN::setDistanceAlgorithem(distanceAlgorithems& disAlgo){
     m_disAlgo = &disAlgo;
+    calculateNeighborsDistances();
+}
+/**
+ * setter- gets new file path as a string
+ * set new file in the csv reader
+ * clears the neighbors vector
+ * init and storage the new file in the neighbors vector
+*/
+void KNN::setNewFile(std::string path){
+    //csvReader.setFile(path);
+    neighbors.clear();
+    initiation();
+}
+/**
+ * setter- gets new input vector
+ * set m_inputVector to the new input vector
+ * sets the m_sizeOfInputVector to the size of the new input vector
+ * calculets new distances according to the new input vector
+*/
+void KNN::setInputVector(std::vector<double> inputVector){
+    m_inputVector = inputVector;
+    m_sizeOfInputVec = inputVector.size();
+    calculateNeighborsDistances();
 }

@@ -43,6 +43,8 @@ KNN() = delete;
 KNN (std::vector<double> inputVector,distanceAlgorithems& disAlgo, const unsigned int k);
 std::string runKNN();
 void setDistanceAlgorithem(distanceAlgorithems& disAlgo);
+void setNewFile(std::string path);
+void setInputVector(std::vector<double> inputVector);
 };
 
 #endif
