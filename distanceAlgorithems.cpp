@@ -16,7 +16,7 @@ std::vector<double>::iterator iter = m_diffVec.begin();
 	return sqrt(sum);
 }
  double distanceAlgorithems::calculatedistance(std::vector<double> vec) {
-	setVectors(vec,m_vec2);
+	setVectors(m_vec1, vec);
 	return calculatedistance();
   }
   double distanceAlgorithems::calculatedistance(std::vector<double> vec1,std::vector<double> vec2) {
