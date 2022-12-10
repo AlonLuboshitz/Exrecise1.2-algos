@@ -17,7 +17,7 @@ class distanceAlgorithems {
 	void initDistanceVec(std::vector<double> vec1, std::vector<double> vec2);
 	public:
 	//not init distance algo with no vectors.
-	distanceAlgorithems() = delete;
+	distanceAlgorithems();
 	distanceAlgorithems(std::vector<double> vec1);
 	distanceAlgorithems(std::vector<double> vec1, std::vector<double> vec2);
 	virtual double calculatedistance();
