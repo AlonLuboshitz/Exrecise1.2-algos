@@ -29,11 +29,20 @@ int main(int argc,char* argv[]){
 	disAlgo = distAlgoFactory(argv[3]);
 	CSVReader csvReader(filePath);
 	std::vector<double> inputVector;
-
+	getVectorFromInput(inputVector);
+	KNN knn(inputVector, disAlgo, csvReader, k);
+	
+	bool flag = true;
 	while (true){
-		getVectorFromInput(inputVector);
-		KNN knn(inputVector, disAlgo, csvReader, k);
+		if (flag) {
 		std::cout << "\n" << knn.runKNN() << "\n";
+		flag = false;
+		} else {
+			inputVector.clear();
+			getVectorFromInput(inputVector);
+			knn.setInputVector(inputVector);
+			std::cout << "\n" << knn.runKNN() << "\n";
+		}
 	}
 
 	return 0;
