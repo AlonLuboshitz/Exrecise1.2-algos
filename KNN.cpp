@@ -112,8 +112,14 @@ void KNN::sortNeighbors(){
  * returns label
 */
 std::string KNN::findKNearest(){
+    int loops = neighbors.size();
+    if (m_k < neighbors.size()) {
+        loops = m_k;
+    }
+    
     labelsMap.insert(std::pair<std::string, int>(neighbors.at(0).label, 1));
     //runs k-1 loops
+
     int numOfNeighbors = 0;
     //check if the number of neighbors is bigger or smaller than k
     if (m_k < neighbors.size()){
@@ -122,6 +128,7 @@ std::string KNN::findKNearest(){
     else numOfNeighbors = neighbors.size();
 
     for (int i = 1; i < numOfNeighbors; i++){
+
         std::string tempLabel = neighbors.at(i).label;
         //if the map finds a key the same as the neighbor's label-
          //it increases its value by one (there is one more vector with this label)

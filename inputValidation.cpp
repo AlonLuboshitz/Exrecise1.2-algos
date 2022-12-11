@@ -80,6 +80,15 @@ bool allDoubleVector(const std::vector<std::string> vec) {
    } return true;
 }
 
+void stringCleaner(std::string& str) {
+	std::string newstr;
+    newstr.assign(str.end()-1,str.end());
+	if ((newstr == "\r") || (newstr == "\t") || (newstr == "\b")) {
+		str.erase(str.end()-1,str.end());
+	}
+}
+
+
 distanceAlgorithems distAlgoFactory(std::string str){
 	if(str == "AUC") {
 		return Euclidean();
@@ -121,3 +130,4 @@ void getArguments (int argc,char* argv[]){
 	std::string s = std::to_string(k);
 	argv[1] = &s[0];
  }
+

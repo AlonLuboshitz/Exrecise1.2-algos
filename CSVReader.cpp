@@ -1,10 +1,6 @@
 #include "CSVReader.h"
-CSVReader::CSVReader(std::string filename) {
-    while (!validateCSVfile(filename)) {
-        std::cin>>filename;
-    }
-    m_fileName = filename;
-    readFromFile();
+CSVReader::CSVReader() {
+    m_initFlag = false;
 }
 bool CSVReader::validateCSVfile(std::string filename) {
     std::string csv;
@@ -17,23 +13,34 @@ bool CSVReader::validateCSVfile(std::string filename) {
         return true;
     }
 }
-void CSVReader::setNewFile(std::string filename) {
+bool CSVReader::setNewFile(std::string filename) {
     if (validateCSVfile(filename)) {
         m_fileName = filename;
+        if (isFileValid()) {
+            
+            m_initFlag = false;
+            return true;
+        }
+        else {
+            m_fileName.clear();
+            return false;
+        }
     }
-    readFromFile();
+    else return false;
+    
 }
 void CSVReader::setIterator() {
     m_vectorLine_iterator = m_lineVector.begin();
 }
 void CSVReader::readFromFile() {
+    m_initFlag = true;
     //resets the vector of the class to hold the lines from the file.
     m_lineVector.clear();
     //init strings for line from file, words between commas in lines.
     std::string line,word;
     std::vector<std::string> vectorFromLine;
     //init file streamer with csv file.
-    std::fstream csvfile(m_fileName, std::ios::in);
+    std::ifstream csvfile(m_fileName, std::ios::in);
     //check file has been associated with the fstream
     if (csvfile.is_open()) {
         //as long is it possible assign the line from the file into line string.
@@ -54,6 +61,11 @@ void CSVReader::readFromFile() {
     csvfile.close();
 }
 bool CSVReader::getNewLine(std::vector<std::string>& lineToGet) {
+  if (!m_initFlag) {
+    if(isFileValid()) {
+    readFromFile();
+    }
+  } 
   std::vector<std::vector<std::string>>::const_iterator itToEnd = m_lineVector.end();
   if (m_vectorLine_iterator == itToEnd) {
     setIterator();
@@ -68,3 +80,12 @@ bool CSVReader::getNewLine(std::vector<std::string>& lineToGet) {
   return true;
   }
 }
+bool CSVReader::isFileValid() {
+    std::ifstream csvflie(m_fileName, std::ios::in);
+    if (csvflie.is_open()) {
+        csvflie.close();
+        return true;
+    }
+    else return false;
+    }
+

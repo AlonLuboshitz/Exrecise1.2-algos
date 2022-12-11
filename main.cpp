@@ -1,14 +1,9 @@
-#include "distanceAlgorithems.h"
-#include "inputValidation.h"
-#include "Euclidean.h"
-#include "Manhatan.h"
-#include "Canberra.h"
-#include "check.h"
-#include "Minkovsky.h"
+
 #include <map>
 #include <iostream>
 #include "KNN.h"
 #include "CSVReader.h"
+
 
 
 int main(int argc,char* argv[]){
@@ -18,6 +13,7 @@ int main(int argc,char* argv[]){
 	// std::string al = "al";
 	// char* gili[5] = {&file[0], &three[0], &hi[0], &al[0], &three[0]};
 	
+
 	
 		
 	int k;
@@ -46,4 +42,5 @@ int main(int argc,char* argv[]){
 	}
 
 	return 0;
+
 }

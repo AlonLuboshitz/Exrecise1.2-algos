@@ -2,12 +2,17 @@
 #ifndef DISTANCEALGORITHEMS_H
 #define DISTANCEALGORITHEMS_H
 #include "VectorManipulator.h"
-
 #include<vector>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <cstdlib>
+// this is a "super class" acts as an abstract class with one defualt function 
+// to calculate distance between two vectors.
+// defualt function as aucldean distnace as the most common method.
+// further more the function is virtual to allow sub classes (other methods)
+// to overide it.
+// Members: vec1 vec2, diff vector (v1-v2 in i place) 
 class distanceAlgorithems {
 	protected:
 	std::vector<double> m_vec1;

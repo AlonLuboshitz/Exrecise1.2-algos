@@ -7,7 +7,7 @@
 #include <map>
 #include "inputValidation.h"
 #include <limits>
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 #include "VectorManipulator.h"
 #include "CSVReader.h"
 
@@ -21,6 +21,8 @@ distanceAlgorithems* m_disAlgo;
 // map?
 unsigned int m_sizeOfInputVec;
 //std::vector<std::pair<std::string,std::vector<double>>> pairsOfData;
+
+
 struct neighbor{
 std::string label;
 std::vector<double> data;
