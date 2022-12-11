@@ -2,7 +2,6 @@
 #include <map>
 #include <iostream>
 #include "KNN.h"
-#include "CSVReader.h"
 
 
 
@@ -13,9 +12,6 @@ int main(int argc,char* argv[]){
 	// std::string al = "al";
 	// char* gili[5] = {&file[0], &three[0], &hi[0], &al[0], &three[0]};
 	
-
-	
-		
 	int k;
 	std::string filePath;
 	distanceAlgorithems disAlgo;
@@ -23,7 +19,9 @@ int main(int argc,char* argv[]){
 	k = atoi(argv[1]);
 	filePath = argv[2];
 	disAlgo = distAlgoFactory(argv[3]);
-	CSVReader csvReader(filePath);
+	CSVReader csvReader;
+	// check file
+	csvReader.setNewFile(filePath);
 	std::vector<double> inputVector;
 	getVectorFromInput(inputVector);
 	KNN knn(inputVector, disAlgo, csvReader, k);

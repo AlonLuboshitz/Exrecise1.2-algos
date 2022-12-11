@@ -110,19 +110,17 @@ distanceAlgorithems distAlgoFactory(std::string str){
 
 void getArguments (int argc,char* argv[]){
 	int k = 0;
-
+	//std::string s_k;
 	if (argc != 4)	{
 		std::cout << "arguments did not follow the pattern : a.out k file distance\n";
 		std::cout<<"please insert value of k:\n";
-		std::cin >> k;
+		std::cin >> argv[1];
 		std::cout <<"please insert file path - 'filename'.csv\n";
 		std::cin >> argv[2];
 		std::cout << "please insert name of distance's algorithem - AUC/MAN/CHB/CAN/MIN (default - AUC)\n";
 		std::cin >> argv[3];
 	}
-	else {
-		k = atoi(argv[1]);
-	}
+	k = atoi(argv[1]);
 	while (k <= 0){
 	std::cout << "k is not a positive integer, try again:\n";
 	std::cin >> k;

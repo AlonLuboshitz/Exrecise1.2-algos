@@ -4,7 +4,6 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include "distanceAlgorithems.h"
 #include "Euclidean.h"
 #include "Manhatan.h"
 #include "Chevichev.h"
