@@ -1,6 +1,6 @@
 #include "KNN.h"
 
-KNN::KNN (const std::vector<double> inputVector, distanceAlgorithems& disAlgo, CSVReader csvReader ,unsigned int k) {
+KNN::KNN (const std::vector<double> inputVector, distanceAlgorithems& disAlgo, CSVReader& csvReader ,unsigned int k) {
     m_inputVector = inputVector;
     m_disAlgo = &disAlgo;
     if (k>0) {
@@ -12,11 +12,11 @@ KNN::KNN (const std::vector<double> inputVector, distanceAlgorithems& disAlgo, C
 }
 
 //bool getNextVector();
-struct KNN::neighbor{
-std::string label;
-std::vector<double> data;
-double distance;
-};
+// struct KNN::neighbor{
+// std::string label;
+// std::vector<double> data;
+// double distance;
+// };
 
 /**
 * comperator - compares 2 neighbors according to their distance
@@ -118,9 +118,14 @@ void KNN::sortNeighbors(){
  * returns label
 */
 std::string KNN::findKNearest(){
+    int loops = neighbors.size();
+    if (m_k < neighbors.size()) {
+        loops = m_k;
+    }
+    
     labelsMap.insert(std::pair<std::string, int>(neighbors.at(0).label, 1));
     //runs k-1 loops
-    for (int i = 1; i < m_k; i++){
+    for (int i = 1; i < loops; i++){
         std::string tempLabel = neighbors.at(i).label;
         //if the map finds a key the same as the neighbor's label-
          //it increases its value by one (there is one more vector with this label)

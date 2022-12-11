@@ -1,3 +1,5 @@
+#ifndef CSVREADER_H
+#define CSVREADER_H
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -11,6 +13,7 @@
 // the line readed into a vector.
 class CSVReader {
     private:
+    bool m_initFlag;
     std::string m_fileName;
     std::vector<std::vector<std::string>> m_lineVector;
     std::vector<std::vector<std::string>>::iterator m_vectorLine_iterator;
@@ -21,12 +24,15 @@ class CSVReader {
     //fuction check if last four letters in string are ".csv" make sure the file is csv type.
     bool validateCSVfile(std::string filename);
     public: 
-    //ctor with filename\ path
-    CSVReader(std::string filename);
+    //defualt ctor init m_initflag to false.
+    CSVReader();
     //sets a new filename into the filename memeber of csv
-    void setNewFile(std::string filename);
+    bool setNewFile(std::string filename);
     //reads a new vector from linesVector into vector given by reff. 
     //returns true if there are more line(vectors)
     //returns false if there are no more lines to read from.
     bool getNewLine(std::vector<std::string>& lineToGet);
+    //function return true if file is associated with filereader.
+    bool isFileValid();
 };
+#endif

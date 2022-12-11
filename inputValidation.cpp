@@ -79,3 +79,10 @@ bool allDoubleVector(const std::vector<std::string> vec) {
 		}
    } return true;
 }
+void stringCleaner(std::string& str) {
+	std::string newstr;
+    newstr.assign(str.end()-1,str.end());
+	if ((newstr == "\r") || (newstr == "\t") || (newstr == "\b")) {
+		str.erase(str.end()-1,str.end());
+	}
+}

@@ -1,3 +1,5 @@
+#ifndef CANBERRA_H
+#define CANBERRA_H
 #include "distanceAlgorithems.h"
 class Canberra : public distanceAlgorithems {
     public:
@@ -6,3 +8,4 @@ class Canberra : public distanceAlgorithems {
      double calculatedistance(std::vector<double> v1);
       double calculatedistance(std::vector<double> v1, std::vector<double> v2);
 };
+#endif

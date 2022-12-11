@@ -1,3 +1,5 @@
+#ifndef MINKOVSKY_H
+#define MINKOVSKY_H
 #include "distanceAlgorithems.h"
 
 class Minkovsky :  public distanceAlgorithems {
@@ -10,3 +12,4 @@ class Minkovsky :  public distanceAlgorithems {
     double calculatedistance(std::vector<double> v1, std::vector<double> v2);
 
 }; 
+#endif

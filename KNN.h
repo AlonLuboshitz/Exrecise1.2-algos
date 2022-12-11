@@ -7,7 +7,7 @@
 #include <map>
 #include "inputValidation.h"
 #include <limits>
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 #include "VectorManipulator.h"
 #include "CSVReader.h"
 
@@ -21,7 +21,11 @@ distanceAlgorithems* m_disAlgo;
 // map?
 unsigned int m_sizeOfInputVec;
 //std::vector<std::pair<std::string,std::vector<double>>> pairsOfData;
-struct neighbor; 
+struct neighbor {
+    std::string label;
+std::vector<double> data;
+double distance;
+};
 std::vector<neighbor> neighbors;
 bool init;
 std::map<std::string, int> labelsMap;
@@ -41,7 +45,7 @@ void initiation();
 
 public: 
 KNN() = delete;
-KNN (std::vector<double> inputVector,distanceAlgorithems& disAlgo, CSVReader csvReader, const unsigned int k);
+KNN (std::vector<double> inputVector,distanceAlgorithems& disAlgo, CSVReader& csvReader, const unsigned int k);
 std::string runKNN();
 void setDistanceAlgorithem(distanceAlgorithems& disAlgo);
 void setNewFile(std::string path);

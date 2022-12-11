@@ -1,3 +1,5 @@
+#ifndef CHEVICHEV_H
+#define CHEVICHEV_H
 #include "distanceAlgorithems.h"
 class Chevichev : public distanceAlgorithems {
     public:
@@ -6,3 +8,4 @@ class Chevichev : public distanceAlgorithems {
     double calculatedistance(std::vector<double> v1);
     double calculatedistance(std::vector<double> v1, std::vector<double> v2);
 };
+#endif
