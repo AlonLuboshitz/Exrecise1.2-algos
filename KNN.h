@@ -45,7 +45,7 @@ void initiation();
 
 public: 
 KNN() = delete;
-KNN (std::vector<double> inputVector,distanceAlgorithems& disAlgo, CSVReader csvReader, const unsigned int k);
+KNN (std::vector<double> inputVector,distanceAlgorithems& disAlgo, CSVReader& csvReader, const unsigned int k);
 std::string runKNN();
 void setDistanceAlgorithem(distanceAlgorithems& disAlgo);
 void setNewFile(std::string path);

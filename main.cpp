@@ -12,38 +12,38 @@
 
 
 int main(int argc,char* argv[]){
+	// std::string file = "file";
+	// std::string three = "3";
+	// std::string hi = "hi";
+	// std::string al = "al";
+	// char* gili[5] = {&file[0], &three[0], &hi[0], &al[0], &three[0]};
 	
-CSVReader csv("datasets/beans/beans_Classified.csv");
-    // std::vector<double> vec1;
-    // std::vector<double> vec2;
-    // getVectorFromInput(vec1);
-    // getVectorFromInput(vec2);
-    
-    // Euclidean euc(vec1,vec2);
-    // KNN knn(vec1,euc,csv,3);
-    // std::string str = knn.runKNN();
-
-
-
-
-
 	
+		
 	int k;
 	std::string filePath;
-	//distanceAlgorithems disAlgo;
-	if (argc != 4)	{
-		std::cout << "please enter 4 arguments as follows : a.out k file distance";
-	}
-	int checkK = atoi(argv[1]);
-	if (checkK > 0){
-		k = checkK;
-	} else std::cout << "k is not a positive integer";
+	distanceAlgorithems disAlgo;
+	getArguments(argc, argv);
+	k = atoi(argv[1]);
 	filePath = argv[2];
+	disAlgo = distAlgoFactory(argv[3]);
+	CSVReader csvReader(filePath);
+	std::vector<double> inputVector;
+	getVectorFromInput(inputVector);
+	KNN knn(inputVector, disAlgo, csvReader, k);
 	
-	
-	
-
-
+	bool flag = true;
+	while (true){
+		if (flag) {
+		std::cout << "\n" << knn.runKNN() << "\n";
+		flag = false;
+		} else {
+			inputVector.clear();
+			getVectorFromInput(inputVector);
+			knn.setInputVector(inputVector);
+			std::cout << "\n" << knn.runKNN() << "\n";
+		}
+	}
 
 	return 0;
 }
