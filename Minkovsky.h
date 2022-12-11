@@ -6,6 +6,7 @@ class Minkovsky :  public distanceAlgorithems {
     private:
     double m_p;
     public:
+    Minkovsky() = default;
     Minkovsky(std::vector<double> v1, std::vector<double> v2, double p);
     double calculatedistance();
     double calculatedistance(std::vector<double> v1);

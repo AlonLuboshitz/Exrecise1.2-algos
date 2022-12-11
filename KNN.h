@@ -21,8 +21,10 @@ distanceAlgorithems* m_disAlgo;
 // map?
 unsigned int m_sizeOfInputVec;
 //std::vector<std::pair<std::string,std::vector<double>>> pairsOfData;
-struct neighbor {
-    std::string label;
+
+
+struct neighbor{
+std::string label;
 std::vector<double> data;
 double distance;
 };

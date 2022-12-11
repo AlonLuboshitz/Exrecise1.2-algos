@@ -79,6 +79,7 @@ bool allDoubleVector(const std::vector<std::string> vec) {
 		}
    } return true;
 }
+
 void stringCleaner(std::string& str) {
 	std::string newstr;
     newstr.assign(str.end()-1,str.end());
@@ -86,3 +87,47 @@ void stringCleaner(std::string& str) {
 		str.erase(str.end()-1,str.end());
 	}
 }
+
+
+distanceAlgorithems distAlgoFactory(std::string str){
+	if(str == "AUC") {
+		return Euclidean();
+	}
+	else if (str == "MAN"){
+		return Manhatan();
+	}
+	else if (str == "CHB"){
+		return Chevichev();
+	}
+	else if (str == "CAN"){
+		return Canberra();
+	}
+	else if (str == "MIN"){
+		return Minkovsky();
+	}
+	else return distanceAlgorithems();
+}
+
+void getArguments (int argc,char* argv[]){
+	int k = 0;
+
+	if (argc != 4)	{
+		std::cout << "arguments did not follow the pattern : a.out k file distance\n";
+		std::cout<<"please insert value of k:\n";
+		std::cin >> k;
+		std::cout <<"please insert file path - 'filename'.csv\n";
+		std::cin >> argv[2];
+		std::cout << "please insert name of distance's algorithem - AUC/MAN/CHB/CAN/MIN (default - AUC)\n";
+		std::cin >> argv[3];
+	}
+	else {
+		k = atoi(argv[1]);
+	}
+	while (k <= 0){
+	std::cout << "k is not a positive integer, try again:\n";
+	std::cin >> k;
+	}
+	std::string s = std::to_string(k);
+	argv[1] = &s[0];
+ }
+

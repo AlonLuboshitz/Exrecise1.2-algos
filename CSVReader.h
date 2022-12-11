@@ -1,5 +1,6 @@
 #ifndef CSVREADER_H
 #define CSVREADER_H
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -32,7 +33,9 @@ class CSVReader {
     //returns true if there are more line(vectors)
     //returns false if there are no more lines to read from.
     bool getNewLine(std::vector<std::string>& lineToGet);
+
     //function return true if file is associated with filereader.
     bool isFileValid();
+
 };
 #endif
