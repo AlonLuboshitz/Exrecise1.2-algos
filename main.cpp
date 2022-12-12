@@ -23,13 +23,13 @@ int main(int argc,char* argv[]){
 	}
 	int k;
 	std::string s_k = checkedArgv[1];
-	std::string filePath;
+	std::string filePath = checkedArgv[2];
+	std::string s_disAlgo = checkedArgv[3];
 	distanceAlgorithems disAlgo;
 	CSVReader csvReader;
-	getArguments(argc, checkedArgv, csvReader);
-	k = atoi(argv[1]);
-	filePath = argv[2];
-	disAlgo = distAlgoFactory(argv[3]);
+	getArguments(argc, s_k, filePath, s_disAlgo, csvReader);
+	k = stoi(s_k);
+	disAlgo = distAlgoFactory(s_disAlgo);
 	std::vector<double> inputVector;
 	getVectorFromInput(inputVector);
 	KNN knn(inputVector, disAlgo, csvReader, k);

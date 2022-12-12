@@ -8,7 +8,9 @@
 void getVectorFromInput(std::vector<double>& vec ){
 	double x;
 	std::string input;
+	while (input.size() == 0) {
 	std::getline(std::cin, input);
+	}
 	std::stringstream stream(input);
 	std::string num;
 	while (stream >> num) {
@@ -144,25 +146,18 @@ std::string getFilePath(std::string filePath, CSVReader& csvreader){
 	return filePath;
 }
 
-void getArguments (int argc,char* argv[], CSVReader& csvreader){
-	std::string s_k;
+void getArguments (int argc,std::string& s_k, std::string& filePath, std::string& s_disAlgo, CSVReader& csvreader){
 	int k = 0;
-	std::string filePath;
 	if (argc != 4)	{
 		std::cout << "arguments did not follow the pattern : a.out k file distance\n";
 		k = getK("a");
 		filePath = getFilePath("0", csvreader);
 		std::cout << "please insert name of distance's algorithem - AUC/MAN/CHB/CAN/MIN (default - AUC)\n";
-		std::cin >> argv[3];
+		std::cin >> s_disAlgo;
 	}
 	else {
-		s_k = argv[1];
-		getK(s_k);
-		filePath = argv[2];
+		k = getK(s_k);
 		getFilePath(filePath, csvreader);
 	}
-	std::string s = std::to_string(k);
-	argv[1] = std::strcpy;
-	argv[2] = filePath;
+	s_k = std::to_string(k);
  }
-
