@@ -108,24 +108,61 @@ distanceAlgorithems distAlgoFactory(std::string str){
 	else return distanceAlgorithems();
 }
 
-void getArguments (int argc,char* argv[]){
+int getK (std::string k){
+	bool flag = true;
+	while (!is_number(k)){
+	if (flag){
+		std::cout<<"please insert value of k:\n";
+		std::cin >> k ;
+		flag = false;
+	}
+	else {
+		std::cout << "k is not an integer, try again: (default: 0 will be considered as 1, double will be rounded down)\n";
+		std::cin >> k ;
+	}
+	}
+	int i_k = abs((int) std::stoi(k));
+	if (i_k == 0) i_k = 1;
+	return i_k;
+}
+
+
+
+std::string getFilePath(std::string filePath, CSVReader& csvreader){
+	bool flag = true;
+	while (! csvreader.setNewFile(filePath)) {
+		if (flag){
+			std::cout <<"please insert file path - (path)'filename'.csv\n";
+			std::cin >> filePath;
+			flag = false;
+		}
+		else {
+		std::cout << "file path is not valid. please insert (path)'filename'.csv ";
+		std::cin >> filePath;
+		}
+	}
+	return filePath;
+}
+
+void getArguments (int argc,char* argv[], CSVReader& csvreader){
+	std::string s_k;
 	int k = 0;
-	//std::string s_k;
+	std::string filePath;
 	if (argc != 4)	{
 		std::cout << "arguments did not follow the pattern : a.out k file distance\n";
-		std::cout<<"please insert value of k:\n";
-		std::cin >> argv[1];
-		std::cout <<"please insert file path - 'filename'.csv\n";
-		std::cin >> argv[2];
+		k = getK("a");
+		filePath = getFilePath("0", csvreader);
 		std::cout << "please insert name of distance's algorithem - AUC/MAN/CHB/CAN/MIN (default - AUC)\n";
 		std::cin >> argv[3];
 	}
-	k = atoi(argv[1]);
-	while (k <= 0){
-	std::cout << "k is not a positive integer, try again:\n";
-	std::cin >> k;
+	else {
+		s_k = argv[1];
+		getK(s_k);
+		filePath = argv[2];
+		getFilePath(filePath, csvreader);
 	}
 	std::string s = std::to_string(k);
-	argv[1] = &s[0];
+	argv[1] = std::strcpy;
+	argv[2] = filePath;
  }
 

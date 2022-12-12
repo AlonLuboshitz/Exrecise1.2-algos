@@ -10,6 +10,8 @@
 #include "Canberra.h"
 #include "Minkovsky.h"
 #include <string>
+#include "CSVReader.h"
+#include <cstdlib>
 
 
 void getVectorFromInput(std::vector<double>& vec );
@@ -21,7 +23,8 @@ bool is_number(const std::string& s);
 bool allDoubleVector(const std::vector<double> vec);
 
 
-
+int getK (std::string k);
+std::string getFilePath(std::string filePath, CSVReader& csvreader);
 distanceAlgorithems distAlgoFactory(std::string str);
-void getArguments(int argc,char* argv[]);
+void getArguments (int argc,char* argv[],  CSVReader& csvreader);
 #endif
