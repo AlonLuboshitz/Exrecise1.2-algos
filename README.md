@@ -21,10 +21,12 @@ in order to compile and run the code you need to enter the following:
 3. enter password "your password"
 after the project has been cloned, enter the following:
 4. cd Exrecise1.2-algos/
-5. make ,ENTER
-6. ./a.out k filepath distanceAlgorithem , ENTER - command which will run the code.
-7. enter vector (each number seperated by a space), ENTER
+5. $ git check out even_dereh_2, ENTER
+6. make ,ENTER
+7. ./a.out k filepath distanceAlgorithem , ENTER - command which will run the code.
+8. enter vector (each number seperated by a space), ENTER
 the code will wait infinitely to a new input vector, if inserted -will calculate its KNN's label.
+9. after code run : $ make clean
 
 
 
