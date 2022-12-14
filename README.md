@@ -21,7 +21,7 @@ in order to compile and run the code you need to enter the following:
 3. enter password "your password"
 after the project has been cloned, enter the following:
 4. cd Exrecise1.2-algos/
-5. $ git check out even_dereh_2, ENTER
+5. $ git checkout even_dereh_2, ENTER
 6. make ,ENTER
 7. ./a.out k filepath distanceAlgorithem , ENTER - command which will run the code.
 8. enter vector (each number seperated by a space), ENTER
