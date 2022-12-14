@@ -79,7 +79,7 @@ void KNN::insertNeighbors(const std::string name, const std::vector<double> vec)
  * erases string from temp vector at given index
 */
 void KNN::eraseStringFromTemp(int index){
-    std::vector<std::string>::const_iterator indexIterator;
+    std::vector<std::string>::iterator indexIterator;
     indexIterator = m_tempVector.begin() + index;
     m_tempVector.erase(indexIterator);
 }
