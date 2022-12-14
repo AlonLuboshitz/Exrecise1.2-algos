@@ -8,13 +8,16 @@
 
 
 int main(int argc,char* argv[]){
-	// std::string file = "file";
-	// std::string three = "3";
-	// std::string hi = "hi";
-	// std::string al = "al";
-	// char* gili[5] = {&file[0], &three[0], &hi[0], &al[0], &three[0]};
-	
 
+/***
+	std::string num;
+	std::cin>>num;
+	if (is_number(num)){
+		std::cout<<"number";
+	} else std::cout << "not number";
+**/
+
+	
 	char* checkedArgv[4];
 	if (argc != 0){
 	for (int i=0; i < argc; i++ ){
@@ -45,6 +48,7 @@ int main(int argc,char* argv[]){
 			std::cout << knn.runKNN() << "\n";
 		}
 	}
+	
 
 	return 0;
 

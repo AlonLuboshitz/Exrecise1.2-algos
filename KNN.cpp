@@ -33,10 +33,14 @@ int KNN::tempVectorValidation() {
     int i = -1;
     //size of temp should ve size of input's variables + string name
    std::vector<std::string>::const_iterator tempIterator = m_tempVector.cbegin();
+   std::string temp;
+   std::string clearedTemp;
    for (tempIterator; tempIterator != m_tempVector.cend(); ++tempIterator) {
         i++;
+        temp = *tempIterator;
+        stringCleaner(temp);
         //if its not double- it's considered as the name of the vector's label
-        if (! is_number(*tempIterator)) {
+        if (! is_number(temp)) {
             tempLabel = *tempIterator;
             numOfStrings++;
             labelIndex = i;
@@ -45,6 +49,10 @@ int KNN::tempVectorValidation() {
             return -1;
             }
         }
+    }
+    //if no strings found
+    if (numOfStrings == 0){
+        return -1;
     }
     return labelIndex;
 }
