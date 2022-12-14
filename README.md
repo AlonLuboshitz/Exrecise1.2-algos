@@ -1,8 +1,7 @@
 # Exrecise1.2-algos
 **Code discription**  
  KNN (K Nearest Neighbors) -
- this code designed for running on a csv file, searching for the K nearest neighbors according to an input vector, and returning the most common label from the KNN.
-    assumptions and default behavors:
+ this code designed for running on a csv file, searching for the K nearest neighbors according to an input vector, and returning the most common label from the KNN.   assumptions and default behavors:
  1. The csv file conatains data vectors, each vector has only one string label, and the rest of the variables are doubles.   
  vector without a label will be categorized as an invalid neighbor.  
  2. The user will enter 4 arguments as follows: a.out k filepath distancealgorithem  
