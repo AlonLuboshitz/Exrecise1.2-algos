@@ -6,7 +6,7 @@ bool CSVReader::validateCSVfile(std::string filename) {
     std::string csv;
     csv.assign(filename.end()-4,filename.end());
     if (csv != ".csv") {
-        std::cout<<"not a csv file please enter a diffrenet file"<<std::endl;
+       // std::cout<<"not a csv file please enter a diffrenet file"<<std::endl;
         return false;
     }
     else {
