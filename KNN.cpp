@@ -1,14 +1,17 @@
 #include "KNN.h"
 
-KNN::KNN (const std::vector<double> inputVector, distanceAlgorithems& disAlgo, CSVReader& csvReader ,unsigned int k) {
+KNN::KNN (const std::vector<double> inputVector, distanceAlgorithems* disAlgo, CSVReader& csvReader ,unsigned int k) {
     m_inputVector = inputVector;
-    m_disAlgo = &disAlgo;
+    m_disAlgo = disAlgo;
     if (k>0) {
         m_k = k;
     }
     m_csvReader = &csvReader;
     m_sizeOfInputVec = m_inputVector.size();
     init = true;
+}
+KNN::~KNN() {
+    delete m_disAlgo;
 }
 
 
@@ -33,10 +36,14 @@ int KNN::tempVectorValidation() {
     int i = -1;
     //size of temp should ve size of input's variables + string name
    std::vector<std::string>::const_iterator tempIterator = m_tempVector.cbegin();
+   std::string temp;
+   std::string clearedTemp;
    for (tempIterator; tempIterator != m_tempVector.cend(); ++tempIterator) {
         i++;
+        temp = *tempIterator;
+        stringCleaner(temp);
         //if its not double- it's considered as the name of the vector's label
-        if (! is_number(*tempIterator)) {
+        if (! is_number(temp)) {
             tempLabel = *tempIterator;
             numOfStrings++;
             labelIndex = i;
@@ -45,6 +52,10 @@ int KNN::tempVectorValidation() {
             return -1;
             }
         }
+    }
+    //if no strings found
+    if (numOfStrings == 0){
+        return -1;
     }
     return labelIndex;
 }
@@ -112,23 +123,21 @@ void KNN::sortNeighbors(){
  * returns label
 */
 std::string KNN::findKNearest(){
+    // if the smallest distance is infinity 
+    if (neighbors.at(0).distance == std::numeric_limits<double>::max()){
+        return "no neighbors found";
+    }
     int loops = neighbors.size();
     if (m_k < neighbors.size()) {
         loops = m_k;
     }
-    
     labelsMap.insert(std::pair<std::string, int>(neighbors.at(0).label, 1));
     //runs k-1 loops
-
-    int numOfNeighbors = 0;
-    //check if the number of neighbors is bigger or smaller than k
-    if (m_k < neighbors.size()){
-        numOfNeighbors = m_k;
-    }
-    else numOfNeighbors = neighbors.size();
-
-    for (int i = 1; i < numOfNeighbors; i++){
-
+    for (int i = 1; i < loops; i++){
+        // if we got to a neighbor which its distance from the input is infinity- break
+        if (neighbors.at(i).distance == std::numeric_limits<double>::max()){
+            break;
+        }
         std::string tempLabel = neighbors.at(i).label;
         //if the map finds a key the same as the neighbor's label-
          //it increases its value by one (there is one more vector with this label)
@@ -179,6 +188,9 @@ std::string KNN::runKNN() {
 if (init){
     initiation();
 }
+if (neighbors.empty()){
+        return "no valid neighbors";
+ }
 calculateNeighborsDistances();
 sortNeighbors();
 std::string kLabel = findKNearest();

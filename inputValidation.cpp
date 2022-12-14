@@ -8,7 +8,9 @@
 void getVectorFromInput(std::vector<double>& vec ){
 	double x;
 	std::string input;
+	while (input.size() == 0) {
 	std::getline(std::cin, input);
+	}
 	std::stringstream stream(input);
 	std::string num;
 	while (stream >> num) {
@@ -89,45 +91,74 @@ void stringCleaner(std::string& str) {
 }
 
 
-distanceAlgorithems distAlgoFactory(std::string str){
+distanceAlgorithems* distAlgoFactory(std::string str){
+	
 	if(str == "AUC") {
-		return Euclidean();
+		return new Euclidean();
 	}
 	else if (str == "MAN"){
-		return Manhatan();
+		return new Manhatan();
 	}
 	else if (str == "CHB"){
-		return Chevichev();
+		return new Chevichev();
 	}
 	else if (str == "CAN"){
-		return Canberra();
+		return new Canberra();
 	}
 	else if (str == "MIN"){
-		return Minkovsky();
+		return new Minkovsky();
 	}
-	else return distanceAlgorithems();
+	else return new distanceAlgorithems();
 }
 
-void getArguments (int argc,char* argv[]){
-	int k = 0;
-
-	if (argc != 4)	{
-		std::cout << "arguments did not follow the pattern : a.out k file distance\n";
+int getK (std::string k){
+	bool flag = true;
+	while (!is_number(k)){
+	if (flag){
 		std::cout<<"please insert value of k:\n";
-		std::cin >> k;
-		std::cout <<"please insert file path - 'filename'.csv\n";
-		std::cin >> argv[2];
-		std::cout << "please insert name of distance's algorithem - AUC/MAN/CHB/CAN/MIN (default - AUC)\n";
-		std::cin >> argv[3];
+		std::cin >> k ;
+		flag = false;
 	}
 	else {
-		k = atoi(argv[1]);
+		std::cout << "k is not an integer, try again: (default: 0 will be considered as 1, double will be rounded down)\n";
+		std::cin >> k ;
 	}
-	while (k <= 0){
-	std::cout << "k is not a positive integer, try again:\n";
-	std::cin >> k;
 	}
-	std::string s = std::to_string(k);
-	argv[1] = &s[0];
- }
+	int i_k = abs((int) std::stoi(k));
+	if (i_k == 0) i_k = 1;
+	return i_k;
+}
 
+
+
+std::string getFilePath(std::string filePath, CSVReader& csvreader){
+	bool flag = true;
+	while (! csvreader.setNewFile(filePath)) {
+		if (flag){
+			std::cout <<"please insert file path - (path)'filename'.csv\n";
+			std::cin >> filePath;
+			flag = false;
+		}
+		else {
+		std::cout << "file path is not valid. please insert (path)'filename'.csv ";
+		std::cin >> filePath;
+		}
+	}
+	return filePath;
+}
+
+void getArguments (int argc,std::string& s_k, std::string& filePath, std::string& s_disAlgo, CSVReader& csvreader){
+	int k = 0;
+	if (argc != 4)	{
+		std::cout << "arguments did not follow the pattern : a.out k file distance\n";
+		k = getK("a");
+		filePath = getFilePath("0", csvreader);
+		std::cout << "please insert name of distance's algorithem - AUC/MAN/CHB/CAN/MIN (default - AUC)\n";
+		std::cin >> s_disAlgo;
+	}
+	else {
+		k = getK(s_k);
+		getFilePath(filePath, csvreader);
+	}
+	s_k = std::to_string(k);
+ }

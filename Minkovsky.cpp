@@ -1,4 +1,7 @@
 #include "Minkovsky.h"
+Minkovsky::Minkovsky() {
+    m_p = 1;
+}
 Minkovsky::Minkovsky(std::vector<double> v1, std::vector<double> v2, double p) : distanceAlgorithems(v1,v2)
  {
     m_p = p;
