@@ -40,7 +40,7 @@ void CSVReader::readFromFile() {
     std::string line,word;
     std::vector<std::string> vectorFromLine;
     //init file streamer with csv file.
-    std::ifstream csvfile(m_fileName, std::ios::in);
+    std::fstream csvfile(m_fileName, std::ios::in);
     //check file has been associated with the fstream
     if (csvfile.is_open()) {
         //as long is it possible assign the line from the file into line string.
@@ -81,7 +81,7 @@ bool CSVReader::getNewLine(std::vector<std::string>& lineToGet) {
   }
 }
 bool CSVReader::isFileValid() {
-    std::ifstream csvflie(m_fileName, std::ios::in);
+    std::fstream csvflie(m_fileName, std::ios::in);
     if (csvflie.is_open()) {
         csvflie.close();
         return true;

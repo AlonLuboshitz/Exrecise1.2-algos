@@ -1,14 +1,17 @@
 #include "KNN.h"
 
-KNN::KNN (const std::vector<double> inputVector, distanceAlgorithems& disAlgo, CSVReader& csvReader ,unsigned int k) {
+KNN::KNN (const std::vector<double> inputVector, distanceAlgorithems* disAlgo, CSVReader& csvReader ,unsigned int k) {
     m_inputVector = inputVector;
-    m_disAlgo = &disAlgo;
+    m_disAlgo = disAlgo;
     if (k>0) {
         m_k = k;
     }
     m_csvReader = &csvReader;
     m_sizeOfInputVec = m_inputVector.size();
     init = true;
+}
+KNN::~KNN() {
+    delete m_disAlgo;
 }
 
 
@@ -124,9 +127,13 @@ std::string KNN::findKNearest(){
     if (neighbors.at(0).distance == std::numeric_limits<double>::max()){
         return "no neighbors found";
     }
+    int loops = neighbors.size();
+    if (m_k < neighbors.size()) {
+        loops = m_k;
+    }
     labelsMap.insert(std::pair<std::string, int>(neighbors.at(0).label, 1));
     //runs k-1 loops
-    for (int i = 1; i < m_k; i++){
+    for (int i = 1; i < loops; i++){
         // if we got to a neighbor which its distance from the input is infinity- break
         if (neighbors.at(i).distance == std::numeric_limits<double>::max()){
             break;

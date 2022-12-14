@@ -8,19 +8,13 @@
 
 
 int main(int argc,char* argv[]){
-
-/***
-	std::string num;
-	std::cin>>num;
-	if (is_number(num)){
-		std::cout<<"number";
-	} else std::cout << "not number";
-**/
-
-	
 	char* checkedArgv[4];
-	if (argc != 0){
-	for (int i=0; i < argc; i++ ){
+	int loops = argc;
+	if (argc !=0){ 
+		if (argc > 4) {
+			loops = 4;
+		}
+	for (int i=0; i < loops; i++ ){
 		checkedArgv[i] = argv[i];
 	}
 	}
@@ -28,11 +22,10 @@ int main(int argc,char* argv[]){
 	std::string s_k = checkedArgv[1];
 	std::string filePath = checkedArgv[2];
 	std::string s_disAlgo = checkedArgv[3];
-	distanceAlgorithems disAlgo;
 	CSVReader csvReader;
 	getArguments(argc, s_k, filePath, s_disAlgo, csvReader);
 	k = stoi(s_k);
-	disAlgo = distAlgoFactory(s_disAlgo);
+	distanceAlgorithems* disAlgo = distAlgoFactory(s_disAlgo);
 	std::vector<double> inputVector;
 	getVectorFromInput(inputVector);
 	KNN knn(inputVector, disAlgo, csvReader, k);
@@ -48,8 +41,5 @@ int main(int argc,char* argv[]){
 			std::cout << knn.runKNN() << "\n";
 		}
 	}
-	
-
 	return 0;
-
 }

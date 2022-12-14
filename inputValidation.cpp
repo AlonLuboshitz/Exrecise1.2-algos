@@ -91,23 +91,24 @@ void stringCleaner(std::string& str) {
 }
 
 
-distanceAlgorithems distAlgoFactory(std::string str){
+distanceAlgorithems* distAlgoFactory(std::string str){
+	
 	if(str == "AUC") {
-		return Euclidean();
+		return new Euclidean();
 	}
 	else if (str == "MAN"){
-		return Manhatan();
+		return new Manhatan();
 	}
 	else if (str == "CHB"){
-		return Chevichev();
+		return new Chevichev();
 	}
 	else if (str == "CAN"){
-		return Canberra();
+		return new Canberra();
 	}
 	else if (str == "MIN"){
-		return Minkovsky();
+		return new Minkovsky();
 	}
-	else return distanceAlgorithems();
+	else return new distanceAlgorithems();
 }
 
 int getK (std::string k){
