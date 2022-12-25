@@ -1,5 +1,11 @@
 #include "KNN.h"
 
+
+KNN::KNN(CSVReader& csvReader){
+    m_csvReader = &csvReader;
+    initiation();
+    init = false;
+}
 KNN::KNN (const std::vector<double> inputVector, distanceAlgorithems* disAlgo, CSVReader& csvReader ,unsigned int k) {
     m_inputVector = inputVector;
     m_disAlgo = disAlgo;
@@ -189,7 +195,8 @@ if (init){
     initiation();
 }
 if (neighbors.empty()){
-        return "no valid neighbors";
+        std::cout<< "no valid neighbors";
+        return "-1";
  }
 calculateNeighborsDistances();
 sortNeighbors();
@@ -218,12 +225,18 @@ void KNN::setNewFile(std::string path){
 }
 /**
  * setter- gets new input vector
- * set m_inputVector to the new input vector
+ * sets m_inputVector to the new input vector
  * sets the m_sizeOfInputVector to the size of the new input vector
- * calculets new distances according to the new input vector
 */
 void KNN::setInputVector(std::vector<double> inputVector){
     m_inputVector = inputVector;
     m_sizeOfInputVec = inputVector.size();
-    calculateNeighborsDistances();
+   // calculateNeighborsDistances();
+}
+
+void KNN::setK(int k){
+    if (k > 0){
+        m_k = k;
+    }
+    else k = 1;
 }
