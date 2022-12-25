@@ -108,7 +108,7 @@ distanceAlgorithems* distAlgoFactory(std::string str){
 	else if (str == "MIN"){
 		return new Minkovsky();
 	}
-	else return new distanceAlgorithems();
+	else return NULL;
 }
 
 int getK (std::string k){
@@ -127,6 +127,28 @@ int getK (std::string k){
 	int i_k = abs((int) std::stoi(k));
 	if (i_k == 0) i_k = 1;
 	return i_k;
+}
+
+int isKAnInteger(std::string k){
+	double m_k;
+	//k is not a double
+	if (!is_number(k)){
+        return -1;
+    }
+	//k is a double
+    else {
+    	 m_k = std::stoi(k);
+		 	// k is negative
+        	 if (m_k <= 0){
+                 return -1;
+            } 
+			// k is not an integer 
+			else if ((int) m_k != m_k){
+				return -1;
+			}
+			// k is an integer
+			else return 1;
+	}
 }
 
 
@@ -162,3 +184,44 @@ void getArguments (int argc,std::string& s_k, std::string& filePath, std::string
 	}
 	s_k = std::to_string(k);
  }
+/*
+ int getVariables() {
+    std::string input;
+    while (input.size() == 0) {
+	std::getline(std::cin, input);
+	}
+	std::stringstream stream(input);
+	std::string variable;
+    double x;
+    int flag;
+	while (stream >> variable) {
+        // while getting a double push it to the input vector
+        if (is_number(variable)){
+            x = std::stod(variable);
+			m_inputVector.push_back(x);
+        }
+        // getting a string
+        else {
+            flag = 1;
+            // first variable after the vector should be distAlgo
+            if (flag == 1){
+                m_disAlgo = distAlgoFactory(variable);
+                if (m_disAlgo == NULL){
+                    return -1;
+                }
+
+                flag = 2;
+            }
+            // second variable after the vector should be k value
+            else if (flag == 2) {
+                if (isKAnInteger(variable) < 0){
+                    return -1;
+                }
+                m_k = std::stoi(variable);
+                flag = 3;
+                }
+            //exceeding number of variables
+            else return -1;
+        }
+    }
+}*/
