@@ -162,3 +162,45 @@ void getArguments (int argc,std::string& s_k, std::string& filePath, std::string
 	}
 	s_k = std::to_string(k);
  }
+ bool checkPort(std::string Port) {
+	double port;
+	//check if port is a double
+	if (is_number(Port)) {
+		port = std::stod(Port);
+		if ((port < 1024) || (port > 65536)) {
+			return false;
+		}
+		else if (isKanintergar(Port)) {
+			return true;
+		}
+
+	}
+	else return false;
+ }
+ void getPort(std::string& Port) {
+	while (!checkPort(Port)) {
+		std::cout<<"Port number isnt valid - Please enter a valid number: "<<std::endl;
+		std::cin>>Port;
+	}
+}
+bool checkIp(std::string IP) {
+	int length = IP.length();
+	char char_ip[length + 1];
+	strcpy(char_ip,IP.c_str());
+	in_addr* ip;
+	// std::stringstream stream(IP);
+	// int flag = 1; 
+	// while (std::getline(stream , number,'.')) {
+	// 	if (number.size()>3)
+	// }
+	if (inet_aton(char_ip,ip) == 1) {
+		return true;
+	}
+	else return false;
+}
+void getIp(std::string& IP) {
+	while (!checkIp(IP)) {
+		std::cout<<"Ip address isnt in IPV4 format - Please enter new IP"<<std::endl;
+		std::cin>>IP;
+	} 
+}
