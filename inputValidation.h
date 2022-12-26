@@ -27,5 +27,7 @@ int getK (std::string k);
 int isKAnInteger(std::string k);
 std::string getFilePath(std::string filePath, CSVReader& csvreader);
 distanceAlgorithems* distAlgoFactory(std::string str);
+bool checkIP(std::string& ip);
+bool checkPort(std::string& portNum);
 void getArguments (int argc,std::string& s_k, std::string& filePath, std::string& s_disAlgo, CSVReader& csvreader);
 #endif

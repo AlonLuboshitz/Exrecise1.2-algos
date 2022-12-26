@@ -137,7 +137,7 @@ int isKAnInteger(std::string k){
     }
 	//k is a double
     else {
-    	 m_k = std::stoi(k);
+    	 m_k = std::stod(k);
 		 	// k is negative
         	 if (m_k <= 0){
                  return -1;
@@ -169,6 +169,13 @@ std::string getFilePath(std::string filePath, CSVReader& csvreader){
 	return filePath;
 }
 
+bool checkIP(std::string& ip){
+	return true;
+}
+bool checkPort(std::string& portNum){
+	return true;
+}
+
 void getArguments (int argc,std::string& s_k, std::string& filePath, std::string& s_disAlgo, CSVReader& csvreader){
 	int k = 0;
 	if (argc != 4)	{
@@ -184,44 +191,4 @@ void getArguments (int argc,std::string& s_k, std::string& filePath, std::string
 	}
 	s_k = std::to_string(k);
  }
-/*
- int getVariables() {
-    std::string input;
-    while (input.size() == 0) {
-	std::getline(std::cin, input);
-	}
-	std::stringstream stream(input);
-	std::string variable;
-    double x;
-    int flag;
-	while (stream >> variable) {
-        // while getting a double push it to the input vector
-        if (is_number(variable)){
-            x = std::stod(variable);
-			m_inputVector.push_back(x);
-        }
-        // getting a string
-        else {
-            flag = 1;
-            // first variable after the vector should be distAlgo
-            if (flag == 1){
-                m_disAlgo = distAlgoFactory(variable);
-                if (m_disAlgo == NULL){
-                    return -1;
-                }
 
-                flag = 2;
-            }
-            // second variable after the vector should be k value
-            else if (flag == 2) {
-                if (isKAnInteger(variable) < 0){
-                    return -1;
-                }
-                m_k = std::stoi(variable);
-                flag = 3;
-                }
-            //exceeding number of variables
-            else return -1;
-        }
-    }
-}*/

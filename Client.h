@@ -26,6 +26,7 @@ int connectToServer();
 int getVariables();
 int sendToServer();
 void recieveFromServer();
+void copyClientsArguments(int argc,char* argv[], char* checkedArgv[]);
 int main(int argc,char* argv[]);
 
    
