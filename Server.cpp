@@ -167,6 +167,7 @@ int main (int argc, char* argv[]) {
             int k;
             distanceAlgorithems* distanceAlgorithems;
             std::string messageToSend = "invalid input";
+            
             if (validateMessage(buffer, messageVector, k, distanceAlgorithems)) {
                 //if message valid run knn and set message to knn result.
                 setKNN(knn, k, messageVector, distanceAlgorithems);
@@ -188,5 +189,7 @@ int main (int argc, char* argv[]) {
             close(client_socket_fd);
         }
     }
+    //finished accpeting clients - close server socket?
+    //close(socket_fd)
 
 }
