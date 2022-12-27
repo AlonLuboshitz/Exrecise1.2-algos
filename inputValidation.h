@@ -16,6 +16,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+bool isKAnInteger(std::string k);
 
 void getVectorFromInput(std::vector<double>& vec );
 //this function clear "/r", "/b", "/t", from the end of a string.

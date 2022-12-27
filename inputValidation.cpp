@@ -170,12 +170,12 @@ void getArguments (int argc,std::string& s_k, std::string& filePath, std::string
 		if ((port < 1024) || (port > 65536)) {
 			return false;
 		}
-		else if (isKanintergar(Port)) {
+		else if (isKAnInteger(Port)) {
 			return true;
 		}
 
 	}
-	else return false;
+ return false;
  }
  void getPort(std::string& Port) {
 	while (!checkPort(Port)) {
@@ -204,3 +204,25 @@ void getIp(std::string& IP) {
 		std::cin>>IP;
 	} 
 }
+bool isKAnInteger(std::string k){
+	double m_k;
+	//k is not a double
+	if (!is_number(k)){
+        return false;
+    }
+	//k is a double
+    else {
+    	 m_k = std::stod(k);
+		 	// k is negative
+        	 if (m_k <= 0){
+                 return false;
+            } 
+			// k is not an integer 
+			else if ((int) m_k != m_k){
+				return false;
+			}
+			// k is an integer
+			else return true;
+	}
+}
+
