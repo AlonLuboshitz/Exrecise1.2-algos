@@ -38,9 +38,10 @@ bool accpetClient(int socket_fd, int& client_socket_fd, struct sockaddr_in& clie
     }
     else return true;
 }
-bool getMessage(int client_socket_fd, char buffer[4096], int expected_data_length) {
+bool getMessage(int client_socket_fd, char buffer[], int expected_data_length) {
     int read_bytes = recv(client_socket_fd,buffer,expected_data_length,0);
     if (read_bytes == 0) {
+        std::cout<<"empty message";
         return false;
     }
     else if ( read_bytes < 0) {
@@ -49,6 +50,20 @@ bool getMessage(int client_socket_fd, char buffer[4096], int expected_data_lengt
     }
     else return true;
 }
+bool sendMessage(int client_socket_fd, std::string message) {
+    int length = message.size() + 1;
+    char buffer[length];
+    strcpy(buffer,message.c_str());
+    length = strlen(buffer);
+    int read_bytes = send(client_socket_fd,buffer,length,0);
+    if (read_bytes < 0) {
+        std::cout<<"error sending message";
+        return false;
+    }
+    else return true;
+}
+
+
 bool validateMessage(char message[],std::vector<double>& message_vector,
 int& k,distanceAlgorithems* distanceAlgorithems) {
     //convert messgae via char into string in order to stream it.
@@ -121,6 +136,11 @@ else {
     fileName = getFilePath(fileName, csvreader);
 }
 }
+void setKNN(KNN& knn, int k, std::vector<double> vector, distanceAlgorithems* distanceAlgorithems) {
+    knn.setInputVector(vector);
+    knn.setK(k);
+    knn.setDistanceAlgorithem(distanceAlgorithems);
+}
 
 int main (int argc, char* argv[]) {
     std::string port, fileName;
@@ -137,21 +157,35 @@ int main (int argc, char* argv[]) {
     if (!listenTo(socket_fd)) {return 0;}
     struct sockaddr_in client;
     int client_socket_fd;
+    KNN knn(csvFileReader);
     while (accpetClient(socket_fd,client_socket_fd,client)) {
         char buffer[4096];
         int expected_data_length = sizeof(buffer);
         while (getMessage(client_socket_fd,buffer,expected_data_length)) {
+            int delitionflag = 0;
             std::vector<double> messageVector;
             int k;
             distanceAlgorithems* distanceAlgorithems;
+            std::string messageToSend = "invalid input";
             if (validateMessage(buffer, messageVector, k, distanceAlgorithems)) {
-                //if message valid run knn and send answer to server.
-                
+                //if message valid run knn and set message to knn result.
+                setKNN(knn, k, messageVector, distanceAlgorithems);
+                messageToSend = knn.runKNN();
             }
-            else {
-                //send "invalid input"
+            //by defualt if validate message is false message remains invalid input.
+            if (sendMessage(client_socket_fd, messageToSend)) {
+                //connection is good continue;
+                //reset distanceAlgorithems pointer.
+                delete distanceAlgorithems;
+                delitionflag = 1;
+                continue;
             }
-
+            // delete pointer to distancealgo. (not a neccesery if?)
+            if (delitionflag == 0) {
+            delete distanceAlgorithems;    
+            }
+            // close clinet socket and accpet new one
+            close(client_socket_fd);
         }
     }
 
