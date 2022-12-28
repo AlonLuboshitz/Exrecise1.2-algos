@@ -1,3 +1,5 @@
+#ifndef CLIENT_H
+#define CLIENT_H
 #include <iostream>
 #include <sys/socket.h>
 #include <stdio.h>
@@ -26,7 +28,7 @@ int connectToServer();
 int getVariables();
 int sendToServer();
 void recieveFromServer();
-void copyClientsArguments(int argc,char* argv[], char* checkedArgv[]);
+void checkClientsArguments(int argc,char* argv[],std::string& serverIP, std::string& strServerPort );
 int main(int argc,char* argv[]);
 
-   
+#endif

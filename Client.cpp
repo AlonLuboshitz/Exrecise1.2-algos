@@ -74,7 +74,7 @@ int getVariables() {
             }
             // second variable after the vector should be k value
             else if (flag == 2) {
-                if (isKAnInteger(variable) < 0){
+                if (! isKAnInteger(variable)){
                     return -1;
                 }
                 m_messegeToServer.append(variable);
@@ -131,28 +131,26 @@ void recieveFromServer(){
 /** 
  * copies all the arguments to a new char* array so there will not be any sugmentation error if less arguments were inserted.
 */
-void copyClientsArguments(int argc,char* argv[], char* checkedArgv[] ){
-	int loops = argc;
-	if (argc !=0){ 
-		if (argc > 4) {
-			loops = 4;
-		}
-	for (int i=0; i < loops; i++ ){
-		checkedArgv[i] = argv[i];
-	}
-	}
+void checkClientsArguments(int argc,char* argv[], std::string& serverIP, std::string& strServerPort ){
+    
+	if(argc != 3){
+        getIp(serverIP);
+        getPort(strServerPort);
+        return;
+    }
+    serverIP = argv[1];
+    strServerPort = argv[2];
+    getIp(serverIP);
+    getPort(strServerPort);
 }
 
 
 
 int main(int argc,char* argv[]) {
     //check if arguments are valid - ip and port
-    char* checkedArgv[3];
-    copyClientsArguments(argc, argv, checkedArgv);
-    std::string serverIP = checkedArgv[1];
-    std::string strServerPort = checkedArgv[2];
-    //   getIP(serverIP);
-    //   getPort(strServerPort);
+    std::string serverIP;
+    std::string strServerPort;
+    checkClientsArguments(argc, argv, serverIP, strServerPort);
     m_serverIpAdress = &serverIP[0];
     m_serverPortNum = std::stoi(strServerPort);
 
