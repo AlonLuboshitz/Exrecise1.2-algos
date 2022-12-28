@@ -208,8 +208,8 @@ return kLabel;
  * set m_disAlgo to the new distance algorithem
  * calculets new distances according to the new algorithem
 */
-void KNN::setDistanceAlgorithem(distanceAlgorithems& disAlgo){
-    m_disAlgo = &disAlgo;
+void KNN::setDistanceAlgorithem(distanceAlgorithems* disAlgo){
+    m_disAlgo = disAlgo;
     calculateNeighborsDistances();
 }
 /**
