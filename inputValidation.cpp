@@ -108,7 +108,7 @@ distanceAlgorithems* distAlgoFactory(std::string str){
 	else if (str == "MIN"){
 		return new Minkovsky();
 	}
-	else return new distanceAlgorithems();
+	else return NULL;
 }
 
 int getK (std::string k){
@@ -129,6 +129,28 @@ int getK (std::string k){
 	return i_k;
 }
 
+int isKAnInteger(std::string k){
+	double m_k;
+	//k is not a double
+	if (!is_number(k)){
+        return -1;
+    }
+	//k is a double
+    else {
+    	 m_k = std::stod(k);
+		 	// k is negative
+        	 if (m_k <= 0){
+                 return -1;
+            } 
+			// k is not an integer 
+			else if ((int) m_k != m_k){
+				return -1;
+			}
+			// k is an integer
+			else return 1;
+	}
+}
+
 
 
 std::string getFilePath(std::string filePath, CSVReader& csvreader){
@@ -147,6 +169,13 @@ std::string getFilePath(std::string filePath, CSVReader& csvreader){
 	return filePath;
 }
 
+bool checkIP(std::string& ip){
+	return true;
+}
+bool checkPort(std::string& portNum){
+	return true;
+}
+
 void getArguments (int argc,std::string& s_k, std::string& filePath, std::string& s_disAlgo, CSVReader& csvreader){
 	int k = 0;
 	if (argc != 4)	{
@@ -162,6 +191,7 @@ void getArguments (int argc,std::string& s_k, std::string& filePath, std::string
 	}
 	s_k = std::to_string(k);
  }
+
  bool checkPort(std::string Port) {
 	double port;
 	//check if port is a double
@@ -225,4 +255,5 @@ bool isKAnInteger(std::string k){
 			else return true;
 	}
 }
+
 

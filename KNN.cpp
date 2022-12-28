@@ -226,7 +226,7 @@ void KNN::setNewFile(std::string path){
 /**
  * setter- gets new input vector
  * sets m_inputVector to the new input vector
- * sets the m_sizeOfInputVector to the size of the new input vector
+ * sets the m_sizeOfInputVector to the size of the new input vector 
 */
 void KNN::setInputVector(std::vector<double> inputVector){
     m_inputVector = inputVector;
