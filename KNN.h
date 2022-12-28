@@ -42,7 +42,7 @@ KNN() = delete;
 KNN(CSVReader& csvReader);
 KNN (std::vector<double> inputVector,distanceAlgorithems* disAlgo, CSVReader& csvReader, const unsigned int k);
 std::string runKNN();
-void setDistanceAlgorithem(distanceAlgorithems& disAlgo);
+void setDistanceAlgorithem(distanceAlgorithems* disAlgo);
 void setNewFile(std::string path);
 void setInputVector(std::vector<double> inputVector);
 void setK(int k);
