@@ -7,10 +7,10 @@ int createSocket(int& m_ClientSocket){
     } else return 1;
 }
 
-void initServerStructAdress(sockaddr_in& m_serverStructAdress, char* m_serverIpAdress, int m_serverPortNum ){
+void initServerStructAdress(sockaddr_in& m_serverStructAdress, std::string& serverIP, int m_serverPortNum ){
     memset(&m_serverStructAdress, 0, sizeof(m_serverStructAdress));
     m_serverStructAdress.sin_family = AF_INET;
-    m_serverStructAdress.sin_addr.s_addr = inet_addr(m_serverIpAdress);
+    m_serverStructAdress.sin_addr.s_addr = inet_addr(&serverIP[0]);
     m_serverStructAdress.sin_port = htons(m_serverPortNum);
 }
 
@@ -117,10 +117,10 @@ void sendToServer(std::string m_messegeToServer, int m_ClientSocket){
 void recieveFromServer(int m_ClientSocket, char* recievedMessege, const int buffer){
     int recievedBytes = recv(m_ClientSocket, recievedMessege, buffer, 0);
     if (recievedBytes == 0){
-        std::cout<<"conection to server is lost";
+        std::cout<<"conection to server is lost\n";
     }
     else if (recievedBytes < 0){
-        std::cout << "error reading messege back from server";
+        std::cout << "error reading messege back from server\n";
     }
     else {
         std::cout << recievedMessege << "\n";
@@ -157,20 +157,20 @@ int main(int argc,char* argv[]) {
     std::string serverIP;
     std::string strServerPort;
     checkClientsArguments(argc, argv, serverIP, strServerPort);
-    m_serverIpAdress = &serverIP[0];
+    //m_serverIpAdress = &serverIP[0];
     m_serverPortNum = std::stoi(strServerPort);
 
     //m_serverPortNum = 5555;
     //create client socket
     
     if (createSocket(m_ClientSocket) < 0){
-        std::cout << "error creating socket";
+        std::cout << "error creating socket\n";
         return -1;
     }
     //init server adress and try to connect to it
-    initServerStructAdress(m_serverStructAdress, m_serverIpAdress, m_serverPortNum);
+    initServerStructAdress(m_serverStructAdress, serverIP, m_serverPortNum);
     if (connectToServer(m_ClientSocket,m_serverStructAdress ) < 0) {
-        std::cout << "error connecting to server";
+        std::cout << "error connecting to server\n";
         return -1;
     }
     while (true) {
