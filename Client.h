@@ -15,7 +15,7 @@
 
 
 int createSocket(int& m_ClientSocket);
-void initServerStructAdress(sockaddr_in& m_serverStructAdress, char* m_serverIpAdress, int m_serverPortNum );
+void initServerStructAdress(sockaddr_in& m_serverStructAdress, char* ip, int m_serverPortNum );
 int connectToServer(int m_ClientSocket, sockaddr_in m_serverStructAdress);
 int getVariables(std::string& m_messegeToServer);
 void sendToServer(std::string m_messegeToServer, int m_ClientSocket);

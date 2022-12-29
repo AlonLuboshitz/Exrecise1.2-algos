@@ -141,7 +141,7 @@ void setKNN(KNN& knn, int k, std::vector<double> vector, distanceAlgorithems* di
     knn.setK(k);
     knn.setDistanceAlgorithem(distanceAlgorithems);
 }
-
+/*
 int main (int argc, char* argv[]) {
     std::string port, fileName;
     CSVReader csvFileReader;
@@ -192,4 +192,4 @@ int main (int argc, char* argv[]) {
     //finished accpeting clients - close server socket?
     //close(socket_fd)
 
-}
+}*/
