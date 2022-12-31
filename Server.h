@@ -23,5 +23,6 @@ bool sendMessage(int client_socket_fd, std::string message);
 /* message format is going to be int k (positive), distancelagorithem name, vector to run knn on.
 using inputvalidation cpp file to validate each input*/
 bool validateMessage(char buffer[],std::vector<double>& message_vector,
-int& k,distanceAlgorithems* distanceAlgorithems);
+int& k,distanceAlgorithems* &distanceAlgorithems);
+
 #endif

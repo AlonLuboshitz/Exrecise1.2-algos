@@ -14,7 +14,7 @@ void initServerStructAdress(sockaddr_in& m_serverStructAdress, char* ip, int m_s
     m_serverStructAdress.sin_port = htons(m_serverPortNum);
 }
 
-int connectToServer(int m_ClientSocket, sockaddr_in m_serverStructAdress){
+int connectToServer(int m_ClientSocket, sockaddr_in& m_serverStructAdress){
     int isConnected = connect(m_ClientSocket, (struct sockaddr *) &m_serverStructAdress, sizeof(m_serverStructAdress));
     if (isConnected < 0) {
         return -1;
@@ -52,6 +52,7 @@ int getVariables(std::string& m_messegeToServer) {
         // while getting a double append it to the messege
         if (is_number(variable) && flag == 0){
             m_messegeToServer.append(variable);
+            m_messegeToServer.append(" ");
         }
         // getting a string
         else {
@@ -69,6 +70,7 @@ int getVariables(std::string& m_messegeToServer) {
                     return -1;
                 }
                 m_messegeToServer.append(variable);
+                 m_messegeToServer.append(" ");
                 flag = 2;
                 delete m_disAlgo;
             }
@@ -123,6 +125,7 @@ void recieveFromServer(int m_ClientSocket, char* recievedMessege, const int buff
         std::cout << "error reading messege back from server\n";
     }
     else {
+        recievedMessege[recievedBytes] = '\0';
         std::cout << recievedMessege << "\n";
     }
 }
