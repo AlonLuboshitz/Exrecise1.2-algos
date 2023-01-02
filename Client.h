@@ -13,21 +13,13 @@
 #include <iostream>
 #include <sstream>
 
-char* m_serverIpAdress;
-int m_serverPortNum;
-int m_ClientSocket;
-const int buffer = 4096;
-struct sockaddr_in m_serverStructAdress;    
-distanceAlgorithems* m_disAlgo;
-std::string m_messegeToServer;
-char recievedMessege[buffer];
 
-int createSocket();
-void initServerStructAdress();
-int connectToServer();
-int getVariables();
-int sendToServer();
-void recieveFromServer();
+int createSocket(int& m_ClientSocket);
+void initServerStructAdress(sockaddr_in& m_serverStructAdress, char* ip, int m_serverPortNum );
+int connectToServer(int m_ClientSocket, sockaddr_in& m_serverStructAdress);
+int getVariables(std::string& m_messegeToServer);
+void sendToServer(std::string m_messegeToServer, int m_ClientSocket);
+void recieveFromServer(int m_ClientSocket, char* recievedMessege, const int buffer);
 void checkClientsArguments(int argc,char* argv[],std::string& serverIP, std::string& strServerPort );
 int main(int argc,char* argv[]);
 

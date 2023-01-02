@@ -210,7 +210,6 @@ return kLabel;
 */
 void KNN::setDistanceAlgorithem(distanceAlgorithems* disAlgo){
     m_disAlgo = disAlgo;
-    calculateNeighborsDistances();
 }
 /**
  * setter- gets new file path as a string

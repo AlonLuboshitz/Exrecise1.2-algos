@@ -9,13 +9,13 @@ if (socket_fd < 0) {
 else return true;
 }
 
-void setSinMembers(struct sockaddr_in& sin, int port) {
+void setSinMembers( sockaddr_in& sin, int port) {
     memset(&sin, 0 ,sizeof(sin));
     sin.sin_family = AF_INET;
     sin.sin_addr.s_addr = INADDR_ANY;
-    sin.sin_port = port;
+    sin.sin_port = htons(port);
 }
-bool bindSocket(int socket_fd,struct sockaddr_in& sin) {
+bool bindSocket(int socket_fd, sockaddr_in& sin) {
     if (bind(socket_fd, (const sockaddr *) &sin, sizeof(sin)) < 0) {
         std::cout<<"failed to bind socket"<<std::endl;
         return false;
@@ -29,7 +29,7 @@ bool listenTo(int socket_fd) {
     }
     else return true;
 }
-bool accpetClient(int socket_fd, int& client_socket_fd, struct sockaddr_in& client) {
+bool accpetClient(int socket_fd, int& client_socket_fd,  sockaddr_in& client) {
     unsigned int adrr_length = sizeof(client);
     client_socket_fd = accept(socket_fd, (sockaddr *) &client, &adrr_length);
     if (client_socket_fd < 0) {
@@ -38,18 +38,8 @@ bool accpetClient(int socket_fd, int& client_socket_fd, struct sockaddr_in& clie
     }
     else return true;
 }
-bool getMessage(int client_socket_fd, char buffer[], int expected_data_length) {
-    int read_bytes = recv(client_socket_fd,buffer,expected_data_length,0);
-    if (read_bytes == 0) {
-        std::cout<<"empty message";
-        return false;
-    }
-    else if ( read_bytes < 0) {
-        std::cout<<"error reiciving message"<<std::endl;
-        return false;
-    }
-    else return true;
-}
+
+
 bool sendMessage(int client_socket_fd, std::string message) {
     int length = message.size() + 1;
     char buffer[length];
@@ -65,7 +55,7 @@ bool sendMessage(int client_socket_fd, std::string message) {
 
 
 bool validateMessage(char message[],std::vector<double>& message_vector,
-int& k,distanceAlgorithems* distanceAlgorithems) {
+int& k,distanceAlgorithems* &distanceAlgorithems) {
     //convert messgae via char into string in order to stream it.
     std::string input(message);
    	std::stringstream stream(input);
@@ -141,7 +131,23 @@ void setKNN(KNN& knn, int k, std::vector<double> vector, distanceAlgorithems* di
     knn.setK(k);
     knn.setDistanceAlgorithem(distanceAlgorithems);
 }
-
+bool getMessage(int client_socket_fd, char buffer[], int expected_data_length) {
+   
+   
+    int read_bytes = recv(client_socket_fd,buffer,expected_data_length,0);
+    if (read_bytes == 0) {
+        std::cout<<"empty message";
+        return false;
+    }
+    else if ( read_bytes < 0) {
+        std::cout<<"error reiciving message"<<std::endl;
+        return false;
+    }
+    else { 
+    buffer[read_bytes] = '\0';
+    return true;
+    }
+}
 int main (int argc, char* argv[]) {
     std::string port, fileName;
     CSVReader csvFileReader;
@@ -161,17 +167,21 @@ int main (int argc, char* argv[]) {
     while (accpetClient(socket_fd,client_socket_fd,client)) {
         char buffer[4096];
         int expected_data_length = sizeof(buffer);
-        while (getMessage(client_socket_fd,buffer,expected_data_length)) {
-            int delitionflag = 0;
-            std::vector<double> messageVector;
+         std::vector<double> messageVector;
             int k;
             distanceAlgorithems* distanceAlgorithems;
-            std::string messageToSend = "invalid input";
+            std::string messageToSend;
+        while (getMessage(client_socket_fd,buffer,expected_data_length)) {
+             messageToSend = "invalid input";
+            int delitionflag = 0;
+           
             
             if (validateMessage(buffer, messageVector, k, distanceAlgorithems)) {
                 //if message valid run knn and set message to knn result.
                 setKNN(knn, k, messageVector, distanceAlgorithems);
                 messageToSend = knn.runKNN();
+                
+                
             }
             //by defualt if validate message is false message remains invalid input.
             if (sendMessage(client_socket_fd, messageToSend)) {
@@ -189,7 +199,7 @@ int main (int argc, char* argv[]) {
             close(client_socket_fd);
         }
     }
-    //finished accpeting clients - close server socket?
-    //close(socket_fd)
+    //finished accpeting clients - close server socket.
+    close(socket_fd);
 
 }
