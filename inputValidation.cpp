@@ -185,18 +185,14 @@ bool checkIp(std::string IP) {
 	int length = IP.length();
 	char char_ip[length + 1];
 	strcpy(char_ip,IP.c_str());
-	in_addr* ip;
-	// std::stringstream stream(IP);
-	// int flag = 1; 
-	// while (std::getline(stream , number,'.')) {
-	// 	if (number.size()>3)
-	// }
-	if (inet_aton(char_ip,ip) == 1) {
+	struct sockaddr_in ip;
+	if (inet_aton(char_ip,&ip.sin_addr) == 1) {
 		return true;
 	}
 	else return false;
 }
 void getIp(std::string& IP) {
+	
 	while (!checkIp(IP)) {
 		std::cout<<"Ip address isnt in IPV4 format - Please enter new IP"<<std::endl;
 		std::cin>>IP;

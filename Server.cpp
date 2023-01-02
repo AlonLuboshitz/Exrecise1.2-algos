@@ -167,14 +167,14 @@ int main (int argc, char* argv[]) {
     while (accpetClient(socket_fd,client_socket_fd,client)) {
         char buffer[4096];
         int expected_data_length = sizeof(buffer);
-        char* arr;
-        while (getMessage(client_socket_fd,buffer,expected_data_length)) {
-            
-            int delitionflag = 0;
-            std::vector<double> messageVector;
+         std::vector<double> messageVector;
             int k;
             distanceAlgorithems* distanceAlgorithems;
-            std::string messageToSend = "invalid input";
+            std::string messageToSend;
+        while (getMessage(client_socket_fd,buffer,expected_data_length)) {
+             messageToSend = "invalid input";
+            int delitionflag = 0;
+           
             
             if (validateMessage(buffer, messageVector, k, distanceAlgorithems)) {
                 //if message valid run knn and set message to knn result.
@@ -199,7 +199,7 @@ int main (int argc, char* argv[]) {
             close(client_socket_fd);
         }
     }
-    //finished accpeting clients - close server socket?
-    //close(socket_fd)
+    //finished accpeting clients - close server socket.
+    close(socket_fd);
 
 }

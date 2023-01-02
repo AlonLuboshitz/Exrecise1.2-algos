@@ -187,8 +187,7 @@ int main(int argc,char* argv[]) {
         if (loop > 0){
             sendToServer(m_messegeToServer,m_ClientSocket );
             recieveFromServer(m_ClientSocket, recievedMessege, buffer);
-            std::cout << "valid variables\n";
-        }
+             }
         else {
             //invalid
             if (loop == -1) {
@@ -197,7 +196,6 @@ int main(int argc,char* argv[]) {
             }
             // loop == -2, meaning user had entered -1 to stop running
             else {
-                std::cout<< "break\n";
                 break;
             }
         } 
