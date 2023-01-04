@@ -7,7 +7,7 @@ in order to compile and run the code you need to enter the following:
 3. enter password "your password"
 after the project has been cloned, enter the following:
 4. cd Exrecise1.2-algos/
-5. $ git checkout even_dereh_2-exc3, ENTER
+5. $ git checkout **even_dereh_2-exc3**, ENTER
 6. make ,ENTER    
  to run the server - 
 7. ./server.out (file path) (port number)    
