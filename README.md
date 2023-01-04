@@ -8,13 +8,13 @@ in order to compile and run the code you need to enter the following:
 after the project has been cloned, enter the following:
 4. cd Exrecise1.2-algos/
 5. $ git checkout even_dereh_2-exc3, ENTER
-6. make ,ENTER
-to run the server - 
-7. ./server.out (file path) (port number)
+6. make ,ENTER    
+ to run the server - 
+8. ./server.out (file path) (port number)    
 to run the client -
-8. ./client.out (server ip) (server port number)
+10. ./client.out (server ip) (server port number)    
 in client:
-9. insert: (vector) (distance's name) (k value) ENTER
+12. insert: (vector) (distance's name) (k value) ENTER
 the code will wait infinitely to a new input vector, if inserted - will calculate its KNN's label.
 10. in order to stop running the client insert -1
 11. when finnished enter -  make clean    
