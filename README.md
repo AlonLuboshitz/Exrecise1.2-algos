@@ -7,15 +7,24 @@ in order to compile and run the code you need to enter the following:
 3. enter password "your password"
 after the project has been cloned, enter the following:
 4. cd Exrecise1.2-algos/
-5. $ git checkout even_dereh_2, ENTER
+5. $ git checkout even_dereh_2-exc3, ENTER
 6. make ,ENTER
-7. ./a.out k filepath distanceAlgorithem , ENTER - command which will run the code.
-8. enter vector (each number seperated by a space), ENTER
-the code will wait infinitely to a new input vector, if inserted -will calculate its KNN's label.
-9. after code run : $ make clean    
+to run the server - 
+7. ./server.out (file path) (port number)
+to run the client -
+8. ./client.out (server ip) (server port number)
+in client:
+9. insert: (vector) (distance's name) (k value) ENTER
+the code will wait infinitely to a new input vector, if inserted - will calculate its KNN's label.
+10. in order to stop running the client insert -1
+11. when finnished enter -  make clean    
 
 
-**Code discription**  
+**Code discription**   
+
+**server**    
+ The server waits infinitly for client to connect with it. Can serve 1 client at a time, with a queue of up to 5 clients. Expecting a char array of a vector, distance algo's name and k value, all seperated with spaces.     
+ 
  KNN (K Nearest Neighbors) -
  this code designed for running on a csv file, searching for the K nearest neighbors according to an input vector, and returning the most common label from the KNN. 
  
@@ -49,7 +58,12 @@ the code will wait infinitely to a new input vector, if inserted -will calculate
 3. Remove the label from the vector and convert all variables to doubles.
 4. if the temp vector has the same size as the input vector, calculate the distance from temp to input according to the distance algorithem.
 5. Sort all the distances (ascending)
-6. From the first k distances, get the most common label. 
+6. From the first k distances, get the most common label.      
+
+**client**
+
+The client waits for an input - vector, distance algo's name and k value, all seperated with spaces.
+sends it to the server, and prints the messege that was sent back from te server. 
 
 
 
