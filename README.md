@@ -10,12 +10,11 @@ after the project has been cloned, enter the following:
 5. $ git checkout even_dereh_2-exc3, ENTER
 6. make ,ENTER    
  to run the server - 
-8. ./server.out (file path) (port number)    
+7. ./server.out (file path) (port number)    
 to run the client -
-10. ./client.out (server ip) (server port number)    
+8. ./client.out (server ip) (server port number)    
 in client:
-12. insert: (vector) (distance's name) (k value) ENTER
-the code will wait infinitely to a new input vector, if inserted - will calculate its KNN's label.
+9. insert: (vector) (distance's name) (k value) ENTER (infinitely)
 10. in order to stop running the client insert -1
 11. when finnished enter -  make clean    
 
@@ -23,7 +22,7 @@ the code will wait infinitely to a new input vector, if inserted - will calculat
 **Code discription**   
 
 **server**    
- The server waits infinitly for client to connect with it. Can serve 1 client at a time, with a queue of up to 5 clients. Expecting a char array of a vector, distance algo's name and k value, all seperated with spaces.     
+ The server waits infinitely for client to connect with it. Can serve 1 client at a time, with a queue of up to 5 clients. Expecting a char array of a vector, distance algo's name and k value, all seperated with spaces.     
  
  KNN (K Nearest Neighbors) -
  this code designed for running on a csv file, searching for the K nearest neighbors according to an input vector, and returning the most common label from the KNN. 
