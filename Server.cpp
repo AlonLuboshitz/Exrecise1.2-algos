@@ -148,58 +148,59 @@ bool getMessage(int client_socket_fd, char buffer[], int expected_data_length) {
     return true;
     }
 }
-int main (int argc, char* argv[]) {
-    std::string port, fileName;
-    CSVReader csvFileReader;
-    getServerArguments(argv,argc,port,fileName,csvFileReader);
-    const int portNumber = std::stoi(port);
-    int socket_fd;
-    if (!initSocket(socket_fd)) {
-        return 0;
-    }
-    struct sockaddr_in sin;
-    setSinMembers(sin, portNumber);
-    if (!bindSocket(socket_fd,sin)) { return 0;}
-    if (!listenTo(socket_fd)) {return 0;}
-    struct sockaddr_in client;
-    int client_socket_fd;
-    KNN knn(csvFileReader);
-    while (accpetClient(socket_fd,client_socket_fd,client)) {
-        char buffer[4096];
-        int expected_data_length = sizeof(buffer);
-         std::vector<double> messageVector;
-            int k;
-            distanceAlgorithems* distanceAlgorithems;
-            std::string messageToSend;
-        while (getMessage(client_socket_fd,buffer,expected_data_length)) {
-             messageToSend = "invalid input";
-            int delitionflag = 0;
+
+// int main (int argc, char* argv[]) {
+//     std::string port, fileName;
+//     CSVReader csvFileReader;
+//     getServerArguments(argv,argc,port,fileName,csvFileReader);
+//     const int portNumber = std::stoi(port);
+//     int socket_fd;
+//     if (!initSocket(socket_fd)) {
+//         return 0;
+//     }
+//     struct sockaddr_in sin;
+//     setSinMembers(sin, portNumber);
+//     if (!bindSocket(socket_fd,sin)) { return 0;}
+//     if (!listenTo(socket_fd)) {return 0;}
+//     struct sockaddr_in client;
+//     int client_socket_fd;
+//     KNN knn(csvFileReader);
+//     while (accpetClient(socket_fd,client_socket_fd,client)) {
+//         char buffer[4096];
+//         int expected_data_length = sizeof(buffer);
+//          std::vector<double> messageVector;
+//             int k;
+//             distanceAlgorithems* distanceAlgorithems;
+//             std::string messageToSend;
+//         while (getMessage(client_socket_fd,buffer,expected_data_length)) {
+//              messageToSend = "invalid input";
+//             int delitionflag = 0;
            
             
-            if (validateMessage(buffer, messageVector, k, distanceAlgorithems)) {
-                //if message valid run knn and set message to knn result.
-                setKNN(knn, k, messageVector, distanceAlgorithems);
-                messageToSend = knn.runKNN();
+//             if (validateMessage(buffer, messageVector, k, distanceAlgorithems)) {
+//                 //if message valid run knn and set message to knn result.
+//                 setKNN(knn, k, messageVector, distanceAlgorithems);
+//                 messageToSend = knn.runKNN();
                 
                 
-            }
-            //by defualt if validate message is false message remains invalid input.
-            if (sendMessage(client_socket_fd, messageToSend)) {
-                //connection is good continue;
-                //reset distanceAlgorithems pointer.
-                delete distanceAlgorithems;
-                delitionflag = 1;
-                continue;
-            }
-            // delete pointer to distancealgo. (not a neccesery if?)
-            if (delitionflag == 0) {
-            delete distanceAlgorithems;    
-            }
-            // close clinet socket and accpet new one
-            close(client_socket_fd);
-        }
-    }
-    //finished accpeting clients - close server socket.
-    close(socket_fd);
+//             }
+//             //by defualt if validate message is false message remains invalid input.
+//             if (sendMessage(client_socket_fd, messageToSend)) {
+//                 //connection is good continue;
+//                 //reset distanceAlgorithems pointer.
+//                 delete distanceAlgorithems;
+//                 delitionflag = 1;
+//                 continue;
+//             }
+//             // delete pointer to distancealgo. (not a neccesery if?)
+//             if (delitionflag == 0) {
+//             delete distanceAlgorithems;    
+//             }
+//             // close clinet socket and accpet new one
+//             close(client_socket_fd);
+//         }
+//     }
+//     //finished accpeting clients - close server socket.
+//     close(socket_fd);
 
-}
+// }

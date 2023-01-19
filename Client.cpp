@@ -148,58 +148,58 @@ void checkClientsArguments(int argc,char* argv[], std::string& serverIP, std::st
 
 
 
-int main(int argc,char* argv[]) {
-    int m_ClientSocket;
-    char* m_serverIpAdress;
-    int m_serverPortNum;
-    const int buffer = 4096;
-    struct sockaddr_in m_serverStructAdress;    
-    std::string m_messegeToServer;
-    char recievedMessege[buffer];
-    //check if arguments are valid - ip and port
-    std::string serverIP;
-    std::string strServerPort;
-    checkClientsArguments(argc, argv, serverIP, strServerPort);
-    m_serverPortNum = std::stoi(strServerPort);
+// int main(int argc,char* argv[]) {
+//     int m_ClientSocket;
+//     char* m_serverIpAdress;
+//     int m_serverPortNum;
+//     const int buffer = 4096;
+//     struct sockaddr_in m_serverStructAdress;    
+//     std::string m_messegeToServer;
+//     char recievedMessege[buffer];
+//     //check if arguments are valid - ip and port
+//     std::string serverIP;
+//     std::string strServerPort;
+//     checkClientsArguments(argc, argv, serverIP, strServerPort);
+//     m_serverPortNum = std::stoi(strServerPort);
 
-    char* ip = new char[serverIP.size() +1];
-    for (int i=0; i < serverIP.size(); i++){
-        *(ip+i) = serverIP.at(i);
-    }
-    *(ip + serverIP.size()) = '\0';
-    //m_serverPortNum = 5555;
-    //create client socket
+//     char* ip = new char[serverIP.size() +1];
+//     for (int i=0; i < serverIP.size(); i++){
+//         *(ip+i) = serverIP.at(i);
+//     }
+//     *(ip + serverIP.size()) = '\0';
+//     //m_serverPortNum = 5555;
+//     //create client socket
     
-    if (createSocket(m_ClientSocket) < 0){
-        std::cout << "error creating socket\n";
-        return -1;
-    }
-    //init server adress and try to connect to it
-    initServerStructAdress(m_serverStructAdress, ip, m_serverPortNum);
-    if (connectToServer(m_ClientSocket,m_serverStructAdress ) < 0) {
-        std::cout << "error connecting to server\n";
-        return -1;
-    }
-    while (true) {
-        // check if variables are valid
-        int loop = getVariables(m_messegeToServer);
-        // loop = 1 - valid variable, send it to server and get an answer
-        if (loop > 0){
-            sendToServer(m_messegeToServer,m_ClientSocket );
-            recieveFromServer(m_ClientSocket, recievedMessege, buffer);
-             }
-        else {
-            //invalid
-            if (loop == -1) {
-                std::cout<< "invalid input\n";
-            continue;
-            }
-            // loop == -2, meaning user had entered -1 to stop running
-            else {
-                break;
-            }
-        } 
-    }
-    close(m_ClientSocket);
-    delete[] ip;
-}
+//     if (createSocket(m_ClientSocket) < 0){
+//         std::cout << "error creating socket\n";
+//         return -1;
+//     }
+//     //init server adress and try to connect to it
+//     initServerStructAdress(m_serverStructAdress, ip, m_serverPortNum);
+//     if (connectToServer(m_ClientSocket,m_serverStructAdress ) < 0) {
+//         std::cout << "error connecting to server\n";
+//         return -1;
+//     }
+//     while (true) {
+//         // check if variables are valid
+//         int loop = getVariables(m_messegeToServer);
+//         // loop = 1 - valid variable, send it to server and get an answer
+//         if (loop > 0){
+//             sendToServer(m_messegeToServer,m_ClientSocket );
+//             recieveFromServer(m_ClientSocket, recievedMessege, buffer);
+//              }
+//         else {
+//             //invalid
+//             if (loop == -1) {
+//                 std::cout<< "invalid input\n";
+//             continue;
+//             }
+//             // loop == -2, meaning user had entered -1 to stop running
+//             else {
+//                 break;
+//             }
+//         } 
+//     }
+//     close(m_ClientSocket);
+//     delete[] ip;
+// }

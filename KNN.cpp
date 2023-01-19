@@ -239,3 +239,6 @@ void KNN::setK(int k){
     }
     else k = 1;
 }
+void KNN::setCSVFile(CSVReader* csv) {
+    m_csvReader = csv;
+}

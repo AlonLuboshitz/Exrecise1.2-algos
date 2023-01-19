@@ -5,7 +5,7 @@
 
 class DisplayResultsCommand: public Command{
     private:
-
+    
     public:
     DisplayResultsCommand() = default;
     ~DisplayResultsCommand() = default;

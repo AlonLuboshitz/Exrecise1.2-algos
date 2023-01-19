@@ -74,6 +74,7 @@ void isSameSize(std::vector<double>& v1, std::vector<double>& v2) {
 }
 //checks if every string in vector of string is considered as double
 bool allDoubleVector(const std::vector<std::string> vec) {
+	
 	std::vector<std::string>::const_iterator vectorIterator = vec.cbegin();
    for (vectorIterator; vectorIterator != vec.cend(); ++vectorIterator){
 		if (! is_number(*vectorIterator)){
