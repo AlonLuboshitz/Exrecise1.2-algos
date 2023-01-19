@@ -1,4 +1,6 @@
 #include "CSVReader.h"
+#include "inputValidation.h"
+
 CSVReader::CSVReader() {
     m_initFlag = false;
 }
@@ -99,6 +101,8 @@ bool CSVReader::setNewFileData(std::string data,bool newfile){
     std::vector<std::string> vectorFromLine;
     std::stringstream dataStreamer(data);
     while(std::getline(dataStreamer,line)) {
+        //cleans the line from '\r'
+        stringCleaner(line);
         //clear the vector to accpet the line details.
          vectorFromLine.clear();
         //init stringstream to seprate words from commas.
@@ -111,4 +115,5 @@ bool CSVReader::setNewFileData(std::string data,bool newfile){
         }
         //sets the m_iterator
     setIterator();
+    return false;
 }

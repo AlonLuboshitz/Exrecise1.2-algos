@@ -32,8 +32,7 @@ bool checkPort(std::string Port);
 int getK (std::string k);
 std::string getFilePath(std::string filePath, CSVReader& csvreader);
 distanceAlgorithems* distAlgoFactory(std::string str);
-//converts char into a string.
-std::string chartoString(const char* buf);
+
 
 void getArguments (int argc,std::string& s_k, std::string& filePath, std::string& s_disAlgo, CSVReader& csvreader);
 #endif

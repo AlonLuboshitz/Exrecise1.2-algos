@@ -220,8 +220,6 @@ bool isKAnInteger(std::string k){
 			else return true;
 	}
 }
-std::string chartoString(const char* buf) {
-	
-}
+
 
 

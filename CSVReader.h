@@ -21,10 +21,11 @@ class CSVReader {
     //reset iterator to the beginning of the m_lineVector
     void setIterator();
     //puts all line from file into m_lineVector
-    void readFromFile();
+    
     //fuction check if last four letters in string are ".csv" make sure the file is csv type.
     bool validateCSVfile(std::string filename);
     public: 
+    void readFromFile();
     //defualt ctor init m_initflag to false.
     CSVReader();
     //sets a new filename into the filename memeber of csv
