@@ -148,6 +148,7 @@ bool getMessage(int client_socket_fd, char buffer[], int expected_data_length) {
     return true;
     }
 }
+/*
 int main (int argc, char* argv[]) {
     std::string port, fileName;
     CSVReader csvFileReader;
@@ -202,4 +203,4 @@ int main (int argc, char* argv[]) {
     //finished accpeting clients - close server socket.
     close(socket_fd);
 
-}
+}*/
