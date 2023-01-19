@@ -36,6 +36,8 @@ class CSVReader {
 
     //function return true if file is associated with filereader.
     bool isFileValid();
-
+    //set new data of a file by the data given by it.
+    //the bool is to know if the data is from new file or same file sended by chunks.
+    bool setNewFileData(std::string data,bool newfile);
 };
 #endif

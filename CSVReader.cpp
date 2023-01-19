@@ -87,5 +87,28 @@ bool CSVReader::isFileValid() {
         return true;
     }
     else return false;
+}
+bool CSVReader::setNewFileData(std::string data,bool newfile){
+    //for new file clear the m_linevector. sets the flag.
+    if (newfile) {
+    m_initFlag = true;
+    m_lineVector.clear();
     }
-
+    //init strings for line from file, words between commas in lines.
+    std::string line,word;
+    std::vector<std::string> vectorFromLine;
+    std::stringstream dataStreamer(data);
+    while(std::getline(dataStreamer,line)) {
+        //clear the vector to accpet the line details.
+         vectorFromLine.clear();
+        //init stringstream to seprate words from commas.
+        std::stringstream wordStreamer(line);
+        while (std::getline(wordStreamer,word,',')){            
+            vectorFromLine.push_back(word);
+        }
+        //puts line as vector into vector of lines.
+        m_lineVector.push_back(vectorFromLine);
+        }
+        //sets the m_iterator
+    setIterator();
+}
