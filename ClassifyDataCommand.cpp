@@ -1,9 +1,13 @@
 #include "ClassifyDataCommand.h"
 
 ClassifyDataCommand::ClassifyDataCommand() {
-    
-    m_Knn.setDistanceAlgorithem(distAlgoFactory("AUC"));
+    m_distancealgo = distAlgoFactory("AUC");
+    m_Knn.setDistanceAlgorithem(m_distancealgo);
     m_result = "";
+}
+void ClassifyDataCommand::setParameters(std::string parameters) {
+
+
 }
 void ClassifyDataCommand::execute(){
 m_Knn.setCSVFile(m_train);
