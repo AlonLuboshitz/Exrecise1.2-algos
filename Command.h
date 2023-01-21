@@ -1,13 +1,13 @@
 #ifndef COMMAND_H
 #define COMMAND_H
-#include "string"
-
+#include "defualtIO.h"
 class  Command
 {
 private:
     /* data */
 protected:
 std::string m_discription; 
+defualtIO* m_io;
 //std::list<Parameter> m_ParameterList; 
 //defualtIo;  
 public:

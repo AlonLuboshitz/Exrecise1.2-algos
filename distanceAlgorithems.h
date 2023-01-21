@@ -15,6 +15,7 @@
 // Members: vec1 vec2, diff vector (v1-v2 in i place) 
 class distanceAlgorithems {
 	protected:
+	std::string name;
 	std::vector<double> m_vec1;
 	std::vector<double> m_vec2;
 	std::vector<double> m_diffVec;
@@ -23,7 +24,7 @@ class distanceAlgorithems {
 	public:
 	//not init distance algo with no vectors.
 	distanceAlgorithems() = default;
-	virtual ~distanceAlgorithems() = default;
+	 ~distanceAlgorithems() = default;
 	distanceAlgorithems(std::vector<double> vec1);
 	distanceAlgorithems(std::vector<double> vec1, std::vector<double> vec2);
 	virtual double calculatedistance();

@@ -5,13 +5,14 @@
 #include "DistanceAlgorithemsHeader.h"
 class SettingCommand: public Command{
     private:
-    int m_k;
+    int* m_k;
+    distanceAlgorithems* m_algo;
     std::string m_msg ,m_disAlgo,m_error_msg;
-    
+    void setMsg();
     public:
     bool setParameters(std::string parameteres);
     std::string getMsg();
-    SettingCommand();
+    SettingCommand(distanceAlgorithems*& algo,int& k, defualtIO& io);
     ~SettingCommand() = default;
     void execute();
     void getParameters();

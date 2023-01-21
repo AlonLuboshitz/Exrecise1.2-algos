@@ -15,6 +15,7 @@
 class CSVReader {
     private:
     bool m_initFlag;
+    bool m_fileSet;
     std::string m_fileName;
     std::vector<std::vector<std::string>> m_lineVector;
     std::vector<std::vector<std::string>>::iterator m_vectorLine_iterator;
@@ -40,5 +41,7 @@ class CSVReader {
     //set new data of a file by the data given by it.
     //the bool is to know if the data is from new file or same file sended by chunks.
     bool setNewFileData(std::string data,bool newfile);
+    //returns if file is set
+    bool isFileSet();
 };
 #endif

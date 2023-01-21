@@ -3,6 +3,7 @@
 
 CSVReader::CSVReader() {
     m_initFlag = false;
+    m_fileSet = false;
 }
 bool CSVReader::validateCSVfile(std::string filename) {
     std::string csv;
@@ -19,17 +20,20 @@ bool CSVReader::setNewFile(std::string filename) {
     if (validateCSVfile(filename)) {
         m_fileName = filename;
         if (isFileValid()) {
-            
+            m_fileSet = true;
             m_initFlag = false;
             return true;
         }
         else {
+            m_fileSet = false;
             m_fileName.clear();
             return false;
         }
     }
-    else return false;
-    
+    else {
+        m_fileSet = false;
+     return false;
+    }
 }
 void CSVReader::setIterator() {
     m_vectorLine_iterator = m_lineVector.begin();
@@ -93,6 +97,7 @@ bool CSVReader::isFileValid() {
 bool CSVReader::setNewFileData(std::string data,bool newfile){
     //for new file clear the m_linevector. sets the flag.
     if (newfile) {
+    m_fileSet = true;
     m_initFlag = true;
     m_lineVector.clear();
     }
@@ -116,4 +121,7 @@ bool CSVReader::setNewFileData(std::string data,bool newfile){
         //sets the m_iterator
     setIterator();
     return false;
+}
+bool CSVReader::isFileSet() {
+    return m_fileSet;
 }
