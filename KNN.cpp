@@ -195,8 +195,9 @@ if (init){
     initiation();
 }
 if (neighbors.empty()){
-        std::cout<< "no valid neighbors";
-        return "-1";
+        //std::cout<< "no valid neighbors";
+        //return "-1";
+        return "no valid neighbors";
  }
 calculateNeighborsDistances();
 sortNeighbors();
