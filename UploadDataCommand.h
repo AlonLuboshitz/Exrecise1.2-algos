@@ -12,7 +12,10 @@ class UploadDataCommand: public Command{
     UploadDataCommand(CSVReader& train, CSVReader& test, defualtIO& io);
     ~UploadDataCommand() = default;
     void execute();
-    void getParameters();
+    using Command::valid;
+    CSVReader* getTrain();
+    CSVReader* getTest();
+
 };
 
 #endif

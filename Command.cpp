@@ -14,3 +14,9 @@ io.write(tosend)
 // Command::~Command(){}
 // void Command::execute(){}
 // void Command::getParameters(){}
+bool Command::valid() {
+    return m_valid;
+}
+std::string Command::getMsg() {
+    return m_msg;
+}

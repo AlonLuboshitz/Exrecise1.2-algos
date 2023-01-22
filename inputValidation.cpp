@@ -109,7 +109,7 @@ distanceAlgorithems* distAlgoFactory(std::string str){
 	else if (str == "MIN"){
 		return new Minkovsky();
 	}
-	else return NULL;
+	else return nullptr;
 }
 
 int getK (std::string k){

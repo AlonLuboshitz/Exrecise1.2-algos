@@ -6,7 +6,8 @@ UploadDataCommand::UploadDataCommand(CSVReader& train, CSVReader& test, defualtI
     m_train = &train;
     m_test = &test;
     m_io = &io;
-}
+    m_valid = false;
+    }
 
 void UploadDataCommand:: execute(){
     //get two files
@@ -27,11 +28,16 @@ void UploadDataCommand:: execute(){
             i++;
         }
     }
+    m_valid = true;
     //go to menu;
 }
-void UploadDataCommand:: getParameters(){
-    
-}
+
 void validfileData(std::string data) {
 
 }
+CSVReader* UploadDataCommand::getTrain() {
+return m_train;
+}
+    CSVReader* UploadDataCommand::getTest() {
+return m_test;
+    }

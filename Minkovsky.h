@@ -5,6 +5,7 @@
 class Minkovsky :  public distanceAlgorithems {
     private:
     double m_p;
+    std::string name ="MIN";
     public:
     Minkovsky();
     Minkovsky(std::vector<double> v1, std::vector<double> v2, double p);

@@ -24,7 +24,7 @@ class distanceAlgorithems {
 	public:
 	//not init distance algo with no vectors.
 	distanceAlgorithems() = default;
-	 ~distanceAlgorithems() = default;
+	virtual ~distanceAlgorithems() = default;
 	distanceAlgorithems(std::vector<double> vec1);
 	distanceAlgorithems(std::vector<double> vec1, std::vector<double> vec2);
 	virtual double calculatedistance();

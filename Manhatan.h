@@ -2,6 +2,7 @@
 #define MANHATAN_H
 #include "distanceAlgorithems.h"
 class Manhatan : virtual public distanceAlgorithems {
+    std::string name = "MAN";
     public:
     Manhatan() = default;
     Manhatan(std::vector<double> v1, std::vector<double> v2);
