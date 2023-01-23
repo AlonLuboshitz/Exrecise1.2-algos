@@ -14,6 +14,7 @@
 #include <sstream>
 #include <bits/stdc++.h>
 #include <cstdio>
+#include <thread>
 
 
 int createSocket(int& m_ClientSocket);
@@ -30,6 +31,8 @@ int endOfMsg(char* recievedMessege, int recievedBytes);
 void printMsg(const int buffer, const int m_ClientSocket,char* recievedMessege, int recievedBytes );
 void resetMsg(char* recievedMessege, int endOfMsg, int buffer);
 bool isFileValid(std::string FilePath);
+void recieveThreadFunc(const int buffer, const int m_clientSocket, bool& stopRunning);
+ void sendThreadFunc(const int m_ClientSocket);
 int main(int argc,char* argv[]);
 
 #endif
