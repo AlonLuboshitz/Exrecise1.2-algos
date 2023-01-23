@@ -196,7 +196,7 @@ void inputFile(const int buffer, const int m_ClientSocket){
     char msg[buffer];
     if (! isFileValid(filePath)){
         //send to server ' ' ???????????????????????????????
-        std::cout<< "invalid input";
+        std::cout<< "invalid input\n";
         return;
     }
     FILE* file;
@@ -234,6 +234,32 @@ void resetMsg(char* recievedMessege, int endOfMsg, int buffer){
     *(recievedMessege + endOfMsg +1) = '\0';
  }
 
+ void seperateLines(std::ofstream& file,char* recievedMessege,  int recievedBytes){
+    std::string tempWord;
+    for (int j = 0; j < recievedBytes; j++){
+        if (*(recievedMessege+j) == ' '){
+            file<<tempWord;
+            file<<",";
+            tempWord.clear();
+        }
+        else if (*(recievedMessege+j) == '\\' && *(recievedMessege+j + 1) == 'n'){
+            file<<tempWord;
+            file<<"\n";
+            tempWord.clear();
+            j++;
+        }
+
+        else {
+            std::string tempChar = std::string(1, *(recievedMessege +j));
+            tempWord.append(tempChar);
+            tempChar.clear();
+        
+        }
+    }
+    file<<tempWord;
+    file<<",";
+ }
+
 void outputFile(const int buffer, const int m_ClientSocket, char* recievedMessege, int recievedBytes) {
      std::string filePath;
     std::cin >> filePath;
@@ -244,7 +270,7 @@ void outputFile(const int buffer, const int m_ClientSocket, char* recievedMesseg
     file.open(filePath);
     int end = endOfMsg(recievedMessege, recievedBytes);
     while (end == buffer){
-       file << recievedMessege;
+       seperateLines(file, recievedMessege, recievedBytes);
        // recievedBytes = recieveFromServer(m_ClientSocket, recievedMessege, buffer);
         end = endOfMsg(recievedMessege, recievedBytes);
     }
@@ -253,7 +279,7 @@ void outputFile(const int buffer, const int m_ClientSocket, char* recievedMesseg
     for (int j = 0; j < end -2; j++){
         last[j] = *(recievedMessege+j);
     }
-    file << last;
+    seperateLines(file, last, recievedBytes);
     file.close();
     resetMsg(recievedMessege, end, buffer);
 }
@@ -270,36 +296,74 @@ void printMsg(const int buffer, const int m_ClientSocket,char* recievedMessege, 
     std::cout<< last;
 
 }
-void interactWithServer(const int buffer, const int m_ClientSocket){
-  char recievedMessege[buffer];
-  std::string m_messegeToServer;
-    // need to be seperated into send thread and recieve thread!!!!!!!!!!
-  while(true){
-    int recievedBytes = recieveFromServer(m_ClientSocket, recievedMessege, buffer);
+
+
+
+void recieveThreadFunc(const int buffer, const int m_clientSocket, bool& stopRunning){
+    char recievedMessege[buffer];
+    while(stopRunning){
+    int recievedBytes = recieveFromServer(m_clientSocket, recievedMessege, buffer);
     std::string parameter;
     for(int i = 0; recievedMessege[i] != ' '; i++){
         std::string temp = std::string(1, recievedMessege[i]);
         parameter.append(temp);
     }
     if ( parameter == "inputFile"){
-        inputFile(buffer, m_ClientSocket);
+        inputFile(buffer, m_clientSocket);
     }
     else if (parameter == "outputFile"){
-        outputFile(buffer, m_ClientSocket, recievedMessege,recievedBytes);
+        outputFile(buffer, m_clientSocket, recievedMessege,recievedBytes);
     }
     //print messege
     else {
-        printMsg(buffer, m_ClientSocket, recievedMessege, recievedBytes);
+        printMsg(buffer, m_clientSocket, recievedMessege, recievedBytes);
 
     }
+}
+}
+ void sendThreadFunc(const int m_ClientSocket){
+    std::string m_messegeToServer;
     std::cin >> m_messegeToServer;
-    sendToServer(m_messegeToServer, m_ClientSocket);
     if (m_messegeToServer == "8"){
+        return;
+    }
+    int i;
+     try
+        {
+            i = std::stoi(m_messegeToServer);
+        }
+        catch(std::invalid_argument const& ex)
+        {
+             std::cout<< "invalid input\n";
+        }
+        catch(std::out_of_range const& ex)
+        {
+             std::cout<< "invalid input\n";
+        }
+ 
+    if (i <=0 || i == 6 || i == 7 || i > 8) {
+        std::cout<< "invalid input\n";
+    }
+    sendToServer(m_messegeToServer, m_ClientSocket);
+ }
+
+ 
+ 
+
+
+void interactWithServer(const int buffer, const int m_ClientSocket){
+    bool stopRunning = false; 
+    // need to be seperated into send thread and recieve thread!!!!!!!!!!
+    std::thread recieveThread(recieveThreadFunc,buffer, m_ClientSocket, std::ref(stopRunning));
+    std::thread sendThread(sendThreadFunc, m_ClientSocket);
+
+    if (sendThread.joinable()){
+        stopRunning = true;
+        recieveThread.join();
+        sendThread.join();
          close(m_ClientSocket);
-         break;
     }
   }
-}
 
 
 
@@ -307,12 +371,13 @@ int main(int argc,char* argv[]) {
     int m_ClientSocket;
     const int buffer = 4096;    
     std::string m_messegeToServer;
-    char recievedMessege[buffer] {'\0'};
+    char recievedMessege[buffer] = {'2','.','3',' ','4','.','5','\\','n','3','.','4','x','x','x'};
     //initiation(argc, argv, m_ClientSocket, buffer);
    // interactWithServer(buffer, m_ClientSocket);
     //inputFile(buffer, m_ClientSocket);
-    std::cin >> recievedMessege;
-    int recievedBytes = 331;
+    //std::cin >> recievedMessege;
+    
+    int recievedBytes = 15;
     
     // std::cout << recievedMessege;
     // int end = endOfMsg(recievedMessege, recievedBytes);
@@ -325,7 +390,7 @@ int main(int argc,char* argv[]) {
         }
     }
     */
-    outputFile(buffer, m_ClientSocket, recievedMessege, recievedBytes);
+    //outputFile(buffer, m_ClientSocket, recievedMessege, recievedBytes);
 
     
     //close(m_ClientSocket);
