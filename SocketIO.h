@@ -4,6 +4,9 @@
 #include <sys/socket.h>
 #include <string.h>
 #include <iostream>
+#include <cstring>
+#include <stdio.h>
+#include <ostream>
 class SocketIO : public defualtIO
 {
 private:
