@@ -42,7 +42,7 @@ bool SettingCommand::setParameters(std::string parameters) {
     if (parameters == "") {
         return true;
     }
-    m_error_msg.append("msg");
+   // m_error_msg.append("msg");
     bool valid;
     int count = 1;
 std::string word;
@@ -93,10 +93,10 @@ std::string word;
     
 
  }
- if (!valid) {
- m_error_msg.append("\nxxx");
+//  if (!valid) {
+//  m_error_msg.append("\nxxx");
 
- }
+//  }
  return valid;
 }
 int SettingCommand::getK() {

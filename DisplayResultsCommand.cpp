@@ -14,17 +14,17 @@ void DisplayResultsCommand::execute(){
     if (m_upload_command->valid()) {
         if (m_classify->valid()) {
             std::string toadd = m_classify->getMsg();
-            m_msg.append("msg ");
+           // m_msg.append("msg ");
             m_msg.append(toadd);
-            m_msg.append("Done.\nxxx");
+            m_msg.append("Done.");
             m_valid = true;
         }
         else {
-            m_msg = "msg please classify the dataxxx\n";
+            m_msg = "please classify the data";
         }
     }
     else {//no data uplaoded.
-        m_msg = "msg please upload dataxxx\n";
+        m_msg = "please upload data";
 }
 m_io->write(m_msg);
 }

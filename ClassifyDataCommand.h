@@ -9,7 +9,7 @@ class ClassifyDataCommand: public Command{
     private:
     bool m_upcommand;
     bool m_setcommand;
-    KNN m_Knn;
+    KNN* m_Knn;
     distanceAlgorithems* m_distancealgo;
     CSVReader* m_train;
     CSVReader* m_test;
@@ -23,7 +23,7 @@ class ClassifyDataCommand: public Command{
     public:
     void setResult();
     ClassifyDataCommand(UploadDataCommand* up_command,SettingCommand* setcommand,defualtIO& io);
-    ~ClassifyDataCommand() = default;
+    ~ClassifyDataCommand();
     void execute();
     using Command::valid;
     using Command::getMsg;

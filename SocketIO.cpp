@@ -90,7 +90,7 @@ void SocketIO::resetMsg(char* recievedMessege, int endOfMsg, int recievedBytes){
 int SocketIO::getMessage(char* buffer) {
     int read_bytes = recv(m_client_socket_fd,buffer,m_expected_data_length,0);
     if (read_bytes == 0) {
-        std::cout<<"empty message";
+        //std::cout<<"empty message";
         return -1;
     }
     else if ( read_bytes < 0) {

@@ -4,6 +4,7 @@ ClassifyDataCommand::ClassifyDataCommand(UploadDataCommand* up_command,SettingCo
      m_train = NULL;
     m_test = NULL;
     m_valid = false;
+    m_Knn = new KNN;
     m_distancealgo = new distanceAlgorithems;
     m_io = &io;
        // m_upload_command = dynamic_cast<UploadDataCommand*>(up_command);
@@ -14,6 +15,9 @@ ClassifyDataCommand::ClassifyDataCommand(UploadDataCommand* up_command,SettingCo
     //add try and catch for dynamic_casting.
     
 }
+ClassifyDataCommand::~ClassifyDataCommand() {
+    delete m_Knn;
+}
 void ClassifyDataCommand::setParams() {
     m_k = m_setting_command->getK();
     delete m_distancealgo;
@@ -23,9 +27,9 @@ void ClassifyDataCommand::setParams() {
 
 }
 void ClassifyDataCommand::setKNN(){
-m_Knn.setCSVFile(m_train);
-m_Knn.setK(m_k);
-m_Knn.setDistanceAlgorithem((m_distancealgo));
+m_Knn->setCSVFile(m_train);
+m_Knn->setK(m_k);
+m_Knn->setDistanceAlgorithem((m_distancealgo));
 }
 void ClassifyDataCommand::execute(){
     m_msg.clear();
@@ -33,11 +37,11 @@ void ClassifyDataCommand::execute(){
         setParams();
         setKNN();
         setResult();
-        (*m_io).write("msg classifying data complete \nxxx");
+        (*m_io).write("classifying data complete");
         m_valid = true;
     }
     else {
-        m_msg = "msg please upload data \nxxx";
+        m_msg = "please upload data";
         (*m_io).write(m_msg);
         m_valid = false;
     }
@@ -56,8 +60,8 @@ void ClassifyDataCommand::setResult() {
         vectoc = convertVectorToDoubles(vectocheck);
         m_msg.append(std::to_string(i));
         m_msg.append(". ");
-        m_Knn.setInputVector(vectoc);
-        m_msg.append(m_Knn.runKNN());
+        m_Knn->setInputVector(vectoc);
+        m_msg.append(m_Knn->runKNN());
         m_msg.append("\n");
         i++;
     }

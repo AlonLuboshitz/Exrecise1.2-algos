@@ -18,16 +18,18 @@ void UploadDataCommand:: execute(){
     while (i < 3) {
         //train file
         if (i == 1) {
-            (*m_io).write("msg Please upload your local train CSV file.xxx\noutputfilexxx\n");
+            (*m_io).write("Please upload your local train CSV file");
+            (*m_io).write("inputfile");
             (*m_train).setNewFileData((*m_io).read(),true);
-            (*m_io).write("msg Upload complete.xxx\n");
+            (*m_io).write("Upload complete.");
             i++;
         }
         //test file
         if (i == 2) {
-            (*m_io).write("msg Please upload your local test CSV file.xxx\noutputfilexxx\n");
+            (*m_io).write("Please upload your local test CSV file");
+            m_io->write("inputfile");
             (*m_test).setNewFileData((*m_io).read(),true);
-            (*m_io).write("msg Upload complete.xxx\n");
+            (*m_io).write("Upload complete.");
             i++;
         }
     }

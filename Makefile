@@ -1,7 +1,7 @@
 compile = g++ -std=c++11 -pthread
-all: distanceAlgorithems.o Euclidean.o Manhatan.o Minkovsky.o Chevichev.o Canberra.o CSVReader.o inputValidation.o KNN.o  VectorManipulator.o Server.o Client.o SocketIO.o Commands.o
-	$(compile) distanceAlgorithems.o Euclidean.o Manhatan.o Minkovsky.o Chevichev.o Canberra.o CSVReader.o inputValidation.o VectorManipulator.o Client.o SocketIO.o Commands.o -o client.out
-	$(compile) distanceAlgorithems.o Euclidean.o Manhatan.o Minkovsky.o Chevichev.o Canberra.o CSVReader.o inputValidation.o KNN.o VectorManipulator.o Server.o SocketIO.o Commands.o -o server.out
+all: distanceAlgorithems.o Euclidean.o Manhatan.o Minkovsky.o Chevichev.o Canberra.o CSVReader.o inputValidation.o KNN.o  VectorManipulator.o Server.o Client.o SocketIO.o Command.o DisplayResultsCommand.o DownloadResultsCommand.o ClassifyDataCommand.o UploadDataCommand.o SettingCommand.o Cli.o
+	$(compile) distanceAlgorithems.o Euclidean.o Manhatan.o Minkovsky.o Chevichev.o Canberra.o CSVReader.o inputValidation.o VectorManipulator.o Client.o SocketIO.o -o client.out
+	$(compile) distanceAlgorithems.o Euclidean.o Manhatan.o Minkovsky.o Chevichev.o Canberra.o CSVReader.o inputValidation.o KNN.o VectorManipulator.o Server.o SocketIO.o Command.o DisplayResultsCommand.o DownloadResultsCommand.o ClassifyDataCommand.o UploadDataCommand.o SettingCommand.o Cli.o -o server.out
 
 
 distanceAlgorithems.o Euclidean.o: distanceAlgorithems.cpp distanceAlgorithems.h Euclidean.cpp Euclidean.h
@@ -30,10 +30,19 @@ SocketIO.o: defualtIO.h SocketIO.h SocketIO.cpp
 	$(compile) -c SocketIO.cpp
 Cli.o: Cli.h Cli.cpp
 	$(compile) -c Cli.cpp
-Commands.o: Commands_header.h Command.cpp ClassifyDataCommand.cpp DownloadResultsCommand.cpp DisplayResultsCommand.cpp SettingCommand.cpp UploadDataCommand.cpp
-	$(compile) -c Command.cpp ClassifyDataCommand.cpp DownloadResultsCommand.cpp DisplayResultsCommand.cpp SettingCommand.cpp UploadDataCommand.cpp
-
-clean: 
+Command.o: Command.h Command.cpp
+	$(compile) -c Command.cpp
+ClassifyDataCommand.o: ClassifyDataCommand.h ClassifyDataCommand.cpp 
+	$(compile) -c ClassifyDataCommand.cpp
+UploadDataCommand.o: UploadDataCommand.h UploadDataCommand.cpp
+	$(compile) -c UploadDataCommand.cpp
+SettingCommand.o: SettingCommand.h SettingCommand.cpp
+	$(compile) -c SettingCommand.cpp
+DisplayResultsCommand.o: DisplayResultsCommand.h DisplayResultsCommand.cpp
+	$(compile) -c DisplayResultsCommand.cpp
+DownloadResultsCommand.o: DownloadResultsCommand.cpp DownloadResultsCommand.cpp
+	$(compile) -c DownloadResultsCommand.cpp
+ clean: 
 	rm *.o server.out client.out
 
 

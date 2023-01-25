@@ -240,7 +240,7 @@ void checkClientsArguments(int argc,char* argv[], std::string& serverIP, std::st
 
 void recieveThreadFunc( bool& stopRunning, SocketIO& io){
     //char recievedMessege[buffer];
-    while(stopRunning){
+    //while(! stopRunning){
         std::string msgFromServer = io.read();
     // int recievedBytes = recieveFromServer(m_clientSocket, recievedMessege, buffer);
     // std::string parameter;
@@ -259,37 +259,37 @@ void recieveThreadFunc( bool& stopRunning, SocketIO& io){
         std::cout << msgFromServer << "\n";
 
     }
-}
+//}
 
 }
  void sendThreadFunc(SocketIO& io){
     std::string m_messegeToServer;
 
-    while (true){
+   // while (true){
     std::cin >> m_messegeToServer;
     if (m_messegeToServer == "8"){
         io.write(m_messegeToServer);
         return;
     }
     int i;
-     try
-        {
-            i = std::stoi(m_messegeToServer);
-        }
-        catch(std::invalid_argument const& ex)
-        {
-             std::cout<< "invalid input\n";
-        }
-        catch(std::out_of_range const& ex)
-        {
-             std::cout<< "invalid input\n";
-        }
+    //  try
+    //     {
+    //         i = std::stoi(m_messegeToServer);
+    //     }
+    //     catch(std::invalid_argument const& ex)
+    //     {
+    //          std::cout<< "invalid input\n";
+    //     }
+    //     catch(std::out_of_range const& ex)
+    //     {
+    //          std::cout<< "invalid input\n";
+    //     }
  
-    if (i <=0 || i == 6 || i == 7 || i > 8) {
-        std::cout<< "invalid input\n";
-    }
+    // if (i <=0 || i == 6 || i == 7 || i > 8) {
+    //     std::cout<< "invalid input\n";
+    // }
     io.write(m_messegeToServer);
-    }
+   // }
  }
 
  
@@ -314,7 +314,7 @@ void recieveThreadFunc( bool& stopRunning, SocketIO& io){
 
 int main() {
     int m_ClientSocket;
-    int m_serverPortNum = 5555;
+    int m_serverPortNum = 5554;
     const int buffer = 4096;
     struct sockaddr_in m_serverStructAdress;    
     std::string m_messegeToServer;
@@ -340,14 +340,18 @@ int main() {
 //     io.write("gili");
 //    std::cout<< io.read();
     bool stop = false;
+    while (true){
     recieveThreadFunc(stop, io);
     sendThreadFunc(io);
     
+    }
+    
+
    delete []ip;
    close(m_ClientSocket);
 
 
-// }
+}
 
 // int main(int argc,char* argv[]) {
 //     int m_ClientSocket;
