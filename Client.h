@@ -13,6 +13,7 @@
 #include <iostream>
 #include <sstream>
 #include "SocketIO.h"
+#include <thread>
 
 
 int createSocket(int& m_ClientSocket);
@@ -22,6 +23,13 @@ int getVariables(std::string& m_messegeToServer);
 void sendToServer(std::string m_messegeToServer, int m_ClientSocket);
 void recieveFromServer(int m_ClientSocket, char* recievedMessege, const int buffer);
 void checkClientsArguments(int argc,char* argv[],std::string& serverIP, std::string& strServerPort );
+void inputFile(SocketIO& io);
+void printMsg(const int buffer, const int m_ClientSocket,char* recievedMessege, int recievedBytes );
+void outputFile(SocketIO& io);
+void seperateLines(std::ofstream& file,std::string& msgFromServer);
+bool isFileValid(std::string FilePath);
+void recieveThreadFunc( bool& stopRunning, SocketIO& io);
+void sendThreadFunc(SocketIO& io);
 // int main(int argc,char* argv[]);
 
 #endif
