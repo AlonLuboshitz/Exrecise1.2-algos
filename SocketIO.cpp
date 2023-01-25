@@ -19,7 +19,7 @@ bool SocketIO::sendMessage(std::string message) {
 }
 //convert back to char*??????????????????????????????
 /**
- * the function returns the index of the first 'x' in the 'xxx' which symbolyze the end of the messge.
+ * the function returns the index of the last 'x' in the 'xxx' which symbolyze the end of the messge.
  * if no 'xxx' was found  - returns back the reiceved bytes
 */
 int SocketIO::endOfMsg(std::string recievedMessege, int recievedBytes){
@@ -37,7 +37,7 @@ int SocketIO::endOfMsg(std::string recievedMessege, int recievedBytes){
     //         }
     //     }
     // }
-    return recievedBytes;
+    return recievedBytes + 3;
     
 }
 /**
@@ -49,7 +49,7 @@ void SocketIO::resetMsg(char* recievedMessege, int endOfMsg, int recievedBytes){
         return;
     }
 
-    m_messegeLeft.append (recievedMessege + endOfMsg + 3, recievedBytes - endOfMsg);
+    m_messegeLeft.append (recievedMessege + endOfMsg, recievedBytes - endOfMsg);
     // std::memmove(recievedMessege, recievedMessege + endOfMsg + 1, buffer - endOfMsg);
     // *(recievedMessege + endOfMsg +1) = '\0';
  }
