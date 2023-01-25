@@ -40,18 +40,18 @@ bool accpetClient(int socket_fd, int& client_socket_fd,  sockaddr_in& client) {
 }
 
 
-bool sendMessage(int client_socket_fd, std::string message) {
-    int length = message.size() + 1;
-    char buffer[length];
-    strcpy(buffer,message.c_str());
-    length = strlen(buffer);
-    int read_bytes = send(client_socket_fd,buffer,length,0);
-    if (read_bytes < 0) {
-        std::cout<<"error sending message";
-        return false;
-    }
-    else return true;
-}
+// bool sendMessage(int client_socket_fd, std::string message) {
+//     int length = message.size() + 1;
+//     char buffer[length];
+//     strcpy(buffer,message.c_str());
+//     length = strlen(buffer);
+//     int read_bytes = send(client_socket_fd,buffer,length,0);
+//     if (read_bytes < 0) {
+//         std::cout<<"error sending message";
+//         return false;
+//     }
+//     else return true;
+// }
 
 
 bool validateMessage(char message[],std::vector<double>& message_vector,
@@ -131,23 +131,23 @@ void setKNN(KNN& knn, int k, std::vector<double> vector, distanceAlgorithems* di
     knn.setK(k);
     knn.setDistanceAlgorithem(distanceAlgorithems);
 }
-bool getMessage(int client_socket_fd, char buffer[], int expected_data_length) {
+// bool getMessage(int client_socket_fd, char buffer[], int expected_data_length) {
    
    
-    int read_bytes = recv(client_socket_fd,buffer,expected_data_length,0);
-    if (read_bytes == 0) {
-        std::cout<<"empty message";
-        return false;
-    }
-    else if ( read_bytes < 0) {
-        std::cout<<"error reiciving message"<<std::endl;
-        return false;
-    }
-    else { 
-    buffer[read_bytes] = '\0';
-    return true;
-    }
-}
+//     int read_bytes = recv(client_socket_fd,buffer,expected_data_length,0);
+//     if (read_bytes == 0) {
+//         std::cout<<"empty message";
+//         return false;
+//     }
+//     else if ( read_bytes < 0) {
+//         std::cout<<"error reiciving message"<<std::endl;
+//         return false;
+//     }
+//     else { 
+//     buffer[read_bytes] = '\0';
+//     return true;
+//     }
+// }
 
 // int main (int argc, char* argv[]) {
 //     std::string port, fileName;

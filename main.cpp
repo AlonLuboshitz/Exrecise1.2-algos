@@ -7,6 +7,7 @@
 #include "ClassifyDataCommand.h"
 #include "DisplayResultsCommand.h"
 #include "DownloadResultsCommand.h"
+=======
 #include "Test.h"
 #include "Cli.h"
 int main () {
