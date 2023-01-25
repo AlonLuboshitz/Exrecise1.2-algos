@@ -6,8 +6,6 @@ SocketIO:: SocketIO(int client_socket_fd, int expected_data_length){
 }
 
 bool SocketIO::sendMessage(std::string message) {
-    // SPACE BEFORE XXX???????
-    message.append(" xxx");
     int length = message.size() + 1;
     char buffer[length];
     strcpy(buffer,message.c_str());
@@ -19,10 +17,15 @@ bool SocketIO::sendMessage(std::string message) {
     }
     else return true;
 }
-int SocketIO::endOfMsg(char* recievedMessege, int recievedBytes){
+//convert back to char*??????????????????????????????
+/**
+ * the function returns the index of the first 'x' in the 'xxx' which symbolyze the end of the messge.
+ * if no 'xxx' was found  - returns back the reiceved bytes
+*/
+int SocketIO::endOfMsg(std::string recievedMessege, int recievedBytes){
     // std::string stop;
-    std::string tempMsg = recievedMessege;
-     std::size_t end = tempMsg.find("xxx");
+    //std::string tempMsg = recievedMessege;
+     std::size_t end = recievedMessege.find("xxx");
     if (end != std::string::npos){
         return static_cast<int>(end);
     }
@@ -37,17 +40,28 @@ int SocketIO::endOfMsg(char* recievedMessege, int recievedBytes){
     return recievedBytes;
     
 }
-
+/**
+ * the function appends to the 'messege left' string  the recieved string without the begging of the string until the end of the messege.
+ * if end of the messege is the same sized as the recieved bytes, it returns without doing anything
+*/
 void SocketIO::resetMsg(char* recievedMessege, int endOfMsg, int recievedBytes){
     if (endOfMsg == recievedBytes){
         return;
     }
-    m_messegeLeft.append (recievedMessege + endOfMsg, recievedBytes - endOfMsg);
+
+    m_messegeLeft.append (recievedMessege + endOfMsg + 3, recievedBytes - endOfMsg);
     // std::memmove(recievedMessege, recievedMessege + endOfMsg + 1, buffer - endOfMsg);
     // *(recievedMessege + endOfMsg +1) = '\0';
  }
 
  void seperateLines(std::ofstream& file,char* recievedMessege,  int recievedBytes){
+    std::string str_msg;
+    size_t found = 0;
+     
+    //  while (found != std:: string::npos){
+    //     str_msg.find()
+    //  }
+
     std::string tempWord;
     for (int j = 0; j < recievedBytes; j++){
         if (*(recievedMessege+j) == ' '){
@@ -90,9 +104,14 @@ int SocketIO::getMessage(char* buffer) {
 }
 
 void SocketIO::write(std::string str){
+    str.append(" xxx");
     sendMessage(str);
 }
 
+/**
+ * this function integrates all the parts of one messge recieved from the server
+ * and returns it
+*/
 std::string SocketIO:: read(){
         std::string str_msg; 
 
@@ -110,9 +129,26 @@ std::string SocketIO:: read(){
     }
     str_msg.append(msg, recievedBytes - end);
     resetMsg(msg, end, recievedBytes);
+    msg[0] = '\0';
     
+    return str_msg;
+}
+std::string SocketIO::getMessegeLeft(){
+    return m_messegeLeft;
 }
 
-SocketIO::~SocketIO()
-{
+
+int main(){
+    
+    SocketIO gili(34, 4096);
+    std::string str = "d56sh djiedey xxx 3vnh782";
+    int i = gili.endOfMsg(str, 25);
+    std::cout<< i;
+    int length = str.size() + 1;
+    char buffer[length];
+    strcpy(buffer,str.c_str());
+    gili.resetMsg(buffer,i,25 );
+    std::string msgleft = gili.getMessegeLeft();
+
+
 }

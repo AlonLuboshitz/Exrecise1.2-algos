@@ -17,14 +17,16 @@ private:
 public:
     SocketIO() = delete;
     SocketIO(int client_socket_fd, int expected_data_length);
-    ~SocketIO();
+    ~SocketIO() = default;
 
     void write(std::string str);
     std::string read();
     bool sendMessage(std::string message);
     int getMessage(char buffer[]);
-    int endOfMsg(char* recievedMessege, int recievedBytes);
+    int endOfMsg(std::string recievedMessege, int recievedBytes);
     void resetMsg(char* recievedMessege, int endOfMsg, int recievedBytes);
+    std::string getMessegeLeft();
+
 };
 
 
