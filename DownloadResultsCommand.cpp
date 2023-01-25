@@ -1,8 +1,8 @@
 #include "DownloadResultsCommand.h"
 
-DownloadResultsCommand::DownloadResultsCommand(UploadDataCommand& uploadCommand,ClassifyDataCommand& classify,defualtIO& io) {
-    m_upload_command = &uploadCommand;
-    m_classify = &classify;
+DownloadResultsCommand::DownloadResultsCommand(UploadDataCommand* uploadCommand,ClassifyDataCommand* classify,defualtIO& io) {
+     m_classify = classify;
+    m_upload_command = uploadCommand;
     m_discription = "download results";
     m_io = &io;
 }

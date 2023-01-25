@@ -19,6 +19,7 @@ public:
      ~Command() = default;
    // void sendCurrentParameters();
     virtual void execute() = 0;
+    std::string getName();
     
    
 };

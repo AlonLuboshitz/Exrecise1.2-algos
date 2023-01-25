@@ -7,6 +7,8 @@
 #include "SettingCommand.h"
 class ClassifyDataCommand: public Command{
     private:
+    bool m_upcommand;
+    bool m_setcommand;
     KNN m_Knn;
     distanceAlgorithems* m_distancealgo;
     CSVReader* m_train;
@@ -20,7 +22,7 @@ class ClassifyDataCommand: public Command{
     void setParams();
     public:
     void setResult();
-    ClassifyDataCommand(UploadDataCommand& command,SettingCommand& setcommand,defualtIO& io);
+    ClassifyDataCommand(UploadDataCommand* up_command,SettingCommand* setcommand,defualtIO& io);
     ~ClassifyDataCommand() = default;
     void execute();
     using Command::valid;

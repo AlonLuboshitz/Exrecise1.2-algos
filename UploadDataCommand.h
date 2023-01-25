@@ -9,8 +9,8 @@ class UploadDataCommand: public Command{
     CSVReader* m_test;
     void validfileData(std::string data);
     public:
-    UploadDataCommand(CSVReader& train, CSVReader& test, defualtIO& io);
-    ~UploadDataCommand() = default;
+    UploadDataCommand(defualtIO& io);
+    ~UploadDataCommand();
     void execute();
     using Command::valid;
     CSVReader* getTrain();

@@ -1,14 +1,17 @@
 #include "UploadDataCommand.h"
 #include <cstring>
 
-UploadDataCommand::UploadDataCommand(CSVReader& train, CSVReader& test, defualtIO& io) {
+UploadDataCommand::UploadDataCommand(defualtIO& io) {
     m_discription = "upload an unclassified csv data file";
-    m_train = &train;
-    m_test = &test;
+    m_train = new CSVReader;
+    m_test = new CSVReader;
     m_io = &io;
     m_valid = false;
     }
-
+UploadDataCommand::~UploadDataCommand() {
+    delete m_train;
+    delete m_test;
+}
 void UploadDataCommand:: execute(){
     //get two files
     int i = 1;

@@ -7,25 +7,25 @@
 #include "ClassifyDataCommand.h"
 #include "DisplayResultsCommand.h"
 #include "DownloadResultsCommand.h"
-
-// int main () {
-//     CSVReader test,train;
-//     standartIO io;
-//     UploadDataCommand up(train,test,io);
-//     up.execute();
-//     SettingCommand set(io);
-//     std::string s="0";
-//     int i =1;
-//     ClassifyDataCommand clsi(up,set,io);
-//     DisplayResultsCommand display(up,clsi,io);
-//     DownloadResultsCommand down(up,clsi,io);
-//     while(i<10 ) {
-
-//           set.execute();
-//     clsi.execute();
-//     display.execute();
-//     down.execute();
-//     i++;
-//     }
-
-// }
+=======
+#include "Test.h"
+#include "Cli.h"
+int main () {
+    std::vector<Command*> commands;
+    standartIO io;
+    UploadDataCommand* up = new UploadDataCommand(io);
+    SettingCommand* set = new SettingCommand(io);
+   ClassifyDataCommand* classify = new ClassifyDataCommand(up,set,io);
+   DisplayResultsCommand* display = new DisplayResultsCommand(up,classify,io);
+     commands.push_back(up);
+    commands.push_back(set);
+    commands.push_back(classify);
+    commands.push_back(display);
+    Cli cli(commands,"Welcome to the KNN Classifier Server. Please choose an option: \n");
+    std::cout<<cli.getMenu();
+    cli.run();
+    for (int i = 0; i <= commands.size(); i ++) {
+        delete commands[i];
+    }
+    commands.clear();
+}

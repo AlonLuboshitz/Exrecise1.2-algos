@@ -1,11 +1,12 @@
 #include "DisplayResultsCommand.h"
 
 
-DisplayResultsCommand::DisplayResultsCommand(UploadDataCommand& uploadCommand,ClassifyDataCommand& classify,defualtIO& io) {
-    m_classify = &classify;
+DisplayResultsCommand::DisplayResultsCommand(UploadDataCommand* uploadCommand,ClassifyDataCommand* classify,defualtIO& io) {
     m_valid = false;
     m_io = &io;
-    m_upload_command = &uploadCommand;
+    m_classify = classify;
+    m_upload_command = uploadCommand;
+    //catch and realse;
     m_discription = "display results";
 }
 void DisplayResultsCommand::execute(){
