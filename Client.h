@@ -12,6 +12,7 @@
 #include "inputValidation.h"
 #include <iostream>
 #include <sstream>
+#include "SocketIO.h"
 
 
 int createSocket(int& m_ClientSocket);
@@ -21,6 +22,6 @@ int getVariables(std::string& m_messegeToServer);
 void sendToServer(std::string m_messegeToServer, int m_ClientSocket);
 void recieveFromServer(int m_ClientSocket, char* recievedMessege, const int buffer);
 void checkClientsArguments(int argc,char* argv[],std::string& serverIP, std::string& strServerPort );
-int main(int argc,char* argv[]);
+// int main(int argc,char* argv[]);
 
 #endif

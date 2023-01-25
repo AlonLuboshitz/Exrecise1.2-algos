@@ -138,17 +138,17 @@ std::string SocketIO::getMessegeLeft(){
 }
 
 
-int main(){
+// int main(){
     
-    SocketIO gili(34, 4096);
-    std::string str = "d56sh djiedey xxx 3vnh782";
-    int i = gili.endOfMsg(str, 25);
-    std::cout<< i;
-    int length = str.size() + 1;
-    char buffer[length];
-    strcpy(buffer,str.c_str());
-    gili.resetMsg(buffer,i,25 );
-    std::string msgleft = gili.getMessegeLeft();
+//     SocketIO gili(34, 4096);
+//     std::string str = "d56sh djiedey xxx 3vnh782";
+//     int i = gili.endOfMsg(str, 25);
+//     std::cout<< i;
+//     int length = str.size() + 1;
+//     char buffer[length];
+//     strcpy(buffer,str.c_str());
+//     gili.resetMsg(buffer,i,25 );
+//     std::string msgleft = gili.getMessegeLeft();
 
 
-}
+// }

@@ -1,7 +1,7 @@
 compile = g++ -std=c++11
-# all: distanceAlgorithems.o Euclidean.o Manhatan.o Minkovsky.o Chevichev.o Canberra.o CSVReader.o inputValidation.o KNN.o  VectorManipulator.o Server.o Client.o
-# 	$(compile) distanceAlgorithems.o Euclidean.o Manhatan.o Minkovsky.o Chevichev.o Canberra.o CSVReader.o inputValidation.o VectorManipulator.o Client.o -o client.out
-# 	$(compile) distanceAlgorithems.o Euclidean.o Manhatan.o Minkovsky.o Chevichev.o Canberra.o CSVReader.o inputValidation.o KNN.o VectorManipulator.o Server.o -o server.out
+all: distanceAlgorithems.o Euclidean.o Manhatan.o Minkovsky.o Chevichev.o Canberra.o CSVReader.o inputValidation.o KNN.o  VectorManipulator.o Server.o Client.o SocketIO.o
+	$(compile) distanceAlgorithems.o Euclidean.o Manhatan.o Minkovsky.o Chevichev.o Canberra.o CSVReader.o inputValidation.o VectorManipulator.o Client.o SocketIO.o -o client.out
+	$(compile) distanceAlgorithems.o Euclidean.o Manhatan.o Minkovsky.o Chevichev.o Canberra.o CSVReader.o inputValidation.o KNN.o VectorManipulator.o Server.o SocketIO.o -o server.out
 distanceAlgorithems.o Euclidean.o: distanceAlgorithems.cpp distanceAlgorithems.h Euclidean.cpp Euclidean.h
 	$(compile) -c distanceAlgorithems.cpp Euclidean.cpp
 Manhatan.o: Manhatan.cpp Manhatan.h
@@ -30,6 +30,12 @@ Command.o: Command.cpp Command.h
 	$(compile) -c Command.cpp
 ClassifyDataCommand.o: ClassifyDataCommand.cpp ClassifyDataCommand.h
 	$(compile) -c ClassifyDataCommand.cpp
+# defualtIO.o: defualtIO.h 
+# 	$(compile) -c defualtIO.h
+SocketIO.o: defualtIO.h SocketIO.h SocketIO.cpp
+	$(compile) -c SocketIO.cpp
+
+
 clean: 
 	rm *.o server.out client.out
 

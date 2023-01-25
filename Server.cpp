@@ -1,5 +1,5 @@
 #include "Server.h"
-
+#include "SocketIO.h"
 bool initSocket(int& socket_fd) {
 socket_fd = socket(AF_INET,SOCK_STREAM, 0);
 if (socket_fd < 0) {
@@ -130,6 +130,24 @@ void setKNN(KNN& knn, int k, std::vector<double> vector, distanceAlgorithems* di
     knn.setInputVector(vector);
     knn.setK(k);
     knn.setDistanceAlgorithem(distanceAlgorithems);
+}
+int main () {
+    int socket_fd;
+    initSocket(socket_fd);
+    int port = 5555;
+    struct sockaddr_in sin;
+    setSinMembers(sin, port);
+    if (!bindSocket(socket_fd,sin)) { return 0;}
+    if (!listenTo(socket_fd)) {return 0;}
+    struct sockaddr_in client;
+    int client_socket_fd;
+    accpetClient(socket_fd,client_socket_fd,client);
+    SocketIO io(client_socket_fd,4096);
+    std::cout<<io.read();
+    io.write("wOrks yay1");
+    close(socket_fd);
+
+    
 }
 // bool getMessage(int client_socket_fd, char buffer[], int expected_data_length) {
    
