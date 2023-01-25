@@ -13,7 +13,7 @@ class DownloadResultsCommand: public Command{
     using Command::getMsg;
     
     public:
-    DownloadResultsCommand(UploadDataCommand& uploadCommand,ClassifyDataCommand& classify,defualtIO& io);
+    DownloadResultsCommand(UploadDataCommand* uploadCommand,ClassifyDataCommand* classify,defualtIO& io);
     ~DownloadResultsCommand() = default;
     void execute();
 };

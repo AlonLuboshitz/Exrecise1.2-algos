@@ -12,7 +12,7 @@ class DisplayResultsCommand: public Command{
      using Command::valid;
     using Command::getMsg;
     public:
-    DisplayResultsCommand(UploadDataCommand& uploadCommand,ClassifyDataCommand& classify,defualtIO& io);
+    DisplayResultsCommand(UploadDataCommand* uploadCommand,ClassifyDataCommand* classify,defualtIO& io);
     ~DisplayResultsCommand() = default;
     void execute();
    

@@ -20,3 +20,6 @@ bool Command::valid() {
 std::string Command::getMsg() {
     return m_msg;
 }
+std::string Command::getName() {
+    return m_discription;
+}

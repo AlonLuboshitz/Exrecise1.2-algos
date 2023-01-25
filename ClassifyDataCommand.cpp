@@ -1,13 +1,18 @@
 #include "ClassifyDataCommand.h"
 
-ClassifyDataCommand::ClassifyDataCommand(UploadDataCommand& command,SettingCommand& setcommand,defualtIO& io) {
+ClassifyDataCommand::ClassifyDataCommand(UploadDataCommand* up_command,SettingCommand* setcommand,defualtIO& io) {
      m_train = NULL;
     m_test = NULL;
     m_valid = false;
     m_distancealgo = new distanceAlgorithems;
     m_io = &io;
-    m_upload_command = &command;
-    m_setting_command = &setcommand;
+       // m_upload_command = dynamic_cast<UploadDataCommand*>(up_command);
+   // m_setting_command = dynamic_cast<SettingCommand*>(setcommand);
+   m_upload_command = up_command;
+   m_setting_command = setcommand;
+    m_discription = "classify data";
+    //add try and catch for dynamic_casting.
+    
 }
 void ClassifyDataCommand::setParams() {
     m_k = m_setting_command->getK();
@@ -50,7 +55,7 @@ void ClassifyDataCommand::setResult() {
         vectoc.clear();
         vectoc = convertVectorToDoubles(vectocheck);
         m_msg.append(std::to_string(i));
-        m_msg.append(" ");
+        m_msg.append(". ");
         m_Knn.setInputVector(vectoc);
         m_msg.append(m_Knn.runKNN());
         m_msg.append("\n");
