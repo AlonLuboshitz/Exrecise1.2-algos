@@ -27,7 +27,7 @@ int SocketIO::endOfMsg(std::string recievedMessege, int recievedBytes){
     //std::string tempMsg = recievedMessege;
      std::size_t end = recievedMessege.find("xxx");
     if (end != std::string::npos){
-        return static_cast<int>(end);
+        return static_cast<int>(end) + 2;
     }
     // for (i = 0; i < recievedBytes; i++){
     //     if(*(recievedMessege+i) == 'x'){
@@ -37,7 +37,7 @@ int SocketIO::endOfMsg(std::string recievedMessege, int recievedBytes){
     //         }
     //     }
     // }
-    return recievedBytes + 3;
+    return recievedBytes;
     
 }
 /**
@@ -49,7 +49,7 @@ void SocketIO::resetMsg(char* recievedMessege, int endOfMsg, int recievedBytes){
         return;
     }
 
-    m_messegeLeft.append (recievedMessege + endOfMsg, recievedBytes - endOfMsg);
+    m_messegeLeft.append (recievedMessege + endOfMsg + 1, recievedBytes - endOfMsg);
     // std::memmove(recievedMessege, recievedMessege + endOfMsg + 1, buffer - endOfMsg);
     // *(recievedMessege + endOfMsg +1) = '\0';
  }
@@ -98,13 +98,13 @@ int SocketIO::getMessage(char* buffer) {
         return -1;
     }
     else { 
-    buffer[read_bytes] = '\0';
+    //buffer[read_bytes] = '\0';
     return read_bytes;
     }
 }
 
 void SocketIO::write(std::string str){
-    str.append(" xxx");
+    str.append("xxx");
     sendMessage(str);
 }
 
@@ -113,9 +113,9 @@ void SocketIO::write(std::string str){
  * and returns it
 */
 std::string SocketIO:: read(){
-        std::string str_msg; 
+    std::string str_msg; 
 
-    if ( ! m_messegeLeft.empty()){
+    if (! m_messegeLeft.empty()){
         str_msg.append(m_messegeLeft);
         m_messegeLeft.clear();
     }
@@ -127,7 +127,7 @@ std::string SocketIO:: read(){
         msg[0] = '\0';
         recievedBytes = getMessage(msg);
     }
-    str_msg.append(msg, end);
+    str_msg.append(msg, end - 2);
     resetMsg(msg, end, recievedBytes);
     msg[0] = '\0';
     

@@ -13,7 +13,7 @@ void DownloadResultsCommand::execute(){
        if (m_upload_command->valid()) {
         if (m_classify->valid()) {
             std::string toadd = m_classify->getMsg();
-            m_msg.append("outputfile ");
+            m_msg.append("outputFile ");
             m_msg.append(toadd);
             m_valid = true;
         }

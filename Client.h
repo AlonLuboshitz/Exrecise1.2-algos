@@ -23,7 +23,7 @@ int getVariables(std::string& m_messegeToServer);
 void sendToServer(std::string m_messegeToServer, int m_ClientSocket);
 void recieveFromServer(int m_ClientSocket, char* recievedMessege, const int buffer);
 void checkClientsArguments(int argc,char* argv[],std::string& serverIP, std::string& strServerPort );
-void inputFile(SocketIO& io);
+void inputFile(SocketIO& io, std::string& instructions);
 void printMsg(const int buffer, const int m_ClientSocket,char* recievedMessege, int recievedBytes );
 void outputFile(SocketIO& io);
 void seperateLines(std::ofstream& file,std::string& msgFromServer);

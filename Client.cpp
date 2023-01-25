@@ -141,7 +141,8 @@ bool isFileValid(std::string FilePath) {
 
 
 
-void inputFile(SocketIO& io){
+void inputFile(SocketIO& io, std::string& instructions){
+    std::cout<< instructions;
     int buffer = 4096;
     std::string filePath;
     std::cin >> filePath;
@@ -248,8 +249,10 @@ void recieveThreadFunc( bool& stopRunning, SocketIO& io){
     //     std::string temp = std::string(1, recievedMessege[i]);
     //     parameter.append(temp);
     // }
-    if ( msgFromServer == "inputFile"){
-        inputFile(io);
+    std::string temp(msgFromServer.begin(), msgFromServer.begin()+9);
+    if (temp =="inputFile"){
+        std::string instructions(msgFromServer, 10, msgFromServer.size() - 9);
+        inputFile(io, instructions); 
     }
     else if (msgFromServer == "outputFile"){
         outputFile(io);
@@ -312,44 +315,43 @@ void recieveThreadFunc( bool& stopRunning, SocketIO& io){
 
 
 
-// int main() {
-//     int m_ClientSocket;
-//     int m_serverPortNum = 5555;
-//     const int buffer = 4096;
-//     struct sockaddr_in m_serverStructAdress;    
-//     std::string m_messegeToServer;
-//     char recievedMessege[buffer];
-//     //check if arguments are valid - ip and port
-//     std::string serverIP = "127.0.0.1";
-//      char* ip = new char[serverIP.size() +1];
-//     for (int i=0; i < serverIP.size(); i++){
-//         *(ip+i) = serverIP.at(i);
-//     }
-//     *(ip + serverIP.size()) = '\0';
-//     if (createSocket(m_ClientSocket) < 0){
-//         std::cout << "error creating socket\n";
-//         return -1;
-//     }
-//     //init server adress and try to connect to it
-//     initServerStructAdress(m_serverStructAdress, ip, m_serverPortNum);
-//     if (connectToServer(m_ClientSocket,m_serverStructAdress ) < 0) {
-//         std::cout << "error connecting to server\n";
-//         return -1;
-//     }
-//      SocketIO io(m_ClientSocket, buffer);
-// //     io.write("gili");
-// //    std::cout<< io.read();
-//     bool stop = false;
-//     while (true){
-//     recieveThreadFunc(stop, io);
-//     sendThreadFunc(io);
+int main() {
+    int m_ClientSocket;
+    int m_serverPortNum = 5555;
+    const int buffer = 4096;
+    struct sockaddr_in m_serverStructAdress;    
+    std::string m_messegeToServer;
+    char recievedMessege[buffer];
+    //check if arguments are valid - ip and port
+    std::string serverIP = "127.0.0.1";
+     char* ip = new char[serverIP.size() +1];
+    for (int i=0; i < serverIP.size(); i++){
+        *(ip+i) = serverIP.at(i);
+    }
+    *(ip + serverIP.size()) = '\0';
+    if (createSocket(m_ClientSocket) < 0){
+        std::cout << "error creating socket\n";
+        return -1;
+    }
+    //init server adress and try to connect to it
+    initServerStructAdress(m_serverStructAdress, ip, m_serverPortNum);
+    if (connectToServer(m_ClientSocket,m_serverStructAdress ) < 0) {
+        std::cout << "error connecting to server\n";
+        return -1;
+    }
+     SocketIO io(m_ClientSocket, buffer);
+//     io.write("gili");
+//    std::cout<< io.read();
+    bool stop = false;
+    while (true){
+    recieveThreadFunc(stop, io);
+    sendThreadFunc(io);
     
-//     }
-//    delete []ip;
-//    close(m_ClientSocket);
+    }
+   delete []ip;
+   close(m_ClientSocket);
 
-
-// }
+}
 
 // int main(int argc,char* argv[]) {
 //     int m_ClientSocket;

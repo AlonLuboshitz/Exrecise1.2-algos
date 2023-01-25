@@ -46,17 +46,35 @@ void Cli::run() {
 checks input from user is in command range.
 */
 bool Cli::validUserinput(std::string command_num,int& num) {
-    //isKaninteger check if int and bigger then 0.
-    if (isKAnInteger(command_num)) {
-        int number_of_command = std::stoi(command_num);
-        //make sure number is commands range.
-        if (number_of_command <= m_commands_size) {
-            num = std::stoi(command_num);
-            return true;
+    // //isKaninteger check if int and bigger then 0.
+    // if (isKAnInteger(command_num)) {
+    //     int number_of_command = std::stoi(command_num);
+    //     //make sure number is commands range.
+    //     if (number_of_command <= m_commands_size) {
+    //         num = std::stoi(command_num);
+    //         return true;
+    //     }
+    //     return false;
+    // }
+    // return false;
+    int i;
+     try
+        {
+            i = std::stoi(command_num);
         }
-        return false;
-    }
-    return false;
+        catch(std::invalid_argument const& ex)
+        {
+             std::cout<< "invalid input\n";
+        }
+        catch(std::out_of_range const& ex)
+        {
+             std::cout<< "invalid input\n";
+        }
+        if (i<=0){
+            return false;
+        }
+        num = i;
+        return true;
 }
 /* runs one command form vector.
 the int is from 1 - vector size (amount of commands)
