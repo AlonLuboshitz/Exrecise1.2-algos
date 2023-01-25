@@ -9,6 +9,9 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include "SocketIO.h"
+#include "Cli.h"
+#include "commands_header.h"
 
 void setKNN(KNN& knn, int k, std::vector<double> vector, distanceAlgorithems* distanceAlgorithems);
 void getServerArguments(char* argv[], int argc, 
@@ -24,5 +27,7 @@ bool accpetClient(int socket_fd, int& client_socket_fd, struct sockaddr_in& clie
 using inputvalidation cpp file to validate each input*/
 bool validateMessage(char buffer[],std::vector<double>& message_vector,
 int& k,distanceAlgorithems* &distanceAlgorithems);
+std::vector<Command*> createcommands(defualtIO& io);
+void runApplication(int next_client_socket);
 
 #endif

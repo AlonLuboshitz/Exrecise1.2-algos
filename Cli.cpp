@@ -1,9 +1,10 @@
 #include "Cli.h"
 #include "inputValidation.h"
-Cli::Cli(std::vector<Command*> command,std::string name) {
+Cli::Cli(std::vector<Command*> command,std::string name,defualtIO& io) {
     m_commands = command;
     m_cli_name = name;
     m_commands_size = command.size();
+    m_io = &io;
 }
 std::string Cli::getMenu() {
     std::string menu = "";
@@ -19,24 +20,38 @@ std::string Cli::getMenu() {
         i++;
         iter ++;
     }
+    menu.append("8. exit");
     return menu;
 
 }
 void Cli::run() {
-    for (int i = 1; i <= m_commands_size; i++) {
-        runCommand(i);
+    std::string input = std::to_string(m_commands_size + 9);
+    int num = -1;
+    //user input isnt 8
+    while (input != "8") {
+        m_io->write(getMenu());
+        input = m_io->read();
+        if (validUserinput(input,num)) {
+            runCommand(num);
+        }
+        //invalid input
+        else {
+            m_io->write("invalid input");
+        }
     }
+    return;
 }
 
 /*
 checks input from user is in command range.
 */
-bool Cli::validUserinput(std::string command_num) {
+bool Cli::validUserinput(std::string command_num,int& num) {
     //isKaninteger check if int and bigger then 0.
     if (isKAnInteger(command_num)) {
         int number_of_command = std::stoi(command_num);
         //make sure number is commands range.
         if (number_of_command <= m_commands_size) {
+            num = std::stoi(command_num);
             return true;
         }
         return false;

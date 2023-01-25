@@ -1,5 +1,5 @@
 #include "Server.h"
-#include "SocketIO.h"
+
 bool initSocket(int& socket_fd) {
 socket_fd = socket(AF_INET,SOCK_STREAM, 0);
 if (socket_fd < 0) {
@@ -131,6 +131,32 @@ void setKNN(KNN& knn, int k, std::vector<double> vector, distanceAlgorithems* di
     knn.setK(k);
     knn.setDistanceAlgorithem(distanceAlgorithems);
 }
+std::vector<Command*> createcommands(defualtIO& io) {
+   std::vector<Command*> commands; 
+     UploadDataCommand* up = new UploadDataCommand(io);
+    SettingCommand* set = new SettingCommand(io);
+   ClassifyDataCommand* classify = new ClassifyDataCommand(up,set,io);
+   DisplayResultsCommand* display = new DisplayResultsCommand(up,classify,io);
+   DownloadResultsCommand* download = new DownloadResultsCommand(up,classify,io);
+   commands.push_back(up);
+    commands.push_back(set);
+    commands.push_back(classify);
+    commands.push_back(display);
+    commands.push_back(download);
+    return commands;
+}
+void runApplication(int next_client_socket) {
+     std::vector<Command*> commands;
+    SocketIO io(next_client_socket,4096);
+    commands = createcommands(io);
+    Cli cli(commands,"Welcome to the KNN Classifier Server. Please choose an option: ",io);
+    cli.run();
+    for (int i = 0; i <= commands.size(); i ++) {
+        delete commands[i];
+    }
+    commands.clear();
+    return;
+}
 int main () {
     int socket_fd;
     initSocket(socket_fd);
@@ -141,14 +167,12 @@ int main () {
     if (!listenTo(socket_fd)) {return 0;}
     struct sockaddr_in client;
     int client_socket_fd;
-    accpetClient(socket_fd,client_socket_fd,client);
-    SocketIO io(client_socket_fd,4096);
-    std::cout<<io.read();
-    io.write("wOrks yay1");
+    while(accpetClient(socket_fd,client_socket_fd,client)) {
+        //create thread
+        runApplication(client_socket_fd);
+    }
     close(socket_fd);
-
-    
-}
+   }
 // bool getMessage(int client_socket_fd, char buffer[], int expected_data_length) {
    
    
