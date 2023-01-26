@@ -14,12 +14,12 @@ std::string SettingCommand::getMsg() {
 }
 void SettingCommand::setMsg() {
     m_msg.clear();
-    m_msg.append("msg The current KNN Parameters are: ");
+    m_msg.append("The current KNN Parameters are: ");
     m_msg.append("K = ");
     m_msg.append(std::to_string(m_k));
     m_msg.append(", distance metric = ");
     m_msg.append(m_disAlgo);
-    m_msg.append("xxx\n");
+    
 }
 void SettingCommand::execute(){
     //set parameters and send.
