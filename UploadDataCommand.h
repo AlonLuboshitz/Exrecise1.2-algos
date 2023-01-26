@@ -4,6 +4,7 @@
 #include "CSVReader.h"
 class UploadDataCommand: public Command{
     private:
+    bool m_newFile;
     std::string m_trainfileData,m_testfileData;
     CSVReader* m_train;
     CSVReader* m_test;
@@ -15,6 +16,8 @@ class UploadDataCommand: public Command{
     using Command::valid;
     CSVReader* getTrain();
     CSVReader* getTest();
+    bool ifNewFile();
+    void setNewFile();
 
 };
 

@@ -229,16 +229,19 @@ void interactionWithServer(SocketIO* io){
         // }
          std::string msgFromServer;
          msgFromServer = io->read();
+
         std::thread downloadFile(outputFile, filePath, msgFromServer);
         downloadFile.detach();
+
     }
     else {
+        if (msgFromServer == "exit"){
+            break;
+        }
         std::cout << msgFromServer << "\n";
         std::string msgToServer = getMsgFromUser();
         io->write(msgToServer);
-        if (msgFromServer == "8"){
-            break;
-        }
+        
     }
     }
 }
@@ -311,6 +314,7 @@ int main() {
    delete io;
    delete []ip;
    close(m_ClientSocket);
+
 
 }
 

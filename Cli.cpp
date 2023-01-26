@@ -31,14 +31,18 @@ void Cli::run() {
     while (input != "8") {
         m_io->write(getMenu());
         input = m_io->read();
+        if (input == "8") {
+            break;
+        }
         if (validUserinput(input,num)) {
             runCommand(num);
         }
         //invalid input
         else {
-            m_io->write("invalid input");
+            m_io->write("message__ invalid input");
         }
     }
+    m_io->write("exit");
     return;
 }
 
@@ -64,13 +68,13 @@ bool Cli::validUserinput(std::string command_num,int& num) {
         }
         catch(std::invalid_argument const& ex)
         {
-             std::cout<< "invalid input\n";
+             return false;
         }
         catch(std::out_of_range const& ex)
         {
-             std::cout<< "invalid input\n";
+             return false;
         }
-        if (i<=0){
+        if (i<=0 || i > m_commands_size){
             return false;
         }
         num = i;

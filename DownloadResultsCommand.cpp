@@ -10,7 +10,7 @@ DownloadResultsCommand::DownloadResultsCommand(UploadDataCommand* uploadCommand,
 
 void DownloadResultsCommand::execute(){
   m_msg.clear();
- // m_msg.append("message__ ");
+
        if (m_upload_command->valid()) {
         if (m_classify->valid()) {
             std::string toadd = m_classify->getMsg();

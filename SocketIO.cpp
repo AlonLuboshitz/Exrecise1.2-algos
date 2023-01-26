@@ -48,6 +48,7 @@ void SocketIO::resetMsg(char* recievedMessege, int endOfMsg, int recievedBytes){
     if (endOfMsg + 1 == recievedBytes){
         return;
     }
+
     std::string temp;
     temp.append(recievedMessege + endOfMsg + 1, recievedBytes - (endOfMsg + 1));
     if (temp.size() == 1){
@@ -58,6 +59,7 @@ void SocketIO::resetMsg(char* recievedMessege, int endOfMsg, int recievedBytes){
     m_messegeLeft.append (temp);
       if (temp.size() == 1){
         if( m_messegeLeft.at(0) == '\0'){
+
         m_messegeLeft.erase(0, 1);
     }
     // std::memmove(recievedMessege, recievedMessege + endOfMsg + 1, buffer - endOfMsg);

@@ -165,7 +165,6 @@ int main () {
 
     int port = 5555;
 
-
     struct sockaddr_in sin;
     setSinMembers(sin, port);
     if (!bindSocket(socket_fd,sin)) { return 0;}
