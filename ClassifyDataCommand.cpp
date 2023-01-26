@@ -37,11 +37,11 @@ void ClassifyDataCommand::execute(){
         setParams();
         setKNN();
         setResult();
-        (*m_io).write("classifying data complete");
+        (*m_io).write("message__ classifying data complete");
         m_valid = true;
     }
     else {
-        m_msg = "please upload data";
+        m_msg = "message__ please upload data";
         (*m_io).write(m_msg);
         m_valid = false;
     }

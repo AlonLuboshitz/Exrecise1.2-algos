@@ -224,6 +224,10 @@ void interactionWithServer(SocketIO* io){
         }
         io->write(file);
     }
+    else if (temp == "message__") {
+        std::string message(msgFromServer, 10, msgFromServer.size() - 9);
+        std::cout<<message;
+        }
     else if (msgFromServer == "outputFile"){
         outputFile(io);
     }
@@ -290,7 +294,7 @@ void interactionWithServer(SocketIO* io){
 
 int main() {
     int m_ClientSocket;
-    int m_serverPortNum = 5554;
+    int m_serverPortNum = 5555;
     const int buffer = 4096;
     struct sockaddr_in m_serverStructAdress;    
     std::string m_messegeToServer;

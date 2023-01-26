@@ -27,7 +27,7 @@ void UploadDataCommand:: execute(){
             }
             else {
             (*m_train).setNewFileData(input,true);
-            (*m_io).write("Upload complete.");
+            (*m_io).write("message__ Upload complete.");
             i++;
             }
         }
@@ -41,7 +41,7 @@ void UploadDataCommand:: execute(){
             }
             else {
             (*m_test).setNewFileData(input,true);
-            (*m_io).write("Upload complete.");
+            (*m_io).write("message__ Upload complete.");
             i++;
             }
         }
