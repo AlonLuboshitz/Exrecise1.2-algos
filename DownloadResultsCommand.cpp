@@ -26,5 +26,7 @@ void DownloadResultsCommand::execute(){
     else {//no data uplaoded.
         m_msg = "message__ please upload data";
 }
+if (! m_valid){
 m_io->write(m_msg);
+}
 }
