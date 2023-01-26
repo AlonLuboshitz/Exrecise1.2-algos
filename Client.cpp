@@ -158,7 +158,7 @@ void seperateLines(std::ofstream& file,std::string& msgFromServer){
     for (int j = 0; j < messegeLength; j++){
         if (*(messegeArray+j) == ' '){
             file<<tempWord;
-            file<<",";
+            file<<"\t";
             tempWord.clear();
         }
         else if (*(messegeArray+j) == '\\' && *(messegeArray+j + 1) == 'n'){
@@ -223,13 +223,14 @@ void interactionWithServer(SocketIO* io){
         }
     else if (msgFromServer == "outputFile"){
         std::string filePath = getMsgFromUser();
-        if (filePath == "-1"){
-            std::cout<< "invalid input";
-            continue;
-        }
+        // if (! isFileValid(filePath)){
+        //     std::cout<< "invalid input";
+        //     continue;
+        // }
          std::string msgFromServer;
          msgFromServer = io->read();
         std::thread downloadFile(outputFile, filePath, msgFromServer);
+        downloadFile.detach();
     }
     else {
         std::cout << msgFromServer << "\n";
@@ -281,38 +282,37 @@ void interactionWithServer(SocketIO* io){
  
 
 
-// int main() {
-//     int m_ClientSocket;
-//     int m_serverPortNum = 5999;
-//     const int buffer = 4096;
-//     struct sockaddr_in m_serverStructAdress;    
-//     std::string m_messegeToServer;
-//     char recievedMessege[buffer];
-//     //check if arguments are valid - ip and port
-//     std::string serverIP = "127.0.0.1";
-//      char* ip = new char[serverIP.size() +1];
-//     for (int i=0; i < serverIP.size(); i++){
-//         *(ip+i) = serverIP.at(i);
-//     }
-//     *(ip + serverIP.size()) = '\0';
-//     if (createSocket(m_ClientSocket) < 0){
-//         std::cout << "error creating socket\n";
-//         return -1;
-//     }
-//     //init server adress and try to connect to it
-//     initServerStructAdress(m_serverStructAdress, ip, m_serverPortNum);
-//     if (connectToServer(m_ClientSocket,m_serverStructAdress ) < 0) {
-//         std::cout << "error connecting to server\n";
-//         return -1;
-//     }
-//     SocketIO* io = new SocketIO(m_ClientSocket, buffer);
-//    interactionWithServer(io);
-//    delete io;
-//    delete []ip;
-//    close(m_ClientSocket);
-   
+int main() {
+    int m_ClientSocket;
+    int m_serverPortNum = 5555;
+    const int buffer = 4096;
+    struct sockaddr_in m_serverStructAdress;    
+    std::string m_messegeToServer;
+    char recievedMessege[buffer];
+    //check if arguments are valid - ip and port
+    std::string serverIP = "127.0.0.1";
+     char* ip = new char[serverIP.size() +1];
+    for (int i=0; i < serverIP.size(); i++){
+        *(ip+i) = serverIP.at(i);
+    }
+    *(ip + serverIP.size()) = '\0';
+    if (createSocket(m_ClientSocket) < 0){
+        std::cout << "error creating socket\n";
+        return -1;
+    }
+    //init server adress and try to connect to it
+    initServerStructAdress(m_serverStructAdress, ip, m_serverPortNum);
+    if (connectToServer(m_ClientSocket,m_serverStructAdress ) < 0) {
+        std::cout << "error connecting to server\n";
+        return -1;
+    }
+    SocketIO* io = new SocketIO(m_ClientSocket, buffer);
+   interactionWithServer(io);
+   delete io;
+   delete []ip;
+   close(m_ClientSocket);
 
-// }
+}
 
 // int main(int argc,char* argv[]) {
 //     int m_ClientSocket;
