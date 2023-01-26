@@ -23,7 +23,7 @@ void recieveFromServer(int m_ClientSocket, char* recievedMessege, const int buff
 void checkClientsArguments(int argc,char* argv[],std::string& serverIP, std::string& strServerPort );
 std::string inputFile(SocketIO* io, std::string& instructions);
 void printMsg(const int buffer, const int m_ClientSocket,char* recievedMessege, int recievedBytes );
-void outputFile(SocketIO* io);
+void outputFile(std::string filePath, std::string msgFromServer);
 void seperateLines(std::ofstream& file,std::string& msgFromServer);
 bool isFileValid(std::string FilePath);
 void sendThreadFunc(SocketIO* io);
