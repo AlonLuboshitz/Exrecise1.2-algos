@@ -226,7 +226,7 @@ void interactionWithServer(SocketIO* io){
     }
     else if (temp == "message__") {
         std::string message(msgFromServer, 10, msgFromServer.size() - 9);
-        std::cout<<message;
+        std::cout<<message<<"\n";
         }
     else if (msgFromServer == "outputFile"){
         outputFile(io);

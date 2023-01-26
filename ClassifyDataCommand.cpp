@@ -30,6 +30,7 @@ void ClassifyDataCommand::setKNN(){
 m_Knn->setCSVFile(m_train);
 m_Knn->setK(m_k);
 m_Knn->setDistanceAlgorithem((m_distancealgo));
+m_Knn->setInit(true);
 }
 void ClassifyDataCommand::execute(){
     m_msg.clear();

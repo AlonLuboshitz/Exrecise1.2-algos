@@ -234,6 +234,10 @@ void KNN::setInputVector(std::vector<double> inputVector){
    // calculateNeighborsDistances();
 }
 
+void KNN::setInit(bool flag){
+    init = flag;
+}
+
 void KNN::setK(int k){
     if (k > 0){
         m_k = k;

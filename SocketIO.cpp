@@ -118,17 +118,33 @@ void SocketIO::write(std::string str){
  * and returns it
 */
 std::string SocketIO:: read(){
+    if ((!m_messegeLeft.empty())){
+        if (m_messegeLeft.at(0) == ','){
+        m_messegeLeft.erase(0, 1);
+        }
+    }
     std::string str_msg; 
-
+    bool flag = true;
+    int recievedBytes = 0;
+    int end = 0;
     if (! m_messegeLeft.empty()){
-        str_msg.append(m_messegeLeft);
-        m_messegeLeft.clear();
+        // str_msg.append(m_messegeLeft);
+        // m_messegeLeft.clear();
+        flag = false;
     }
     char* msg = new char[m_expected_data_length];
-    int recievedBytes = getMessage(msg);
-    int end = endOfMsg(msg, recievedBytes);
-    while (end == recievedBytes){
+    if (flag){
+    recievedBytes = getMessage(msg);
+    end = endOfMsg(msg, recievedBytes);
+    }
+    else {
+    recievedBytes = m_messegeLeft.size();
+    end = endOfMsg(m_messegeLeft, recievedBytes);
+    strcpy(msg,m_messegeLeft.c_str());
+    m_messegeLeft.clear();
+    }
 
+    while (end == recievedBytes){
     str_msg.append(msg);
     delete [] msg;
      msg = new char[m_expected_data_length];

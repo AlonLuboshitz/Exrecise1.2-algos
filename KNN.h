@@ -47,6 +47,7 @@ void setCSVFile(CSVReader* csv);
 void setDistanceAlgorithem(distanceAlgorithems* disAlgo);
 void setNewFile(std::string path);
 void setInputVector(std::vector<double> inputVector);
+void setInit(bool init);
 void setK(int k);
 };
 #endif

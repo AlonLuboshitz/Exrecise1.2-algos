@@ -39,7 +39,7 @@ void SettingCommand::execute(){
 bool SettingCommand::setParameters(std::string parameters) {
     //what if more then two arguments?
     m_error_msg.clear();
-    if (parameters == "") {
+    if (parameters == "empty") {
         return true;
     }
    // m_error_msg.append("msg");
