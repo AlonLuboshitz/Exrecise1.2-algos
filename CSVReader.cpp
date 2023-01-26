@@ -52,6 +52,8 @@ void CSVReader::readFromFile() {
         //as long is it possible assign the line from the file into line string.
         while(std::getline(csvfile,line)) {
         //clear the vector to accpet the line details.
+        m_fileData.append(line);
+        m_fileData.append("\n");
          vectorFromLine.clear();
         //init stringstream to seprate words from commas.
         std::stringstream wordStreamer(line);
@@ -124,4 +126,9 @@ bool CSVReader::setNewFileData(std::string data,bool newfile){
 }
 bool CSVReader::isFileSet() {
     return m_fileSet;
+}
+std::string CSVReader::getFileDate() {
+    m_fileData.clear();
+    readFromFile();
+    return m_fileData;
 }
