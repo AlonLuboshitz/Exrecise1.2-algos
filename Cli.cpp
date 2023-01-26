@@ -36,7 +36,7 @@ void Cli::run() {
         }
         //invalid input
         else {
-            m_io->write("invalid input");
+            m_io->write("message__ invalid input");
         }
     }
     return;
@@ -64,13 +64,13 @@ bool Cli::validUserinput(std::string command_num,int& num) {
         }
         catch(std::invalid_argument const& ex)
         {
-             std::cout<< "invalid input\n";
+             return false;
         }
         catch(std::out_of_range const& ex)
         {
-             std::cout<< "invalid input\n";
+             return false;
         }
-        if (i<=0){
+        if (i<=0 || i > m_commands_size){
             return false;
         }
         num = i;

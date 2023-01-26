@@ -48,7 +48,7 @@ void SocketIO::resetMsg(char* recievedMessege, int endOfMsg, int recievedBytes){
     if (endOfMsg + 1 == recievedBytes){
         return;
     }
-    m_messegeLeft.append (recievedMessege + endOfMsg + 1, recievedBytes - endOfMsg);
+    m_messegeLeft.append (recievedMessege + endOfMsg + 1, recievedBytes - (endOfMsg+1));
       if (m_messegeLeft.at(0) == '\0'){
         m_messegeLeft.erase(0, 1);
     }
