@@ -161,7 +161,9 @@ void runApplication(int next_client_socket) {
 int main () {
     int socket_fd;
     initSocket(socket_fd);
+
     int port = 5555;
+
     struct sockaddr_in sin;
     setSinMembers(sin, port);
     if (!bindSocket(socket_fd,sin)) { return 0;}
@@ -170,6 +172,7 @@ int main () {
     int client_socket_fd;
     accpetClient(socket_fd,client_socket_fd,client);
     SocketIO io(client_socket_fd, 4096);
+
 
     while(true) {
         //create thread

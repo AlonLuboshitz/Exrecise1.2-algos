@@ -45,7 +45,7 @@ int SocketIO::endOfMsg(std::string recievedMessege, int recievedBytes){
  * if end of the messege is the same sized as the recieved bytes, it returns without doing anything
 */
 void SocketIO::resetMsg(char* recievedMessege, int endOfMsg, int recievedBytes){
-    if (endOfMsg == recievedBytes){
+    if (endOfMsg + 1 == recievedBytes){
         return;
     }
     m_messegeLeft.append (recievedMessege + endOfMsg + 1, recievedBytes - endOfMsg);
@@ -106,7 +106,10 @@ int SocketIO::getMessage(char* buffer) {
 }
 
 void SocketIO::write(std::string str){
-    str.append("xxx");
+    if (str.size() > m_expected_data_length-3){
+       str.append("   xxx"); 
+    }
+    else {str.append("xxx");}
     sendMessage(str);
 }
 
@@ -121,23 +124,24 @@ std::string SocketIO:: read(){
         str_msg.append(m_messegeLeft);
         m_messegeLeft.clear();
     }
-    char msg[m_expected_data_length] = {'\0'};
+    char* msg = new char[m_expected_data_length];
     int recievedBytes = getMessage(msg);
     int end = endOfMsg(msg, recievedBytes);
     while (end == recievedBytes){
-        str_msg.append(msg);
- //       msg[0] = '\0';
-        recievedBytes = getMessage(msg); 
-        int end = endOfMsg(msg, recievedBytes);   
+
+    str_msg.append(msg);
+    delete [] msg;
+     msg = new char[m_expected_data_length];
+    recievedBytes = getMessage(msg); 
+    end = endOfMsg(msg, recievedBytes);   
     }
-    std::string msgInstr = msg;
-    str_msg.append(msgInstr,0,  end - 2);
-    resetMsg(msg, end, recievedBytes);
+    str_msg.append(msg,end -2);
+     resetMsg(msg, end, recievedBytes);
     if (str_msg.at(0) == '\0'){
         str_msg.erase(0, 1);
     }
    // msg[0] = '\0';
-    
+    delete [] msg;
     return str_msg;
 }
 std::string SocketIO::getMessegeLeft(){
