@@ -142,7 +142,7 @@ bool isFileValid(std::string FilePath) {
 
 
 void inputFile(SocketIO& io, std::string& instructions){
-    std::cout<< instructions;
+    std::cout<< instructions << "\n";
     int buffer = 4096;
     std::string filePath;
     std::cin >> filePath;
@@ -274,25 +274,8 @@ void recieveThreadFunc( bool& stopRunning, SocketIO& io){
         io.write(m_messegeToServer);
         return;
     }
-    int i;
-    //  try
-    //     {
-    //         i = std::stoi(m_messegeToServer);
-    //     }
-    //     catch(std::invalid_argument const& ex)
-    //     {
-    //          std::cout<< "invalid input\n";
-    //     }
-    //     catch(std::out_of_range const& ex)
-    //     {
-    //          std::cout<< "invalid input\n";
-    //     }
- 
-    // if (i <=0 || i == 6 || i == 7 || i > 8) {
-    //     std::cout<< "invalid input\n";
-    // }
     io.write(m_messegeToServer);
-   // }
+   //}
  }
 
  
