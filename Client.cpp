@@ -300,7 +300,7 @@ void recieveThreadFunc( bool& stopRunning, SocketIO& io){
 
 int main() {
     int m_ClientSocket;
-    int m_serverPortNum = 5555;
+    int m_serverPortNum = 5554;
     const int buffer = 4096;
     struct sockaddr_in m_serverStructAdress;    
     std::string m_messegeToServer;

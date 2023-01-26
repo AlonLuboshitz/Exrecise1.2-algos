@@ -20,16 +20,30 @@ void UploadDataCommand:: execute(){
         if (i == 1) {
              (*m_io).write("inputFile Please upload your local train CSV file");
             //(*m_io).write("Please upload your local train CSV file");
-            (*m_train).setNewFileData((*m_io).read(),true);
+            std::string input = m_io->read();
+            if (input == "error") {
+                m_valid= false;
+                return;
+            }
+            else {
+            (*m_train).setNewFileData(input,true);
             (*m_io).write("Upload complete.");
             i++;
+            }
         }
         //test file
         if (i == 2) {
             (*m_io).write("inputFile Please upload your local test CSV file");
-            (*m_test).setNewFileData((*m_io).read(),true);
+            std::string input = m_io->read();
+            if (input == "error") {
+                m_valid= false;
+                return;
+            }
+            else {
+            (*m_test).setNewFileData(input,true);
             (*m_io).write("Upload complete.");
             i++;
+            }
         }
     }
     m_valid = true;
