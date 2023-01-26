@@ -18,6 +18,7 @@ void DownloadResultsCommand::execute(){
             m_io->write("outputFile");
             m_io->write(toadd);
             m_valid = true;
+
         }
         else {
             m_msg = "message__ please classify the data";
@@ -26,5 +27,8 @@ void DownloadResultsCommand::execute(){
     else {//no data uplaoded.
         m_msg = "message__ please upload data";
 }
+if (!m_valid) {
 m_io->write(m_msg);
+}
+
 }

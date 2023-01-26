@@ -172,9 +172,6 @@ int main () {
     struct sockaddr_in client;
     int client_socket_fd;
     accpetClient(socket_fd,client_socket_fd,client);
-    SocketIO io(client_socket_fd, 4096);
-
-
     while(true) {
         //create thread
         runApplication(client_socket_fd);
