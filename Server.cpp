@@ -108,22 +108,17 @@ int& k,distanceAlgorithems* &distanceAlgorithems) {
     } else return false;
 }
 
-void getServerArguments(char* argv[], int argc, std::string& port,
- std::string& fileName, CSVReader& csvreader) {
+void getServerArguments(char* argv[], int argc, std::string& port) {
 
 if (argc != 2) {
     std::cout<<"wrong number of arguments - please enter Port: "<<std::endl;
     std::cin>> port;
     getPort(port);
-    std::cout<<"Please enter file path: "<<std::endl;
-    std::cin>>fileName;
-    fileName = getFilePath(fileName, csvreader);
 }
 else {
     port = argv[1];
-    fileName = argv[2];
     getPort(port);
-    fileName = getFilePath(fileName, csvreader);
+
 }
 }
 void setKNN(KNN& knn, int k, std::vector<double> vector, distanceAlgorithems* distanceAlgorithems) {
@@ -159,9 +154,8 @@ void runApplication(int next_client_socket) {
 }
 
 int main (int argc, char* argv[]) {
-    std::string port, fileName;
-    CSVReader csvFileReader;
-    getServerArguments(argv,argc,port,fileName,csvFileReader);
+    std::string port;
+    getServerArguments(argv,argc,port);
     const int portNumber = std::stoi(port);
     int socket_fd;
     initSocket(socket_fd);

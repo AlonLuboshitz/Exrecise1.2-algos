@@ -260,20 +260,10 @@ void interactionWithServer(SocketIO* io){
     char msg[buffer];
     
     if (! isFileValid(filePath)){
-        //send to server ' ' ???????????????????????????????
         std::cout<< "invalid input\n";
         return "-1";
     }
-    // FILE* file;
-    // file = fopen(&filePath[0], "r");
-    // std::string msgToServer;
-    // while (!feof(file))
-    // {
-    //     // function used to read the contents of file
-    //     fread(msg, sizeof(msg), 1, file);
-    //     msgToServer.append(msg);
-    // }
-    //  fclose(file);
+ 
     CSVReader* csv = new CSVReader;
     csv->setNewFile(filePath);
     std::string msgToServer = csv->getFileDate();
@@ -285,20 +275,25 @@ void interactionWithServer(SocketIO* io){
  
 
 
-int main() {
+int main(int argc,char* argv[]) {
     int m_ClientSocket;
-    int m_serverPortNum = 5555;
+    char* m_serverIpAdress;
+    int m_serverPortNum;
     const int buffer = 4096;
     struct sockaddr_in m_serverStructAdress;    
     std::string m_messegeToServer;
-    char recievedMessege[buffer];
     //check if arguments are valid - ip and port
-    std::string serverIP = "127.0.0.1";
-     char* ip = new char[serverIP.size() +1];
+    std::string serverIP;
+    std::string strServerPort;
+    checkClientsArguments(argc, argv, serverIP, strServerPort);
+    m_serverPortNum = std::stoi(strServerPort);
+
+    char* ip = new char[serverIP.size() +1];
     for (int i=0; i < serverIP.size(); i++){
         *(ip+i) = serverIP.at(i);
     }
     *(ip + serverIP.size()) = '\0';
+
     if (createSocket(m_ClientSocket) < 0){
         std::cout << "error creating socket\n";
         return -1;
