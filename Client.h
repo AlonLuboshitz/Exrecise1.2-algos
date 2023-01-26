@@ -10,7 +10,6 @@
 #include <vector>
 #include "distanceAlgorithems.h"
 #include "inputValidation.h"
-#include <iostream>
 #include <sstream>
 #include "SocketIO.h"
 #include <thread>
