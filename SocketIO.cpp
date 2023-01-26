@@ -127,7 +127,8 @@ std::string SocketIO:: read(){
     while (end == recievedBytes){
         str_msg.append(msg);
  //       msg[0] = '\0';
-        recievedBytes = getMessage(msg);    
+        recievedBytes = getMessage(msg); 
+        int end = endOfMsg(msg, recievedBytes);   
     }
     std::string msgInstr = msg;
     str_msg.append(msgInstr,0,  end - 2);
