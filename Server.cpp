@@ -163,7 +163,7 @@ int main () {
     initSocket(socket_fd);
 
 
-    int port = 5999;
+    int port = 5555;
 
 
     struct sockaddr_in sin;
