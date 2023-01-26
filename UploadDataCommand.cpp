@@ -7,6 +7,7 @@ UploadDataCommand::UploadDataCommand(defualtIO& io) {
     m_test = new CSVReader;
     m_io = &io;
     m_valid = false;
+    m_newFile = false;
     }
 UploadDataCommand::~UploadDataCommand() {
     delete m_train;
@@ -43,6 +44,7 @@ void UploadDataCommand:: execute(){
             (*m_test).setNewFileData(input,true);
             (*m_io).write("message__ Upload complete.");
             i++;
+            m_newFile = true;
             }
         }
     }
@@ -59,3 +61,9 @@ return m_train;
     CSVReader* UploadDataCommand::getTest() {
 return m_test;
     }
+bool UploadDataCommand::ifNewFile() {
+    return m_newFile;
+}
+void UploadDataCommand::setNewFile() {
+m_newFile = true;
+}
