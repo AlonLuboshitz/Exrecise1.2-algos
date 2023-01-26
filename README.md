@@ -7,10 +7,10 @@ in order to compile and run the code you need to enter the following:
 3. enter password "your password"
 after the project has been cloned, enter the following:
 4. cd Exrecise1.2-algos/
-5. $ git checkout **even_dereh_2-exc3**, ENTER
+5. $ git checkout **even_dereh_3**, ENTER
 6. make ,ENTER    
  to run the server - 
-7. ./server.out (file path) (port number)    
+7. ./server.out (port number)    
 to run the client -
 8. ./client.out (server ip) (server port number)    
 in client:
@@ -22,7 +22,14 @@ in client:
 **Code discription**   
 
 **server**    
- The server waits infinitely for client to connect with it. Can serve 1 client at a time, with a queue of up to 5 clients. Expecting a char array of a vector, distance algo's name and k value, all seperated with spaces.     
+ The server waits infinitely for clients to connect with it. Can serve multiple clients at a time. The server sends to the client a menu with all the possible actions to be performed, and after getting the choise from the client, sends instruction accordinly.    
+ Server's option menu:    
+ 1. upload an unclasiified csv data file (train file - clasiffied data file, test file - unclassified data file)   
+ 2. algorithem settings - (defaule: k = 5 , distance algo's name = AUC - if the user presses enter, keeps default, else - user can insert new values by order)     
+ 3. clasiffy data    
+ 4. display results    
+ 5. download results    
+ 8. exit
  
  KNN (K Nearest Neighbors) -
  this code designed for running on a csv file, searching for the K nearest neighbors according to an input vector, and returning the most common label from the KNN. 
@@ -61,8 +68,7 @@ in client:
 
 **client**
 
-The client waits for an input - vector, distance algo's name and k value, all seperated with spaces.
-sends it to the server, and prints the messege that was sent back from te server. 
+The client prints all of the Server's messages, waits for input from the user acoordinly and sends it back to the server. 
 
 
 
