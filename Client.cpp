@@ -243,10 +243,12 @@ void interactionWithServer(SocketIO* io){
     }
 }
 
-
  std::string getMsgFromUser(){
     std::string msg;
-    std::cin >> msg;
+    std::getline(std::cin, msg);
+    if (msg.length()  == 0){
+        msg = "empty";
+    }
     return msg;
  }
 
