@@ -17,6 +17,7 @@ class CSVReader {
     bool m_initFlag;
     bool m_fileSet;
     std::string m_fileName;
+    std::string m_fileData;
     std::vector<std::vector<std::string>> m_lineVector;
     std::vector<std::vector<std::string>>::iterator m_vectorLine_iterator;
     //reset iterator to the beginning of the m_lineVector
@@ -43,5 +44,6 @@ class CSVReader {
     bool setNewFileData(std::string data,bool newfile);
     //returns if file is set
     bool isFileSet();
+    std::string getFileDate();
 };
 #endif
