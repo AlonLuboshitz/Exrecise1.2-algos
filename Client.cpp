@@ -179,16 +179,9 @@ void seperateLines(std::ofstream& file,std::string& msgFromServer){
     //file<<",";
  }  
  
-void outputFile(SocketIO* io) {
-     std::string filePath;
-    std::cin >> filePath;
-    //char msg[buffer];
-    //create new thread!!!!!!!!!!
-    
+void outputFile(std::string filePath, std::string msgFromServer) {
     std::ofstream file;
     file.open(filePath);
-    std::string msgFromServer;
-    msgFromServer = io->read();
     seperateLines(file, msgFromServer);
     file.close();
 }
@@ -211,7 +204,7 @@ void checkClientsArguments(int argc,char* argv[], std::string& serverIP, std::st
 }
 
 void interactionWithServer(SocketIO* io){
-   
+
    while(true){
     std::string msgFromServer = io->read();
     std::string temp(msgFromServer.begin(), msgFromServer.begin()+9);
@@ -229,9 +222,15 @@ void interactionWithServer(SocketIO* io){
         std::cout<<message<<"\n";
         }
     else if (msgFromServer == "outputFile"){
-        outputFile(io);
+        std::string filePath = getMsgFromUser();
+        if (filePath == "-1"){
+            std::cout<< "invalid input";
+            continue;
+        }
+         std::string msgFromServer;
+         msgFromServer = io->read();
+        std::thread downloadFile(outputFile, filePath, msgFromServer);
     }
-    //print messege
     else {
         std::cout << msgFromServer << "\n";
         std::string msgToServer = getMsgFromUser();
@@ -280,24 +279,6 @@ void interactionWithServer(SocketIO* io){
  }
 
  
- 
-
-
-// void interactWithServer(const int m_ClientSocket, const int buffer){
-//      SocketIO* recieveIO = new SocketIO(m_ClientSocket, buffer);
-//      SocketIO* sendIO = new SocketIO(m_ClientSocket, buffer);
-//     bool stopRunning = false; 
-//     // need to be seperated into send thread and recieve thread!!!!!!!!!!
-//     std::thread recieveThread(recieveThreadFunc, std::ref(stopRunning) ,recieveIO);
-//     std::thread sendThread(sendThreadFunc,sendIO);
-//     recieveThread.join();
-//     stopRunning = true;
-//     sendThread.join();
-//     delete recieveIO;
-//     delete sendIO;
-//  }
-  
-
 
 
 // int main() {
