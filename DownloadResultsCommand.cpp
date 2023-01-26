@@ -10,12 +10,13 @@ DownloadResultsCommand::DownloadResultsCommand(UploadDataCommand* uploadCommand,
 
 void DownloadResultsCommand::execute(){
   m_msg.clear();
-  
+
        if (m_upload_command->valid()) {
         if (m_classify->valid()) {
             std::string toadd = m_classify->getMsg();
-            m_msg.append("outputFile ");
-            m_msg.append(toadd);
+            //m_msg.append("outputFile ");
+            m_io->write("outputFile");
+            m_io->write(toadd);
             m_valid = true;
         }
         else {
