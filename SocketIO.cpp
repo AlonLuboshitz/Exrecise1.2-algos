@@ -128,6 +128,7 @@ std::string SocketIO:: read(){
     int recievedBytes = getMessage(msg);
     int end = endOfMsg(msg, recievedBytes);
     while (end == recievedBytes){
+
     str_msg.append(msg);
     delete [] msg;
      msg = new char[m_expected_data_length];

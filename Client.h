@@ -20,16 +20,18 @@ int createSocket(int& m_ClientSocket);
 void initServerStructAdress(sockaddr_in& m_serverStructAdress, char* ip, int m_serverPortNum );
 int connectToServer(int m_ClientSocket, sockaddr_in& m_serverStructAdress);
 int getVariables(std::string& m_messegeToServer);
-void sendToServer(std::string m_messegeToServer, int m_ClientSocket);
 void recieveFromServer(int m_ClientSocket, char* recievedMessege, const int buffer);
 void checkClientsArguments(int argc,char* argv[],std::string& serverIP, std::string& strServerPort );
-void inputFile(SocketIO& io, std::string& instructions);
+std::string inputFile(SocketIO* io, std::string& instructions);
 void printMsg(const int buffer, const int m_ClientSocket,char* recievedMessege, int recievedBytes );
-void outputFile(SocketIO& io);
+void outputFile(SocketIO* io);
 void seperateLines(std::ofstream& file,std::string& msgFromServer);
 bool isFileValid(std::string FilePath);
-void recieveThreadFunc( bool& stopRunning, SocketIO& io);
-void sendThreadFunc(SocketIO& io);
+void sendThreadFunc(SocketIO* io);
+void interactionWithServer(SocketIO* io);
+std::string getMsgFromUser();
+std::string getDataFromFile(std::string filePath);
+
 // int main(int argc,char* argv[]);
 
 #endif

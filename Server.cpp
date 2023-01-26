@@ -161,7 +161,9 @@ void runApplication(int next_client_socket) {
 int main () {
     int socket_fd;
     initSocket(socket_fd);
-    int port = 5554;
+
+    int port = 5555;
+
     struct sockaddr_in sin;
     setSinMembers(sin, port);
     if (!bindSocket(socket_fd,sin)) { return 0;}

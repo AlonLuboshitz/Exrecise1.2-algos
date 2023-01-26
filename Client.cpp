@@ -98,19 +98,19 @@ int getVariables(std::string& m_messegeToServer) {
  * sends it to the server.
  * if the messege was sent successfully - returns 1, else - returns -1
 */
-void sendToServer(std::string m_messegeToServer, int m_ClientSocket){
-    int messegeLength = m_messegeToServer.length();
-    char messegeArray[messegeLength + 1];
-    //convert string to char array
-    strcpy(messegeArray, m_messegeToServer.c_str());
-    int dataLength = strlen(messegeArray);
-    //sent to server
-    int sentToServer = send(m_ClientSocket, messegeArray, dataLength, 0);
-    //if error accures
-    if (sentToServer < 0){
-        std::cout<<"error sending to the server\n";
-    }
-}
+// void sendToServer(std::string m_messegeToServer, int m_ClientSocket){
+//     int messegeLength = m_messegeToServer.length();
+//     char messegeArray[messegeLength + 1];
+//     //convert string to char array
+//     strcpy(messegeArray, m_messegeToServer.c_str());
+//     int dataLength = strlen(messegeArray);
+//     //sent to server
+//     int sentToServer = send(m_ClientSocket, messegeArray, dataLength, 0);
+//     //if error accures
+//     if (sentToServer < 0){
+//         std::cout<<"error sending to the server\n";
+//     }
+// }
 
 /**
  * tries to recieve messege from the server.
@@ -141,28 +141,12 @@ bool isFileValid(std::string FilePath) {
 
 
 
-void inputFile(SocketIO& io, std::string& instructions){
+std::string inputFile(SocketIO* io, std::string& instructions){
     std::cout<< instructions << "\n";
-    int buffer = 4096;
-    std::string filePath;
-    std::cin >> filePath;
-    char msg[buffer];
-    if (! isFileValid(filePath)){
-        //send to server ' ' ???????????????????????????????
-        std::cout<< "invalid input\n";
-        return;
-    }
-    FILE* file;
-    file = fopen(&filePath[0], "r");
-    std::string msgToServer;
-    while (!feof(file))
-    {
-        // function used to read the contents of file
-        fread(msg, sizeof(msg), 1, file);
-        msgToServer.append(msg);
-    }
-    io.write(msgToServer);
-    fclose(file);
+    std::string filePath = getMsgFromUser();
+    std::string file = getDataFromFile(filePath);
+    return file;
+    
 }
 
 void seperateLines(std::ofstream& file,std::string& msgFromServer){
@@ -195,7 +179,7 @@ void seperateLines(std::ofstream& file,std::string& msgFromServer){
     //file<<",";
  }  
  
-void outputFile(SocketIO& io) {
+void outputFile(SocketIO* io) {
      std::string filePath;
     std::cin >> filePath;
     //char msg[buffer];
@@ -204,22 +188,9 @@ void outputFile(SocketIO& io) {
     std::ofstream file;
     file.open(filePath);
     std::string msgFromServer;
-    msgFromServer = io.read();
+    msgFromServer = io->read();
     seperateLines(file, msgFromServer);
-    // int end = endOfMsg(recievedMessege, recievedBytes);
-    // while (end == buffer){
-    //    seperateLines(file, recievedMessege, recievedBytes);
-    //    // recievedBytes = recieveFromServer(m_ClientSocket, recievedMessege, buffer);
-    //     end = endOfMsg(recievedMessege, recievedBytes);
-    // }
-    
-    // char last[end - 1];
-    // for (int j = 0; j < end -2; j++){
-    //     last[j] = *(recievedMessege+j);
-    // }
-    // seperateLines(file, last, recievedBytes);
     file.close();
-    
 }
 
 
@@ -239,20 +210,19 @@ void checkClientsArguments(int argc,char* argv[], std::string& serverIP, std::st
     getPort(strServerPort);
 }
 
-void recieveThreadFunc( bool& stopRunning, SocketIO& io){
-    //char recievedMessege[buffer];
-    //while(! stopRunning){
-        std::string msgFromServer = io.read();
-    // int recievedBytes = recieveFromServer(m_clientSocket, recievedMessege, buffer);
-    // std::string parameter;
-    // for(int i = 0; recievedMessege[i] != ' '; i++){
-    //     std::string temp = std::string(1, recievedMessege[i]);
-    //     parameter.append(temp);
-    // }
+void interactionWithServer(SocketIO* io){
+   
+   while(true){
+    std::string msgFromServer = io->read();
     std::string temp(msgFromServer.begin(), msgFromServer.begin()+9);
     if (temp =="inputFile"){
         std::string instructions(msgFromServer, 10, msgFromServer.size() - 9);
-        inputFile(io, instructions); 
+        std::string file = inputFile(io, instructions); 
+        if (file == "-1"){
+            io->write("error");
+            continue;
+        }
+        io->write(file);
     }
     else if (msgFromServer == "outputFile"){
         outputFile(io);
@@ -260,41 +230,61 @@ void recieveThreadFunc( bool& stopRunning, SocketIO& io){
     //print messege
     else {
         std::cout << msgFromServer << "\n";
-
+        std::string msgToServer = getMsgFromUser();
+        io->write(msgToServer);
+        if (msgFromServer == "8"){
+            break;
+        }
     }
-//}
-
+    }
 }
- void sendThreadFunc(SocketIO& io){
-    std::string m_messegeToServer;
 
-   // while (true){
-    std::cin >> m_messegeToServer;
-    if (m_messegeToServer == "8"){
-        io.write(m_messegeToServer);
-        return;
+
+ std::string getMsgFromUser(){
+    std::string msg;
+    std::cin >> msg;
+    return msg;
+ }
+
+ std::string getDataFromFile(std::string filePath){
+    int buffer = 4096;
+    char msg[buffer];
+    if (! isFileValid(filePath)){
+        //send to server ' ' ???????????????????????????????
+        std::cout<< "invalid input\n";
+        return "-1";
     }
-    io.write(m_messegeToServer);
-   //}
+    FILE* file;
+    file = fopen(&filePath[0], "r");
+    std::string msgToServer;
+    while (!feof(file))
+    {
+        // function used to read the contents of file
+        fread(msg, sizeof(msg), 1, file);
+        msgToServer.append(msg);
+    }
+     fclose(file);
+    return msgToServer;
  }
 
  
  
 
 
-// void interactWithServer(const int buffer, const int m_ClientSocket){
+// void interactWithServer(const int m_ClientSocket, const int buffer){
+//      SocketIO* recieveIO = new SocketIO(m_ClientSocket, buffer);
+//      SocketIO* sendIO = new SocketIO(m_ClientSocket, buffer);
 //     bool stopRunning = false; 
 //     // need to be seperated into send thread and recieve thread!!!!!!!!!!
-//     std::thread recieveThread(recieveThreadFunc,buffer, m_ClientSocket, std::ref(stopRunning));
-//     std::thread sendThread(sendThreadFunc, m_ClientSocket);
-
-//     if (sendThread.joinable()){
-//         stopRunning = true;
-//         recieveThread.join();
-//         sendThread.join();
-//          close(m_ClientSocket);
-//     }
-//   }
+//     std::thread recieveThread(recieveThreadFunc, std::ref(stopRunning) ,recieveIO);
+//     std::thread sendThread(sendThreadFunc,sendIO);
+//     recieveThread.join();
+//     stopRunning = true;
+//     sendThread.join();
+//     delete recieveIO;
+//     delete sendIO;
+//  }
+  
 
 
 
@@ -322,17 +312,12 @@ int main() {
         std::cout << "error connecting to server\n";
         return -1;
     }
-     SocketIO io(m_ClientSocket, buffer);
-//     io.write("gili");
-//    std::cout<< io.read();
-    bool stop = false;
-    while (true){
-    recieveThreadFunc(stop, io);
-    sendThreadFunc(io);
-    
-    }
+    SocketIO* io = new SocketIO(m_ClientSocket, buffer);
+   interactionWithServer(io);
+   delete io;
    delete []ip;
    close(m_ClientSocket);
+   
 
 }
 
