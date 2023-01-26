@@ -48,8 +48,10 @@ void SocketIO::resetMsg(char* recievedMessege, int endOfMsg, int recievedBytes){
     if (endOfMsg == recievedBytes){
         return;
     }
-
     m_messegeLeft.append (recievedMessege + endOfMsg + 1, recievedBytes - endOfMsg);
+      if (m_messegeLeft.at(0) == '\0'){
+        m_messegeLeft.erase(0, 1);
+    }
     // std::memmove(recievedMessege, recievedMessege + endOfMsg + 1, buffer - endOfMsg);
     // *(recievedMessege + endOfMsg +1) = '\0';
  }
@@ -119,17 +121,21 @@ std::string SocketIO:: read(){
         str_msg.append(m_messegeLeft);
         m_messegeLeft.clear();
     }
-    char msg[m_expected_data_length];
+    char msg[m_expected_data_length] = {'\0'};
     int recievedBytes = getMessage(msg);
     int end = endOfMsg(msg, recievedBytes);
     while (end == recievedBytes){
         str_msg.append(msg);
-        msg[0] = '\0';
-        recievedBytes = getMessage(msg);
+ //       msg[0] = '\0';
+        recievedBytes = getMessage(msg);    
     }
-    str_msg.append(msg, end - 2);
+    std::string msgInstr = msg;
+    str_msg.append(msgInstr,0,  end - 2);
     resetMsg(msg, end, recievedBytes);
-    msg[0] = '\0';
+    if (str_msg.at(0) == '\0'){
+        str_msg.erase(0, 1);
+    }
+   // msg[0] = '\0';
     
     return str_msg;
 }
