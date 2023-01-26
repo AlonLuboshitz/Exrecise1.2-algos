@@ -31,6 +31,9 @@ void Cli::run() {
     while (input != "8") {
         m_io->write(getMenu());
         input = m_io->read();
+        if (input == "8") {
+            break;
+        }
         if (validUserinput(input,num)) {
             runCommand(num);
         }
@@ -39,6 +42,7 @@ void Cli::run() {
             m_io->write("message__ invalid input");
         }
     }
+    m_io->write("exit");
     return;
 }
 
