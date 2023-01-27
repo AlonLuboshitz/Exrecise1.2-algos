@@ -17,7 +17,7 @@ class UploadDataCommand: public Command{
     CSVReader* getTrain();
     CSVReader* getTest();
     bool ifNewFile();
-    void setNewFile();
+    void setNewFile(bool value);
 
 };
 

@@ -40,6 +40,7 @@ void ClassifyDataCommand::execute(){
         setResult();
         (*m_io).write("message__ classifying data complete");
         m_valid = true;
+        m_upload_command->setNewFile(false);
     }
     else {
         m_msg = "message__ please upload data";
@@ -68,6 +69,7 @@ void ClassifyDataCommand::setResult() {
     }
     
 }
+
 
 // void ClassifyDataCommand::setParameters(int k, std::string algo) {
 //     if (k > 0) {

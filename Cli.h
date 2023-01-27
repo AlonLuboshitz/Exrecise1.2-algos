@@ -12,6 +12,7 @@ private:
      defualtIO* m_io;
      bool validUserinput(std::string command_num, int& num);
      void runCommand(int command_num);
+     bool moreThenOneArg(std::string input);
 public:
     Cli(std::vector<Command*> command,std::string name,defualtIO& io);
     ~Cli() = default;

@@ -64,6 +64,6 @@ return m_test;
 bool UploadDataCommand::ifNewFile() {
     return m_newFile;
 }
-void UploadDataCommand::setNewFile() {
-m_newFile = true;
+void UploadDataCommand::setNewFile(bool value) {
+m_newFile = value;
 }

@@ -12,7 +12,7 @@ void DownloadResultsCommand::execute(){
   m_msg.clear();
 
        if (m_upload_command->valid()) {
-        if (m_classify->valid()) {
+        if (m_classify->valid()&&(!m_upload_command->ifNewFile())) {
             std::string toadd = m_classify->getMsg();
             //m_msg.append("outputFile ");
             m_io->write("outputFile");
@@ -21,10 +21,12 @@ void DownloadResultsCommand::execute(){
 
         }
         else {
+            m_valid = false;
             m_msg = "message__ please classify the data";
         }
     }
     else {//no data uplaoded.
+    m_valid =false;
         m_msg = "message__ please upload data";
 }
 if (!m_valid) {

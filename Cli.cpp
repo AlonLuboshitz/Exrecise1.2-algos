@@ -45,22 +45,52 @@ void Cli::run() {
     m_io->write("exit");
     return;
 }
-
 /*
-checks input from user is in command range.
+check for more then one argument
+*/
+bool Cli::moreThenOneArg(std::string input){
+std::stringstream stream(input);
+int count = 0;
+std::string arg;
+while (std::getline(stream,arg,',')) {
+    count ++;
+    if (count > 1) {
+        return false;
+    }
+}
+count =0;
+arg.clear();
+std::stringstream stream2(input);
+while (stream2 >> arg) {
+    count ++;
+    if(count > 1) {
+        return false;
+    }
+}
+return true;
+}
+/*
+checks input from user is in double then int, then if two numbers equal.
+if not then number is double no valid.
+check if its the command range.
 */
 bool Cli::validUserinput(std::string command_num,int& num) {
-    // //isKaninteger check if int and bigger then 0.
-    // if (isKAnInteger(command_num)) {
-    //     int number_of_command = std::stoi(command_num);
-    //     //make sure number is commands range.
-    //     if (number_of_command <= m_commands_size) {
-    //         num = std::stoi(command_num);
-    //         return true;
-    //     }
-    //     return false;
-    // }
-    // return false;
+    //checks for num of args.
+    if (!moreThenOneArg(command_num)) {
+        return false;
+    }
+    double idouble;
+    try {
+idouble = std::stod(command_num);
+    }
+    catch(std::invalid_argument const& ex)
+        {
+             return false;
+        }
+        catch(std::out_of_range const& ex)
+        {
+             return false;
+        }
     int i;
      try
         {
@@ -73,6 +103,9 @@ bool Cli::validUserinput(std::string command_num,int& num) {
         catch(std::out_of_range const& ex)
         {
              return false;
+        }
+        if ( (double)i != idouble) {
+            return false;
         }
         if (i<=0 || i > m_commands_size){
             return false;
