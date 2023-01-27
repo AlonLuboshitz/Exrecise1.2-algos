@@ -1,6 +1,9 @@
 #include "CSVReader.h"
+#include "inputValidation.h"
+
 CSVReader::CSVReader() {
     m_initFlag = false;
+    m_fileSet = false;
 }
 bool CSVReader::validateCSVfile(std::string filename) {
     std::string csv;
@@ -17,17 +20,20 @@ bool CSVReader::setNewFile(std::string filename) {
     if (validateCSVfile(filename)) {
         m_fileName = filename;
         if (isFileValid()) {
-            
+            m_fileSet = true;
             m_initFlag = false;
             return true;
         }
         else {
+            m_fileSet = false;
             m_fileName.clear();
             return false;
         }
     }
-    else return false;
-    
+    else {
+        m_fileSet = false;
+     return false;
+    }
 }
 void CSVReader::setIterator() {
     m_vectorLine_iterator = m_lineVector.begin();
@@ -46,6 +52,8 @@ void CSVReader::readFromFile() {
         //as long is it possible assign the line from the file into line string.
         while(std::getline(csvfile,line)) {
         //clear the vector to accpet the line details.
+        m_fileData.append(line);
+        m_fileData.append("\n");
          vectorFromLine.clear();
         //init stringstream to seprate words from commas.
         std::stringstream wordStreamer(line);
@@ -87,5 +95,40 @@ bool CSVReader::isFileValid() {
         return true;
     }
     else return false;
+}
+bool CSVReader::setNewFileData(std::string data,bool newfile){
+    //for new file clear the m_linevector. sets the flag.
+    if (newfile) {
+    m_fileSet = true;
+    m_initFlag = true;
+    m_lineVector.clear();
     }
-
+    //init strings for line from file, words between commas in lines.
+    std::string line,word;
+    std::vector<std::string> vectorFromLine;
+    std::stringstream dataStreamer(data);
+    while(std::getline(dataStreamer,line)) {
+        //cleans the line from '\r'
+        stringCleaner(line);
+        //clear the vector to accpet the line details.
+         vectorFromLine.clear();
+        //init stringstream to seprate words from commas.
+        std::stringstream wordStreamer(line);
+        while (std::getline(wordStreamer,word,',')){            
+            vectorFromLine.push_back(word);
+        }
+        //puts line as vector into vector of lines.
+        m_lineVector.push_back(vectorFromLine);
+        }
+        //sets the m_iterator
+    setIterator();
+    return false;
+}
+bool CSVReader::isFileSet() {
+    return m_fileSet;
+}
+std::string CSVReader::getFileDate() {
+    m_fileData.clear();
+    readFromFile();
+    return m_fileData;
+}

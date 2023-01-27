@@ -195,8 +195,9 @@ if (init){
     initiation();
 }
 if (neighbors.empty()){
-        std::cout<< "no valid neighbors";
-        return "-1";
+        //std::cout<< "no valid neighbors";
+        //return "-1";
+        return "no valid neighbors";
  }
 calculateNeighborsDistances();
 sortNeighbors();
@@ -233,9 +234,16 @@ void KNN::setInputVector(std::vector<double> inputVector){
    // calculateNeighborsDistances();
 }
 
+void KNN::setInit(bool flag){
+    init = flag;
+}
+
 void KNN::setK(int k){
     if (k > 0){
         m_k = k;
     }
     else k = 1;
+}
+void KNN::setCSVFile(CSVReader* csv) {
+    m_csvReader = csv;
 }

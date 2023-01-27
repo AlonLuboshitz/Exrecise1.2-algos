@@ -1,5 +1,6 @@
 #include "Client.h"
 
+
 int createSocket(int& m_ClientSocket){
     m_ClientSocket = socket(AF_INET, SOCK_STREAM, 0);
     if(m_ClientSocket < 0 ){
@@ -97,19 +98,19 @@ int getVariables(std::string& m_messegeToServer) {
  * sends it to the server.
  * if the messege was sent successfully - returns 1, else - returns -1
 */
-void sendToServer(std::string m_messegeToServer, int m_ClientSocket){
-    int messegeLength = m_messegeToServer.length();
-    char messegeArray[messegeLength + 1];
-    //convert string to char array
-    strcpy(messegeArray, m_messegeToServer.c_str());
-    int dataLength = strlen(messegeArray);
-    //sent to server
-    int sentToServer = send(m_ClientSocket, messegeArray, dataLength, 0);
-    //if error accures
-    if (sentToServer < 0){
-        std::cout<<"error sending to the server\n";
-    }
-}
+// void sendToServer(std::string m_messegeToServer, int m_ClientSocket){
+//     int messegeLength = m_messegeToServer.length();
+//     char messegeArray[messegeLength + 1];
+//     //convert string to char array
+//     strcpy(messegeArray, m_messegeToServer.c_str());
+//     int dataLength = strlen(messegeArray);
+//     //sent to server
+//     int sentToServer = send(m_ClientSocket, messegeArray, dataLength, 0);
+//     //if error accures
+//     if (sentToServer < 0){
+//         std::cout<<"error sending to the server\n";
+//     }
+// }
 
 /**
  * tries to recieve messege from the server.
@@ -129,6 +130,62 @@ void recieveFromServer(int m_ClientSocket, char* recievedMessege, const int buff
         std::cout << recievedMessege << "\n";
     }
 }
+// bool isFileValid(std::string FilePath) {
+//     std::fstream csvflie(FilePath, std::ios::in);
+//     if (csvflie.is_open()) {
+//         csvflie.close();
+//         return true;
+//     }
+//     else return false;
+//     }
+
+
+
+std::string inputFile(SocketIO* io, std::string& instructions){
+    std::cout<< instructions << "\n";
+    std::string filePath = getMsgFromUser();
+    std::string file = getDataFromFile(filePath);
+    return file;
+    
+}
+
+void seperateLines(std::ofstream& file,std::string& msgFromServer){
+    int messegeLength = msgFromServer.size();
+    char messegeArray[messegeLength + 1];
+    //convert string to char array
+    strcpy(messegeArray, msgFromServer.c_str());
+    std::string tempWord;
+    for (int j = 0; j < messegeLength; j++){
+        if (*(messegeArray+j) == ' '){
+            file<<tempWord;
+            file<<"\t";
+            tempWord.clear();
+        }
+        else if (*(messegeArray+j) == '\\' && *(messegeArray+j + 1) == 'n'){
+            file<<tempWord;
+            file<<"\n";
+            tempWord.clear();
+            j++;
+        }
+
+        else {
+            std::string tempChar = std::string(1, *(messegeArray +j));
+            tempWord.append(tempChar);
+            tempChar.clear();
+        
+        }
+    }
+    file<<tempWord;
+    //file<<",";
+ }  
+ 
+void outputFile(std::string filePath, std::string msgFromServer) {
+    std::ofstream file;
+    file.open(filePath);
+    seperateLines(file, msgFromServer);
+    file.close();
+}
+
 
 /** 
  * copies all the arguments to a new char* array so there will not be any sugmentation error if less arguments were inserted.
@@ -146,6 +203,80 @@ void checkClientsArguments(int argc,char* argv[], std::string& serverIP, std::st
     getPort(strServerPort);
 }
 
+void interactionWithServer(SocketIO* io){
+
+   while(true){
+    std::string msgFromServer = io->read();
+    std::string temp(msgFromServer.begin(), msgFromServer.begin()+9);
+    if (temp =="inputFile"){
+        std::string instructions(msgFromServer, 10, msgFromServer.size() - 9);
+        std::string file = inputFile(io, instructions); 
+        if (file == "-1"){
+            io->write("error");
+            continue;
+        }
+        io->write(file);
+    }
+    else if (temp == "message__") {
+        std::string message(msgFromServer, 10, msgFromServer.size() - 9);
+        std::cout<<message<<"\n";
+        }
+    else if (msgFromServer == "outputFile"){
+        std::string filePath = getMsgFromUser();
+        // if (! isFileValid(filePath)){
+        //     std::cout<< "invalid input";
+        //     continue;
+        // }
+         std::string msgFromServer;
+         msgFromServer = io->read();
+
+        std::thread downloadFile(outputFile, filePath, msgFromServer);
+        downloadFile.detach();
+
+    }
+    else {
+        if (msgFromServer == "exit"){
+            break;
+        }
+        std::cout << msgFromServer << "\n";
+        std::string msgToServer = getMsgFromUser();
+        io->write(msgToServer);
+        
+    }
+    }
+}
+
+ std::string getMsgFromUser(){
+    std::string msg;
+    std::getline(std::cin, msg);
+    if (msg.length()  == 0){
+        msg = "empty";
+    }
+    return msg;
+ }
+
+ std::string getDataFromFile(std::string filePath){
+    // int buffer = 4096;
+    // char msg[buffer];
+    
+    // if (! isFileValid(filePath)){
+    //     std::cout<< "invalid input\n";
+    //     return "-1";
+    // }
+ 
+    CSVReader* csv = new CSVReader;
+    if(!csv->setNewFile(filePath)) {
+        std::cout<< "invalid input\n";
+          return "-1";
+    }
+    
+    std::string msgToServer = csv->getFileDate();
+    delete csv;
+    return msgToServer;
+    
+ }
+
+ 
 
 
 int main(int argc,char* argv[]) {
@@ -155,7 +286,6 @@ int main(int argc,char* argv[]) {
     const int buffer = 4096;
     struct sockaddr_in m_serverStructAdress;    
     std::string m_messegeToServer;
-    char recievedMessege[buffer];
     //check if arguments are valid - ip and port
     std::string serverIP;
     std::string strServerPort;
@@ -167,9 +297,7 @@ int main(int argc,char* argv[]) {
         *(ip+i) = serverIP.at(i);
     }
     *(ip + serverIP.size()) = '\0';
-    //m_serverPortNum = 5555;
-    //create client socket
-    
+
     if (createSocket(m_ClientSocket) < 0){
         std::cout << "error creating socket\n";
         return -1;
@@ -180,26 +308,67 @@ int main(int argc,char* argv[]) {
         std::cout << "error connecting to server\n";
         return -1;
     }
-    while (true) {
-        // check if variables are valid
-        int loop = getVariables(m_messegeToServer);
-        // loop = 1 - valid variable, send it to server and get an answer
-        if (loop > 0){
-            sendToServer(m_messegeToServer,m_ClientSocket );
-            recieveFromServer(m_ClientSocket, recievedMessege, buffer);
-             }
-        else {
-            //invalid
-            if (loop == -1) {
-                std::cout<< "invalid input\n";
-            continue;
-            }
-            // loop == -2, meaning user had entered -1 to stop running
-            else {
-                break;
-            }
-        } 
-    }
-    close(m_ClientSocket);
-    delete[] ip;
+    SocketIO* io = new SocketIO(m_ClientSocket, buffer);
+   interactionWithServer(io);
+   delete io;
+   delete []ip;
+   close(m_ClientSocket);
+
+
 }
+
+// int main(int argc,char* argv[]) {
+//     int m_ClientSocket;
+//     char* m_serverIpAdress;
+//     int m_serverPortNum;
+//     const int buffer = 4096;
+//     struct sockaddr_in m_serverStructAdress;    
+//     std::string m_messegeToServer;
+//     char recievedMessege[buffer];
+//     //check if arguments are valid - ip and port
+//     std::string serverIP;
+//     std::string strServerPort;
+//     checkClientsArguments(argc, argv, serverIP, strServerPort);
+//     m_serverPortNum = std::stoi(strServerPort);
+
+//     char* ip = new char[serverIP.size() +1];
+//     for (int i=0; i < serverIP.size(); i++){
+//         *(ip+i) = serverIP.at(i);
+//     }
+//     *(ip + serverIP.size()) = '\0';
+//     //m_serverPortNum = 5555;
+//     //create client socket
+    
+//     if (createSocket(m_ClientSocket) < 0){
+//         std::cout << "error creating socket\n";
+//         return -1;
+//     }
+//     //init server adress and try to connect to it
+//     initServerStructAdress(m_serverStructAdress, ip, m_serverPortNum);
+//     if (connectToServer(m_ClientSocket,m_serverStructAdress ) < 0) {
+//         std::cout << "error connecting to server\n";
+//         return -1;
+//     }
+//     while (true) {
+//         // check if variables are valid
+//         int loop = getVariables(m_messegeToServer);
+//         // loop = 1 - valid variable, send it to server and get an answer
+//         if (loop > 0){
+//             sendToServer(m_messegeToServer,m_ClientSocket );
+//             recieveFromServer(m_ClientSocket, recievedMessege, buffer);
+//              }
+//         else {
+//             //invalid
+//             if (loop == -1) {
+//                 std::cout<< "invalid input\n";
+//             continue;
+//             }
+//             // loop == -2, meaning user had entered -1 to stop running
+//             else {
+//                 break;
+//             }
+//         } 
+//     }
+//     close(m_ClientSocket);
+//     delete[] ip;
+// }

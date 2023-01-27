@@ -74,6 +74,7 @@ void isSameSize(std::vector<double>& v1, std::vector<double>& v2) {
 }
 //checks if every string in vector of string is considered as double
 bool allDoubleVector(const std::vector<std::string> vec) {
+	
 	std::vector<std::string>::const_iterator vectorIterator = vec.cbegin();
    for (vectorIterator; vectorIterator != vec.cend(); ++vectorIterator){
 		if (! is_number(*vectorIterator)){
@@ -108,7 +109,7 @@ distanceAlgorithems* distAlgoFactory(std::string str){
 	else if (str == "MIN"){
 		return new Minkovsky();
 	}
-	else return NULL;
+	else return nullptr;
 }
 
 int getK (std::string k){
@@ -219,5 +220,6 @@ bool isKAnInteger(std::string k){
 			else return true;
 	}
 }
+
 
 

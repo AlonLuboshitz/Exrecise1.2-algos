@@ -40,18 +40,18 @@ bool accpetClient(int socket_fd, int& client_socket_fd,  sockaddr_in& client) {
 }
 
 
-bool sendMessage(int client_socket_fd, std::string message) {
-    int length = message.size() + 1;
-    char buffer[length];
-    strcpy(buffer,message.c_str());
-    length = strlen(buffer);
-    int read_bytes = send(client_socket_fd,buffer,length,0);
-    if (read_bytes < 0) {
-        std::cout<<"error sending message";
-        return false;
-    }
-    else return true;
-}
+// bool sendMessage(int client_socket_fd, std::string message) {
+//     int length = message.size() + 1;
+//     char buffer[length];
+//     strcpy(buffer,message.c_str());
+//     length = strlen(buffer);
+//     int read_bytes = send(client_socket_fd,buffer,length,0);
+//     if (read_bytes < 0) {
+//         std::cout<<"error sending message";
+//         return false;
+//     }
+//     else return true;
+// }
 
 
 bool validateMessage(char message[],std::vector<double>& message_vector,
@@ -108,22 +108,17 @@ int& k,distanceAlgorithems* &distanceAlgorithems) {
     } else return false;
 }
 
-void getServerArguments(char* argv[], int argc, std::string& port,
- std::string& fileName, CSVReader& csvreader) {
+void getServerArguments(char* argv[], int argc, std::string& port) {
 
-if (argc != 3) {
+if (argc != 2) {
     std::cout<<"wrong number of arguments - please enter Port: "<<std::endl;
     std::cin>> port;
     getPort(port);
-    std::cout<<"Please enter file path: "<<std::endl;
-    std::cin>>fileName;
-    fileName = getFilePath(fileName, csvreader);
 }
 else {
     port = argv[1];
-    fileName = argv[2];
     getPort(port);
-    fileName = getFilePath(fileName, csvreader);
+
 }
 }
 void setKNN(KNN& knn, int k, std::vector<double> vector, distanceAlgorithems* distanceAlgorithems) {
@@ -131,75 +126,123 @@ void setKNN(KNN& knn, int k, std::vector<double> vector, distanceAlgorithems* di
     knn.setK(k);
     knn.setDistanceAlgorithem(distanceAlgorithems);
 }
-bool getMessage(int client_socket_fd, char buffer[], int expected_data_length) {
-   
-   
-    int read_bytes = recv(client_socket_fd,buffer,expected_data_length,0);
-    if (read_bytes == 0) {
-        std::cout<<"empty message";
-        return false;
-    }
-    else if ( read_bytes < 0) {
-        std::cout<<"error reiciving message"<<std::endl;
-        return false;
-    }
-    else { 
-    buffer[read_bytes] = '\0';
-    return true;
-    }
+std::vector<Command*> createcommands(defualtIO& io) {
+   std::vector<Command*> commands; 
+     UploadDataCommand* up = new UploadDataCommand(io);
+    SettingCommand* set = new SettingCommand(io);
+   ClassifyDataCommand* classify = new ClassifyDataCommand(up,set,io);
+   DisplayResultsCommand* display = new DisplayResultsCommand(up,classify,io);
+   DownloadResultsCommand* download = new DownloadResultsCommand(up,classify,io);
+   commands.push_back(up);
+    commands.push_back(set);
+    commands.push_back(classify);
+    commands.push_back(display);
+    commands.push_back(download);
+    return commands;
 }
+void runApplication(int next_client_socket) {
+     std::vector<Command*> commands;
+    SocketIO io(next_client_socket,4096);
+    commands = createcommands(io);
+    Cli cli(commands,"Welcome to the KNN Classifier Server. Please choose an option: ",io);
+    cli.run();
+    for (int i = 0; i <= commands.size(); i ++) {
+        delete commands[i];
+    }
+    commands.clear();
+    return;
+}
+
 int main (int argc, char* argv[]) {
-    std::string port, fileName;
-    CSVReader csvFileReader;
-    getServerArguments(argv,argc,port,fileName,csvFileReader);
+    std::string port;
+    getServerArguments(argv,argc,port);
     const int portNumber = std::stoi(port);
     int socket_fd;
-    if (!initSocket(socket_fd)) {
-        return 0;
-    }
+    initSocket(socket_fd);
     struct sockaddr_in sin;
     setSinMembers(sin, portNumber);
     if (!bindSocket(socket_fd,sin)) { return 0;}
     if (!listenTo(socket_fd)) {return 0;}
+    std::vector<std::thread> clientThreads;  
     struct sockaddr_in client;
     int client_socket_fd;
-    KNN knn(csvFileReader);
-    while (accpetClient(socket_fd,client_socket_fd,client)) {
-        char buffer[4096];
-        int expected_data_length = sizeof(buffer);
-         std::vector<double> messageVector;
-            int k;
-            distanceAlgorithems* distanceAlgorithems;
-            std::string messageToSend;
-        while (getMessage(client_socket_fd,buffer,expected_data_length)) {
-             messageToSend = "invalid input";
-            int delitionflag = 0;
+    while (true){
+    accpetClient(socket_fd,client_socket_fd,client);
+    clientThreads.push_back(std::thread(runApplication, client_socket_fd));
+    clientThreads.back().detach();
+   }
+   close(socket_fd);
+}
+// bool getMessage(int client_socket_fd, char buffer[], int expected_data_length) {
+   
+   
+//     int read_bytes = recv(client_socket_fd,buffer,expected_data_length,0);
+//     if (read_bytes == 0) {
+//         std::cout<<"empty message";
+//         return false;
+//     }
+//     else if ( read_bytes < 0) {
+//         std::cout<<"error reiciving message"<<std::endl;
+//         return false;
+//     }
+//     else { 
+//     buffer[read_bytes] = '\0';
+//     return true;
+//     }
+// }
+
+// int main (int argc, char* argv[]) {
+//     std::string port, fileName;
+//     CSVReader csvFileReader;
+//     getServerArguments(argv,argc,port,fileName,csvFileReader);
+//     const int portNumber = std::stoi(port);
+//     int socket_fd;
+//     if (!initSocket(socket_fd)) {
+//         return 0;
+//     }
+//     struct sockaddr_in sin;
+//     setSinMembers(sin, portNumber);
+//     if (!bindSocket(socket_fd,sin)) { return 0;}
+//     if (!listenTo(socket_fd)) {return 0;}
+//     struct sockaddr_in client;
+//     int client_socket_fd;
+//     KNN knn(csvFileReader);
+//     while (accpetClient(socket_fd,client_socket_fd,client)) {
+//         char buffer[4096];
+//         int expected_data_length = sizeof(buffer);
+//          std::vector<double> messageVector;
+//             int k;
+//             distanceAlgorithems* distanceAlgorithems;
+//             std::string messageToSend;
+//         while (getMessage(client_socket_fd,buffer,expected_data_length)) {
+//              messageToSend = "invalid input";
+//             int delitionflag = 0;
            
             
-            if (validateMessage(buffer, messageVector, k, distanceAlgorithems)) {
-                //if message valid run knn and set message to knn result.
-                setKNN(knn, k, messageVector, distanceAlgorithems);
-                messageToSend = knn.runKNN();
+//             if (validateMessage(buffer, messageVector, k, distanceAlgorithems)) {
+//                 //if message valid run knn and set message to knn result.
+//                 setKNN(knn, k, messageVector, distanceAlgorithems);
+//                 messageToSend = knn.runKNN();
                 
                 
-            }
-            //by defualt if validate message is false message remains invalid input.
-            if (sendMessage(client_socket_fd, messageToSend)) {
-                //connection is good continue;
-                //reset distanceAlgorithems pointer.
-                delete distanceAlgorithems;
-                delitionflag = 1;
-                continue;
-            }
-            // delete pointer to distancealgo. (not a neccesery if?)
-            if (delitionflag == 0) {
-            delete distanceAlgorithems;    
-            }
-            // close clinet socket and accpet new one
-            close(client_socket_fd);
-        }
-    }
-    //finished accpeting clients - close server socket.
-    close(socket_fd);
+//             }
+//             //by defualt if validate message is false message remains invalid input.
+//             if (sendMessage(client_socket_fd, messageToSend)) {
+//                 //connection is good continue;
+//                 //reset distanceAlgorithems pointer.
+//                 delete distanceAlgorithems;
+//                 delitionflag = 1;
+//                 continue;
+//             }
+//             // delete pointer to distancealgo. (not a neccesery if?)
+//             if (delitionflag == 0) {
+//             delete distanceAlgorithems;    
+//             }
+//             // close clinet socket and accpet new one
+//             close(client_socket_fd);
+//         }
+//     }
+//     //finished accpeting clients - close server socket.
+//     close(socket_fd);
 
-}
+// }

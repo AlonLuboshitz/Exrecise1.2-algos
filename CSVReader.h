@@ -15,16 +15,19 @@
 class CSVReader {
     private:
     bool m_initFlag;
+    bool m_fileSet;
     std::string m_fileName;
+    std::string m_fileData;
     std::vector<std::vector<std::string>> m_lineVector;
     std::vector<std::vector<std::string>>::iterator m_vectorLine_iterator;
     //reset iterator to the beginning of the m_lineVector
     void setIterator();
     //puts all line from file into m_lineVector
-    void readFromFile();
+    
     //fuction check if last four letters in string are ".csv" make sure the file is csv type.
     bool validateCSVfile(std::string filename);
     public: 
+    void readFromFile();
     //defualt ctor init m_initflag to false.
     CSVReader();
     //sets a new filename into the filename memeber of csv
@@ -36,6 +39,11 @@ class CSVReader {
 
     //function return true if file is associated with filereader.
     bool isFileValid();
-
+    //set new data of a file by the data given by it.
+    //the bool is to know if the data is from new file or same file sended by chunks.
+    bool setNewFileData(std::string data,bool newfile);
+    //returns if file is set
+    bool isFileSet();
+    std::string getFileDate();
 };
 #endif

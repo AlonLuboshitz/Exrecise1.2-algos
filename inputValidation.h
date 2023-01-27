@@ -33,5 +33,6 @@ int getK (std::string k);
 std::string getFilePath(std::string filePath, CSVReader& csvreader);
 distanceAlgorithems* distAlgoFactory(std::string str);
 
+
 void getArguments (int argc,std::string& s_k, std::string& filePath, std::string& s_disAlgo, CSVReader& csvreader);
 #endif

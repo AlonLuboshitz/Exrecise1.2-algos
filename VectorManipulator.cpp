@@ -42,9 +42,10 @@ void PrintVec(std::vector<double> v1) {
 }
 //converts vector of strings to vector of doubles
 std::vector<double> convertVectorToDoubles(std::vector<std::string>& vec) {
-    std::vector<std::string>::const_iterator vectorIterator = vec.cbegin();
+    std::vector<std::string>::iterator vectorIterator = vec.begin();
     std::vector<double> doubleVector;
-   for (vectorIterator; vectorIterator != vec.cend(); ++vectorIterator) {
+   for (vectorIterator; vectorIterator != vec.end(); ++vectorIterator) {
+        stringCleaner((*vectorIterator));
         if (is_number(*vectorIterator)){
             doubleVector.push_back(std::stod(*vectorIterator));
         }

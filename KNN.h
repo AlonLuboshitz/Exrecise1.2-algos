@@ -38,13 +38,16 @@ std::string findKNearest();
 void initiation();
 public: 
 ~ KNN();
-KNN() = delete;
+//KNN() = delete;
+KNN() = default;
 KNN(CSVReader& csvReader);
 KNN (std::vector<double> inputVector,distanceAlgorithems* disAlgo, CSVReader& csvReader, const unsigned int k);
 std::string runKNN();
+void setCSVFile(CSVReader* csv);
 void setDistanceAlgorithem(distanceAlgorithems* disAlgo);
 void setNewFile(std::string path);
 void setInputVector(std::vector<double> inputVector);
+void setInit(bool init);
 void setK(int k);
 };
 #endif
