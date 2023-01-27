@@ -130,14 +130,14 @@ void recieveFromServer(int m_ClientSocket, char* recievedMessege, const int buff
         std::cout << recievedMessege << "\n";
     }
 }
-bool isFileValid(std::string FilePath) {
-    std::fstream csvflie(FilePath, std::ios::in);
-    if (csvflie.is_open()) {
-        csvflie.close();
-        return true;
-    }
-    else return false;
-    }
+// bool isFileValid(std::string FilePath) {
+//     std::fstream csvflie(FilePath, std::ios::in);
+//     if (csvflie.is_open()) {
+//         csvflie.close();
+//         return true;
+//     }
+//     else return false;
+//     }
 
 
 
@@ -256,16 +256,20 @@ void interactionWithServer(SocketIO* io){
  }
 
  std::string getDataFromFile(std::string filePath){
-    int buffer = 4096;
-    char msg[buffer];
+    // int buffer = 4096;
+    // char msg[buffer];
     
-    if (! isFileValid(filePath)){
-        std::cout<< "invalid input\n";
-        return "-1";
-    }
+    // if (! isFileValid(filePath)){
+    //     std::cout<< "invalid input\n";
+    //     return "-1";
+    // }
  
     CSVReader* csv = new CSVReader;
-    csv->setNewFile(filePath);
+    if(!csv->setNewFile(filePath)) {
+        std::cout<< "invalid input\n";
+          return "-1";
+    }
+    
     std::string msgToServer = csv->getFileDate();
     delete csv;
     return msgToServer;
