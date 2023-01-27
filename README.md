@@ -14,8 +14,8 @@ after the project has been cloned, enter the following:
 to run the client -
 8. ./client.out (server ip) (server port number)    
 in client:
-9. insert: (vector) (distance's name) (k value) ENTER (infinitely)
-10. in order to stop running the client insert -1
+run accord to server menu.
+when input file path insert without "".
 11. when finnished enter -  make clean    
 
 
