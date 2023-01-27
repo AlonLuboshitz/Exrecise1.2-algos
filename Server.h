@@ -14,8 +14,7 @@
 #include "commands_header.h"
 
 void setKNN(KNN& knn, int k, std::vector<double> vector, distanceAlgorithems* distanceAlgorithems);
-void getServerArguments(char* argv[], int argc, 
-std::string& port, std::string& fileName, CSVReader& csvreader);
+void getServerArguments(char* argv[], int argc, std::string& port);
 bool initSocket(int& socket_fd);
 void setSinMembers(struct sockaddr_in& sin, int port);
 bool bindSocket(int socket_fd,struct sockaddr_in& sin);

@@ -108,22 +108,17 @@ int& k,distanceAlgorithems* &distanceAlgorithems) {
     } else return false;
 }
 
-void getServerArguments(char* argv[], int argc, std::string& port,
- std::string& fileName, CSVReader& csvreader) {
+void getServerArguments(char* argv[], int argc, std::string& port) {
 
-if (argc != 3) {
+if (argc != 2) {
     std::cout<<"wrong number of arguments - please enter Port: "<<std::endl;
     std::cin>> port;
     getPort(port);
-    std::cout<<"Please enter file path: "<<std::endl;
-    std::cin>>fileName;
-    fileName = getFilePath(fileName, csvreader);
 }
 else {
     port = argv[1];
-    fileName = argv[2];
     getPort(port);
-    fileName = getFilePath(fileName, csvreader);
+
 }
 }
 void setKNN(KNN& knn, int k, std::vector<double> vector, distanceAlgorithems* distanceAlgorithems) {
@@ -158,27 +153,26 @@ void runApplication(int next_client_socket) {
     return;
 }
 
-int main () {
+int main (int argc, char* argv[]) {
+    std::string port;
+    getServerArguments(argv,argc,port);
+    const int portNumber = std::stoi(port);
     int socket_fd;
     initSocket(socket_fd);
-
-
-    int port = 5555;
-
     struct sockaddr_in sin;
-    setSinMembers(sin, port);
+    setSinMembers(sin, portNumber);
     if (!bindSocket(socket_fd,sin)) { return 0;}
     if (!listenTo(socket_fd)) {return 0;}
+    std::vector<std::thread> clientThreads;  
     struct sockaddr_in client;
     int client_socket_fd;
+    while (true){
     accpetClient(socket_fd,client_socket_fd,client);
-    while(true) {
-        //create thread
-        runApplication(client_socket_fd);
-    }
-    close(socket_fd);
+    clientThreads.push_back(std::thread(runApplication, client_socket_fd));
+    clientThreads.back().detach();
    }
-
+   close(socket_fd);
+}
 // bool getMessage(int client_socket_fd, char buffer[], int expected_data_length) {
    
    

@@ -29,8 +29,7 @@ void DownloadResultsCommand::execute(){
     m_valid =false;
         m_msg = "message__ please upload data";
 }
-if (!m_valid) {
+if (! m_valid){
 m_io->write(m_msg);
 }
-
 }
